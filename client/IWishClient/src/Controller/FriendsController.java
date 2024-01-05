@@ -12,9 +12,9 @@ import javafx.fxml.Initializable;
 /**
  * FXML Controller class
  *
- * @author DELL
+ * @author mennatallah
  */
-public class WishListController implements Initializable {
+public class FriendsController implements Initializable {
 
     /**
      * Initializes the controller class.

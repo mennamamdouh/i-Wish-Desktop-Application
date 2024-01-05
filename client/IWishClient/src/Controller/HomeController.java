@@ -37,8 +37,8 @@ public class HomeController implements Initializable {
         try {
             wishList.setContent(FXMLLoader.load(getClass().getResource("/View/WishList.fxml")));
             notification.setContent(FXMLLoader.load(getClass().getResource("/View/Notification.fxml")));
-            //friends.setContent(FXMLLoader.load(getClass().getResource("/View/Friend.fxml")));
-            //about.setContent(FXMLLoader.load(getClass().getResource("/View/About.fxml")));
+            friends.setContent(FXMLLoader.load(getClass().getResource("/View/Friends.fxml")));
+            about.setContent(FXMLLoader.load(getClass().getResource("/View/About.fxml")));
         } catch (IOException ex) {
             Logger.getLogger(HomeController.class.getName()).log(Level.SEVERE, null, ex);
         }
