@@ -22,7 +22,7 @@ public final class IWishClient extends Application {
     @Override
     public void start(Stage stage) throws Exception {
        
-        Parent root = FXMLLoader.load(getClass().getResource("/View/Home.fxml")); 
+        Parent root = FXMLLoader.load(getClass().getResource("/View/Login.fxml")); 
         Scene scene = new Scene(root);
       
         stage.setScene(scene);
