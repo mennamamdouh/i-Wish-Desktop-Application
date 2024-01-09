@@ -1,16 +1,43 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.geometry.Insets?>
 <?import javafx.scene.control.Label?>
-<?import javafx.scene.layout.AnchorPane?>
-<?import javafx.scene.text.Font?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.FlowPane?>
 
-
-<AnchorPane id="AnchorPane" prefHeight="714.0" prefWidth="1000.0" xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/8.0.171" fx:controller="Controller.FriendsController">
-   <children>
-      <Label alignment="CENTER" contentDisplay="CENTER" layoutX="287.0" layoutY="312.0" prefHeight="90.0" prefWidth="426.0" text="Hi from Friends tab!">
-         <font>
-            <Font size="30.0" />
-         </font>
-      </Label>
-   </children>
-</AnchorPane>
+<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="714.0" prefWidth="1000.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Controller.FriendsController">
+   <top>
+      <FlowPane fx:id="searchFriendsBar" hgap="5.0" prefHeight="32.0" prefWidth="600.0" BorderPane.alignment="CENTER">
+         <children>
+            <ImageView fx:id="logoImage" fitHeight="67.0" fitWidth="75.0" pickOnBounds="true" preserveRatio="true">
+               <FlowPane.margin>
+                  <Insets left="7.0" right="7.0" top="-5.0" />
+               </FlowPane.margin>
+               <image>
+                  <Image url="@../resources/genie-lamp-icon.png" />
+               </image></ImageView>
+            <TextField fx:id="searchTextField" alignment="CENTER" prefHeight="31.0" prefWidth="895.0" promptText="Search for people" />
+         </children>
+         <BorderPane.margin>
+            <Insets bottom="2.0" left="2.0" right="2.0" top="10.0" />
+         </BorderPane.margin>
+      </FlowPane>
+   </top>
+   <center>
+      <TableView fx:id="listOfFriends" prefHeight="344.0" prefWidth="600.0" stylesheets="@../resources/css%20files/customize-table.css" BorderPane.alignment="CENTER">
+        <placeholder>
+            <Label text="You have no friends yet" />
+        </placeholder>
+        <columns>
+          <TableColumn fx:id="imageColumn" prefWidth="224.0" />
+          <TableColumn fx:id="nameColumn" minWidth="0.0" prefWidth="620.0" />
+          <TableColumn fx:id="removeButtonColumn" minWidth="0.0" prefWidth="155.0" />
+        </columns>
+      </TableView>
+   </center>
+</BorderPane>

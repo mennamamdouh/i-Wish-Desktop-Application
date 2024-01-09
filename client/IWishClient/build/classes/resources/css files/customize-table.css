@@ -1,0 +1,17 @@
+.column-header-background {
+    visibility: hidden; -fx-padding: -1em;
+}
+
+.table-view {
+    -fx-table-cell-border-color: transparent;
+    -fx-table-cell-border-width: 0;
+}
+
+.table-row-cell {
+    -fx-table-cell-border-color: transparent;
+    -fx-table-cell-border-width: 0;
+}
+
+.table-cell {
+    -fx-alignment: center;
+}
