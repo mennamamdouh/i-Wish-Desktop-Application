@@ -29,6 +29,7 @@ public class HomeController implements Initializable {
     private Tab notification;
     @FXML
     private Tab about;
+    
     /**
      * Initializes the controller class.
      */
