@@ -20,7 +20,6 @@ import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.util.Callback;
-import javafx.beans.property.SimpleStringProperty;
 
 /**
  * FXML Controller class
@@ -35,15 +34,14 @@ public class FriendsController implements Initializable {
     @FXML private TableColumn<Friend, Void> removeButtonColumn;
     @FXML private TextField searchTextField;
     
-    private ObservableList<Friend> friends = FXCollections.observableArrayList();
-    /*=
+    private ObservableList<Friend> friends =
         FXCollections.observableArrayList(
             new Friend("resources/male-avatar.png", "Jacob Smith"),
             new Friend("resources/female-avatar.png", "Isabella Johnson"),
             new Friend("resources/male-avatar.png", "Ethan Williams"),
             new Friend("resources/female-avatar.png", "Emma Jones"),
             new Friend("resources/male-avatar.png", "Michael Brown")
-    );*/
+    );
     
     @Override
     public void initialize(URL url, ResourceBundle rb) {
@@ -141,29 +139,4 @@ public class FriendsController implements Initializable {
         listOfFriends.setItems(filteredFriends);
     }
     
-}
-
-class Friend {
-    private SimpleStringProperty profilePicture;
-    private SimpleStringProperty fullName;
- 
-    Friend(String fName, String lName) {
-        this.profilePicture = new SimpleStringProperty(fName);
-        this.fullName = new SimpleStringProperty(lName);
-    }
- 
-    public String getProfilePicture() {
-        return profilePicture.get();
-    }
-    public void setProfilePicture(String fName) {
-        profilePicture.set(fName);
-    }
-        
-    public String getFullName() {
-        return fullName.get();
-    }
-    public void setFullName(String fName) {
-        fullName.set(fName);
-    }
-        
 }
