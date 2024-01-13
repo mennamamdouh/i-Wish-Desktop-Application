@@ -15,12 +15,12 @@
 <?import javafx.scene.layout.Pane?>
 <?import javafx.scene.text.Font?>
 
-<Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="780.0" prefWidth="1000.0" style="-fx-background-color: #2D0901;" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Controller.LoginController">
+<Pane fx:id="mainnode" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="780.0" prefWidth="1000.0" style="-fx-background-color: #2D0901;" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Controller.LoginController">
 
    <children>
       <AnchorPane layoutX="497.0" layoutY="143.0" prefHeight="450.0" prefWidth="406.0" style="-fx-background-color: #601100;">
          <children>
-            <TextField layoutX="59.0" layoutY="139.0" prefHeight="42.0" prefWidth="301.0" promptText="Username">
+            <TextField fx:id="emailtf" layoutX="59.0" layoutY="139.0" prefHeight="42.0" prefWidth="301.0" promptText="Email">
                <effect>
                   <Reflection fraction="0.15" topOpacity="0.2" />
                </effect>
@@ -31,7 +31,7 @@
                   <Cursor fx:constant="TEXT" />
                </cursor>
             </TextField>
-            <PasswordField layoutX="59.0" layoutY="201.0" prefHeight="42.0" prefWidth="301.0" promptText="Password">
+            <PasswordField fx:id="passtf" layoutX="59.0" layoutY="201.0" prefHeight="42.0" prefWidth="301.0" promptText="Password">
                <font>
                   <Font size="14.0" />
                </font>

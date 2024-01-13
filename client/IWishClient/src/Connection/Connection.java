@@ -9,6 +9,8 @@ import java.io.DataInputStream;
 import java.io.IOException;
 import java.io.PrintStream;
 import java.net.Socket;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /**
  *
@@ -32,6 +34,17 @@ public class Connection {
             connection = new Connection();
         return connection;
     }
+    public void closeConnection() throws IOException{
+        if(connection != null){
+            server.close();
+            input.close();
+            notification.close();
+            output.close();
+        }       
+    }
+    public static boolean getStatus(){
+        return connection != null;
+    }
     public DataInputStream getInputStream() {
         return input;
     }
@@ -39,5 +52,9 @@ public class Connection {
     public PrintStream getOutputStream() {
         return output;
     } 
+
+    public DataInputStream getNotification() {
+        return notification;
+    }
     
 }
