@@ -72,7 +72,7 @@ CREATE TABLE `Friendship` (
 
 LOCK TABLES `Friendship` WRITE;
 /*!40000 ALTER TABLE `Friendship` DISABLE KEYS */;
-INSERT INTO `Friendship` VALUES (2,1,'Accepted'),(3,1,'Accepted');
+INSERT INTO `Friendship` VALUES (2,1,'Accepted'),(3,1,'Accepted'),(4, 1, 'Accepted'),(4, 2, 'Accepted'),(4, 3, 'Accepted'),(4, 5, 'Pending');
 /*!40000 ALTER TABLE `Friendship` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -86,7 +86,7 @@ DROP TABLE IF EXISTS `Items`;
 CREATE TABLE `Items` (
   `ItemID` int NOT NULL AUTO_INCREMENT,
   `ItemName` varchar(50) NOT NULL,
-  `ItemPhoto` blob,
+  `ItemPhoto` varchar(255),
   `Price` decimal(10,2) NOT NULL,
   PRIMARY KEY (`ItemID`)
 ) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
@@ -113,7 +113,7 @@ CREATE TABLE `Users` (
   `UserID` int NOT NULL AUTO_INCREMENT,
   `Email` varchar(50) NOT NULL,
   `FullName` varchar(50) NOT NULL,
-  `UserPhoto` blob,
+  `UserPhoto` varchar(255),
   `Password` varchar(50) NOT NULL,
   PRIMARY KEY (`UserID`)
 ) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
@@ -125,7 +125,7 @@ CREATE TABLE `Users` (
 
 LOCK TABLES `Users` WRITE;
 /*!40000 ALTER TABLE `Users` DISABLE KEYS */;
-INSERT INTO `Users` VALUES (1,'abdallah.mohamed0079@gmail.com','Abdullah Attia',NULL,'root'),(2,'diaaahmed38@gmail.com','Diaa Ahmed',NULL,'root'),(3,'mahmoudhatem96@gmail.com','Mahmoud Hatem',NULL,'root'),(4,'mennamamdouh@gmail.com','Menna Mamdouh',NULL,'root'),(5,'omarramadan1425@gmail.com','Omar Ramadan',NULL,'root');
+INSERT INTO `Users` VALUES (1,'abdallah.mohamed0079@gmail.com','Abdullah Attia', 'resources/male-avatar.png','root'),(2,'diaaahmed38@gmail.com','Diaa Ahmed','resources/male-avatar.png','root'),(3,'mahmoudhatem96@gmail.com','Mahmoud Hatem','resources/male-avatar.png','root'),(4,'mennamamdouh@gmail.com','Menna Mamdouh','resources/female-avatar.png','root'),(5,'omarramadan1425@gmail.com','Omar Ramadan','resources/male-avatar.png','root');
 /*!40000 ALTER TABLE `Users` ENABLE KEYS */;
 UNLOCK TABLES;
 
