@@ -5,8 +5,6 @@
  */
 package Model;
 
-import java.sql.Blob;
-
 /**
  *
  * @author DELL
@@ -15,14 +13,19 @@ public class User {
     private int userid;
     private String email;
     private String fullname;
-    private Blob userphoto;
+    private String userphoto;
     private String password;
 
     public User(String email, String password) {
         this.email = email;
         this.password = password;
     }
-
+    
+    public User(int userid, String fullname, String userphoto) {
+        this.userid = userid;
+        this.fullname = fullname;
+        this.userphoto = userphoto;
+    }
     
     public int getUserid() {
         return userid;
@@ -48,11 +51,11 @@ public class User {
         this.fullname = fullname;
     }
 
-    public Blob getUserphoto() {
+    public String getUserphoto() {
         return userphoto;
     }
 
-    public void setUserphoto(Blob userphoto) {
+    public void setUserphoto(String userphoto) {
         this.userphoto = userphoto;
     }
 
