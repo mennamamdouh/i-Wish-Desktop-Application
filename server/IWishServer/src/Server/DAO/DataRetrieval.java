@@ -30,7 +30,7 @@ public class DataRetrieval {
         {
             user.setUserid(result.getInt(1));
             user.setFullname(result.getString(3));
-            user.setUserphoto(result.getBlob(4));
+            user.setUserphoto(result.getString(4));
             statement.close();
             return true;
         }
@@ -40,9 +40,27 @@ public class DataRetrieval {
         }
     }
     
-    public static ArrayList<User> getFriends(){
-        ArrayList<User> arr = new ArrayList<User>();
-        return arr ;
+    public static ArrayList<User> getFriends(User user) throws SQLException{
+        ArrayList<User> friends = new ArrayList<User>();
+        Connection con = DBConnection.getConnection();
+        ResultSet result;
+        PreparedStatement statement = con.prepareCall("SELECT F.FriendID, U.FullName, U.UserPhoto\n" +
+                                                        "FROM Users AS U\n" +
+                                                        "INNER JOIN Friendship AS F\n" +
+                                                        "    ON F.FriendID = U.userID\n" +
+                                                        "WHERE F.UserID = ? AND FriendshipStatus = 'Accepted'", ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_READ_ONLY);
+        statement.setInt(1, user.getUserid());
+        result = statement.executeQuery();
+        if(result.next())
+        {
+            result.previous();
+            while(result.next()){
+                friends.add(new User(result.getInt(1), result.getString(2), result.getString(3)));
+            }
+            return friends;
+        }
+        statement.close();
+        return friends;
     }
     
     public static ArrayList<WishList> getWishList(User user) throws SQLException{
