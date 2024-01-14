@@ -5,13 +5,27 @@
  */
 package Controller;
 
+import Connection.Connection;
+import Connection.MessageProtocol;
+import Model.User;
+import com.google.gson.Gson;
+import com.google.gson.JsonObject;
+import com.google.gson.reflect.TypeToken;
+import java.io.IOException;
+import java.lang.reflect.Type;
 import java.net.URL;
+import java.util.ArrayList;
 import java.util.ResourceBundle;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javafx.application.Platform;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
+import javafx.scene.control.ButtonType;
 import javafx.scene.control.TableCell;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
@@ -28,34 +42,47 @@ import javafx.util.Callback;
  */
 public class FriendsController implements Initializable {
     
-    @FXML private TableView<Friend> listOfFriends;
-    @FXML private TableColumn<Friend, String> imageColumn;
-    @FXML private TableColumn<Friend, String> nameColumn;
-    @FXML private TableColumn<Friend, Void> removeButtonColumn;
+    @FXML private TableView<User> listOfFriends;
+    @FXML private TableColumn<User, String> imageColumn;
+    @FXML private TableColumn<User, String> nameColumn;
+    @FXML private TableColumn<User, Void> removeButtonColumn;
     @FXML private TextField searchTextField;
     
-    private ObservableList<Friend> friends =
-        FXCollections.observableArrayList(
-            new Friend("resources/male-avatar.png", "Jacob Smith"),
-            new Friend("resources/female-avatar.png", "Isabella Johnson"),
-            new Friend("resources/male-avatar.png", "Ethan Williams"),
-            new Friend("resources/female-avatar.png", "Emma Jones"),
-            new Friend("resources/male-avatar.png", "Michael Brown")
-    );
+    // Define the observable list that holds the friends data
+    private ObservableList<User> friends;
     
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         
+        // Implement new thread to request a connection to the server
+        Thread connect = new Thread(new Runnable(){
+            @Override
+            public void run() {
+                try{
+                    Connection con = Connection.getInstance();
+                    // Getting the friend list of the current use
+                    getFriendList();
+                    // View the friends list into the table view through the Application Thread
+                    Platform.runLater(() -> {
+                        listOfFriends.setItems(friends);
+                    });
+                } catch (IOException ex) {
+                    Logger.getLogger(FriendsController.class.getName()).log(Level.SEVERE, null, ex);
+                }
+            }
+        });
+        connect.start();
+        
         // Set the cell value factory for the imageColumn
         imageColumn.setCellValueFactory(
-                new PropertyValueFactory<>("profilePicture")
+                new PropertyValueFactory<>("userphoto")
         );
 
         // Set the cell factory for the imageColumn
-        imageColumn.setCellFactory(new Callback<TableColumn<Friend, String>, TableCell<Friend, String>>() {
+        imageColumn.setCellFactory(new Callback<TableColumn<User, String>, TableCell<User, String>>() {
             @Override
-            public TableCell<Friend, String> call(TableColumn<Friend, String> param) {
-                return new TableCell<Friend, String>(){
+            public TableCell<User, String> call(TableColumn<User, String> param) {
+                 return new TableCell<User, String>(){
                     private final ImageView imageView = new ImageView();
                     
                     @Override
@@ -71,30 +98,41 @@ public class FriendsController implements Initializable {
                         }
                     }
                 };
-            }
+            }   
         });
 
         // Set the cell value factory for the nameColumn
         nameColumn.setCellValueFactory(
-                new PropertyValueFactory<>("fullName")
+                new PropertyValueFactory<>("fullname")
         );
         
         // Set the cell factory for the removeButtonColumn
-        removeButtonColumn.setCellFactory(new Callback<TableColumn<Friend, Void>, TableCell<Friend, Void>>() {
+        removeButtonColumn.setCellFactory(new Callback<TableColumn<User, Void>, TableCell<User, Void>>() {
             @Override
-            public TableCell<Friend, Void> call(TableColumn<Friend, Void> param) {
-                return new TableCell<Friend, Void>() {
+            public TableCell<User, Void> call(TableColumn<User, Void> param) {
+                return new TableCell<User, Void>() {
                     private final Button removeButton = new Button("Remove");
-
                     {
                         removeButton.setOnAction(event -> {
                             // Get the row item associated with the clicked button
-                            Friend friend = getTableView().getItems().get(getIndex());
-                            // Perform the remove action for the person
-                            removeFriend(friend);
+                            User friend = getTableView().getItems().get(getIndex());
+                            
+                            Platform.runLater(() -> {
+                                    Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
+                                    alert.setContentText("You're about to remove " + friend.getFullname());
+                                    alert.showAndWait().ifPresent(response -> {
+                                        if (response == ButtonType.OK){
+                                            try {
+                                                // Perform the remove action for the person
+                                                removeFriend(friend);
+                                            } catch (IOException ex) {
+                                                Logger.getLogger(FriendsController.class.getName()).log(Level.SEVERE, null, ex);
+                                            }
+                                        }
+                                    });
+                                });
                         });
                     }
-
                     @Override
                     protected void updateItem(Void item, boolean empty) {
                         super.updateItem(item, empty);
@@ -107,29 +145,68 @@ public class FriendsController implements Initializable {
                     }
                 };
             }
+            
         });
         
-        // Set the friends data into the table
-        listOfFriends.setItems(friends);
-        
         // Configure the search field listener
-        searchTextField.textProperty().addListener((observable, oldValue, newValue) -> searchFriends(newValue));
+        //searchTextField.textProperty().addListener((observable, oldValue, newValue) -> searchFriends(newValue));
     }
     
-    private void removeFriend(Friend friend) {
-        // Perform the remove action for the person
-        friends.remove(friend);
+    private void getFriendList() throws IOException{
+        // Prepare the request
+        Gson gson = new Gson();
+        JsonObject request = new JsonObject();
+        request.addProperty("request", gson.toJson(MessageProtocol.RETRIEVAL.GET_FRIENDS));
         
-        // Update the viewed list after removing
-        String searchText = searchTextField.getText().toLowerCase();
-        searchFriends(searchText);
+        // Send the request
+        Connection.getInstance().getOutputStream().println(request.toString());
+        
+        // Wait for the reply
+        String msg = Connection.getInstance().getInputStream().readLine();
+        
+        // Process the reply
+        JsonObject reply = gson.fromJson(msg, JsonObject.class);
+        
+        if(reply.has("data")){
+            String arr = reply.get("data").getAsString();
+            Type dataType = new TypeToken<ArrayList<User>>(){}.getType();
+            ArrayList<User> friendsList = gson.fromJson(arr, dataType);
+            friends = FXCollections.observableArrayList(friendsList);
+        }
+        else{
+            System.out.println("No data found");
+        }
     }
     
+    
+    // A method to remove friends from the friend list
+    private void removeFriend(User friend) throws IOException {
+        // Prepare the request
+        Gson gson = new Gson();
+        JsonObject request = new JsonObject();
+        request.addProperty("request", gson.toJson(MessageProtocol.MODIFY.REMOVE_FRIEND));
+        request.addProperty("data", gson.toJson(friend));
+                
+        // Send the request
+        Connection.getInstance().getOutputStream().println(request.toString());
+        
+        // Wait for the reply
+        String msg = Connection.getInstance().getInputStream().readLine();
+        
+        // Update the viewed list after removing the friend
+        getFriendList();
+        Platform.runLater(() -> {
+            listOfFriends.setItems(friends);
+        });
+    }
+    
+    /*
+    // A method to search for a specific friends
     private void searchFriends(String searchText) {
         
         ObservableList<Friend> filteredFriends = FXCollections.observableArrayList();
         
-        for (Friend friend : friends) {
+        for (User friend : friends) {
             if (friend.getFullName().toLowerCase().contains(searchText.toLowerCase())) {
                 filteredFriends.add(friend);
             }
@@ -137,6 +214,6 @@ public class FriendsController implements Initializable {
 
         // Set the filteredList as the items of the listOfFriends TableView
         listOfFriends.setItems(filteredFriends);
-    }
+    }*/
     
 }
