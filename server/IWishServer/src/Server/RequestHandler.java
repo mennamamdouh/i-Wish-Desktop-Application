@@ -49,7 +49,7 @@ public class RequestHandler  {
             if(login)
                 switch(retriev){                   
                     case GET_FRIENDS :
-                        return dataToJson(DataRetrieval.getFriends(),MessageProtocol.RETRIEVAL.GET_FRIENDS );
+                        return dataToJson(DataRetrieval.getFriends(user),MessageProtocol.RETRIEVAL.GET_FRIENDS );
 
                     case GET_WISHLIST :
                         return dataToJson(DataRetrieval.getWishList(user),MessageProtocol.RETRIEVAL.GET_WISHLIST );
@@ -86,6 +86,10 @@ public class RequestHandler  {
                     
                 case REGISTER :
                    return statusToJson(DataModification.register(),MessageProtocol.MODIFY.REGISTER); 
+                
+                case REMOVE_FRIEND :
+                    User friend = gson.fromJson(client.get("data").getAsString(), User.class);
+                    return statusToJson(DataModification.removeFriend(user, friend),MessageProtocol.MODIFY.REMOVE_FRIEND); 
             }
         }
         
