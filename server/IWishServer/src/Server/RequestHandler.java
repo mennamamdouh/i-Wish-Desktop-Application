@@ -62,6 +62,10 @@ public class RequestHandler  {
 
                     case GET_NOTIFICATIONS :
                         return dataToJson(DataRetrieval.getNotifications(),MessageProtocol.RETRIEVAL.GET_NOTIFICATIONS );
+                    
+                    case GET_USERS :
+                        String searchedText = gson.fromJson(client.get("data").getAsString(), String.class);
+                        return dataToJson(DataRetrieval.getUsers(user, searchedText),MessageProtocol.RETRIEVAL.GET_USERS );
                 }
             if(retriev == MessageProtocol.RETRIEVAL.LOGIN ){
                   user = gson.fromJson(client.get("data").getAsString(), User.class);
@@ -74,9 +78,10 @@ public class RequestHandler  {
                Recieve Data from json before calling any method
                ex : user = gson.fromJson(client.get("data").getAsString(), User.class); 
             */
+            User friend = gson.fromJson(client.get("data").getAsString(), User.class);
             switch(modify){
                 case ADD_FRIEND :
-                    return statusToJson(DataModification.addFriend(),MessageProtocol.MODIFY.ADD_FRIEND );
+                    return statusToJson(DataModification.addFriend(user, friend),MessageProtocol.MODIFY.ADD_FRIEND );
                     
                 case ADD_TO_WISHLIST :
                     return statusToJson(DataModification.addToWishList(),MessageProtocol.MODIFY.ADD_TO_WISHLIST );    
@@ -88,7 +93,6 @@ public class RequestHandler  {
                    return statusToJson(DataModification.register(),MessageProtocol.MODIFY.REGISTER); 
                 
                 case REMOVE_FRIEND :
-                    User friend = gson.fromJson(client.get("data").getAsString(), User.class);
                     return statusToJson(DataModification.removeFriend(user, friend),MessageProtocol.MODIFY.REMOVE_FRIEND); 
             }
         }
