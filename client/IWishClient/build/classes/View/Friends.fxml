@@ -36,7 +36,7 @@
         <columns>
           <TableColumn fx:id="imageColumn" prefWidth="224.0" />
           <TableColumn fx:id="nameColumn" minWidth="0.0" prefWidth="620.0" />
-          <TableColumn fx:id="removeButtonColumn" minWidth="0.0" prefWidth="155.0" />
+          <TableColumn fx:id="buttonColumn" minWidth="0.0" prefWidth="155.0" />
         </columns>
       </TableView>
    </center>
