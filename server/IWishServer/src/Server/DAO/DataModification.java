@@ -16,8 +16,21 @@ import java.sql.SQLException;
  */
 public class DataModification {
     
-    public static boolean addFriend(){
-        return false;
+    public static boolean addFriend(User user, User friend) throws SQLException{
+        Connection con = DBConnection.getConnection();
+        PreparedStatement statement = con.prepareStatement("INSERT INTO Friendship VALUES(?, ?, 'Pending')");
+        statement.setInt(1, user.getUserid());
+        statement.setInt(2, friend.getUserid());
+        int result = statement.executeUpdate();
+        if(result == 1){
+            statement.close();
+            System.out.println("Friend was added successfuly.");
+            return true;
+        }
+        else{
+            System.out.println("Friend wasn't added.");
+            return false;
+        }
     }
     public static boolean addToWishList(){
         return false;
