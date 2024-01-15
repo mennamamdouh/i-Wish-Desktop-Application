@@ -57,7 +57,6 @@ public class DataRetrieval {
             while(result.next()){
                 friends.add(new User(result.getInt(1), result.getString(2), result.getString(3)));
             }
-            return friends;
         }
         statement.close();
         return friends;
@@ -96,6 +95,43 @@ public class DataRetrieval {
     public static ArrayList<Notification> getNotifications(){
         ArrayList<Notification> arr = new ArrayList<Notification>();
         return arr;
+    }
+    
+    public static ArrayList<User> getUsers(User user, String searchedText) throws SQLException{
+        ArrayList<User> users = new ArrayList<User>();
+        Connection con = DBConnection.getConnection();
+        ResultSet result;
+        PreparedStatement statement = con.prepareCall("WITH friends AS(\n" +
+                                                        "    SELECT F.FriendID, U.FullName, U.UserPhoto, F.FriendshipStatus\n" +
+                                                        "    FROM Users AS U\n" +
+                                                        "    INNER JOIN Friendship AS F\n" +
+                                                        "        ON F.FriendID = U.userID\n" +
+                                                        "    WHERE F.UserID = ? AND FriendshipStatus = 'Accepted'\n" +
+                                                        "),\n" +
+                                                        "pending AS(\n" +
+                                                        "    SELECT F.FriendID, U.FullName, U.UserPhoto, F.FriendshipStatus\n" +
+                                                        "    FROM Users AS U\n" +
+                                                        "    INNER JOIN Friendship AS F\n" +
+                                                        "        ON F.FriendID = U.userID\n" +
+                                                        "    WHERE F.UserID = ? AND FriendshipStatus = 'Pending'\n" +
+                                                        ")\n" +
+                                                        "SELECT U.UserID, U.FullName, U.UserPhoto\n" +
+                                                        "FROM Users AS U\n" +
+                                                        "WHERE (U.UserID NOT IN(SELECT FriendID FROM friends) AND U.UserID NOT IN(SELECT FriendID FROM pending)) AND U.UserID != ? AND U.FullName LIKE ?;", ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_READ_ONLY);
+        statement.setInt(1, user.getUserid());
+        statement.setInt(2, user.getUserid());
+        statement.setInt(3, user.getUserid());
+        statement.setString(4, searchedText+'%');
+        result = statement.executeQuery();
+        if(result.next())
+        {
+            result.previous();
+            while(result.next()){
+                users.add(new User(result.getInt(1), result.getString(2), result.getString(3)));
+            }
+        }
+        statement.close();
+        return users;
     }
     
 }
