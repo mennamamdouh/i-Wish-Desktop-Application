@@ -45,11 +45,15 @@ public class FriendsController implements Initializable {
     @FXML private TableView<User> listOfFriends;
     @FXML private TableColumn<User, String> imageColumn;
     @FXML private TableColumn<User, String> nameColumn;
-    @FXML private TableColumn<User, Void> removeButtonColumn;
+    @FXML private TableColumn<User, Void> buttonColumn;
     @FXML private TextField searchTextField;
+    boolean searching = false;
     
     // Define the observable list that holds the friends data
     private ObservableList<User> friends;
+    
+    // Define a collection to hold the targeted people
+    private ObservableList<User> filteredPeopleCollection;
     
     @Override
     public void initialize(URL url, ResourceBundle rb) {
@@ -106,53 +110,18 @@ public class FriendsController implements Initializable {
                 new PropertyValueFactory<>("fullname")
         );
         
-        // Set the cell factory for the removeButtonColumn
-        removeButtonColumn.setCellFactory(new Callback<TableColumn<User, Void>, TableCell<User, Void>>() {
-            @Override
-            public TableCell<User, Void> call(TableColumn<User, Void> param) {
-                return new TableCell<User, Void>() {
-                    private final Button removeButton = new Button("Remove");
-                    {
-                        removeButton.setOnAction(event -> {
-                            // Get the row item associated with the clicked button
-                            User friend = getTableView().getItems().get(getIndex());
-                            
-                            Platform.runLater(() -> {
-                                    Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
-                                    alert.setContentText("You're about to remove " + friend.getFullname());
-                                    alert.showAndWait().ifPresent(response -> {
-                                        if (response == ButtonType.OK){
-                                            try {
-                                                // Perform the remove action for the person
-                                                removeFriend(friend);
-                                            } catch (IOException ex) {
-                                                Logger.getLogger(FriendsController.class.getName()).log(Level.SEVERE, null, ex);
-                                            }
-                                        }
-                                    });
-                                });
-                        });
-                    }
-                    @Override
-                    protected void updateItem(Void item, boolean empty) {
-                        super.updateItem(item, empty);
-
-                        if (empty) {
-                            setGraphic(null);
-                        } else {
-                            setGraphic(removeButton);
-                        }
-                    }
-                };
-            }
-            
-        });
-        
         // Configure the search field listener
-        //searchTextField.textProperty().addListener((observable, oldValue, newValue) -> searchFriends(newValue));
+        searchTextField.textProperty().addListener((observable, oldValue, newValue) -> {
+            try {
+                searchForPeople(newValue);
+            } catch (IOException ex) {
+                Logger.getLogger(FriendsController.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        });
     }
     
     private void getFriendList() throws IOException{
+        resetButton(false);
         // Prepare the request
         Gson gson = new Gson();
         JsonObject request = new JsonObject();
@@ -196,24 +165,149 @@ public class FriendsController implements Initializable {
         // Update the viewed list after removing the friend
         getFriendList();
         Platform.runLater(() -> {
+            resetButton(false);
             listOfFriends.setItems(friends);
         });
     }
     
-    /*
+    private void addFriend(User friend) throws IOException {
+        // Prepare the request
+        Gson gson = new Gson();
+        JsonObject request = new JsonObject();
+        request.addProperty("request", gson.toJson(MessageProtocol.MODIFY.ADD_FRIEND));
+        request.addProperty("data", gson.toJson(friend));
+                
+        // Send the request
+        Connection.getInstance().getOutputStream().println(request.toString());
+        
+        // Wait for the reply
+        String msg = Connection.getInstance().getInputStream().readLine();
+        
+        // Update the viewed list after removing the friend
+        getFriendList();
+        Platform.runLater(() -> {
+            resetButton(false);
+            listOfFriends.setItems(friends);
+        });
+    }
+    
     // A method to search for a specific friends
-    private void searchFriends(String searchText) {
+    private void searchForPeople(String searchText) throws IOException {
         
-        ObservableList<Friend> filteredFriends = FXCollections.observableArrayList();
-        
-        for (User friend : friends) {
-            if (friend.getFullName().toLowerCase().contains(searchText.toLowerCase())) {
-                filteredFriends.add(friend);
+        if(searchText.isEmpty()){
+            resetButton(false);
+            listOfFriends.setItems(friends);
+        }
+        else{
+            resetButton(true);
+            // Prepare the request
+            Gson gson = new Gson();
+            JsonObject request = new JsonObject();
+            request.addProperty("request", gson.toJson(MessageProtocol.RETRIEVAL.GET_USERS));
+            request.addProperty("data", gson.toJson(searchText));
+
+            // Send the request
+            Connection.getInstance().getOutputStream().println(request.toString());
+
+            // Wait for the reply
+            String msg = Connection.getInstance().getInputStream().readLine();
+
+            // Process the reply
+            JsonObject reply = gson.fromJson(msg, JsonObject.class);
+
+            if(reply.has("data")){
+                String arr = reply.get("data").getAsString();
+                Type dataType = new TypeToken<ArrayList<User>>(){}.getType();
+                ArrayList<User> filteredPeople = gson.fromJson(arr, dataType);
+                filteredPeopleCollection = FXCollections.observableArrayList(filteredPeople);
+                Platform.runLater(() -> {
+                    listOfFriends.setItems(filteredPeopleCollection);
+                });
+            }
+            else{
+                System.out.println("No data found");
             }
         }
-
-        // Set the filteredList as the items of the listOfFriends TableView
-        listOfFriends.setItems(filteredFriends);
-    }*/
+    }
     
+    private void resetButton(Boolean searching){
+        // Set the cell factory for the buttonColumn
+        buttonColumn.setCellFactory(new Callback<TableColumn<User, Void>, TableCell<User, Void>>() {
+            @Override
+            public TableCell<User, Void> call(TableColumn<User, Void> param) {
+                if(!searching){
+                    return new TableCell<User, Void>() {
+                        private final Button removeButton = new Button("Remove");
+                        {
+                            removeButton.setOnAction(event -> {
+                                // Get the row item associated with the clicked button
+                                User friend = getTableView().getItems().get(getIndex());
+
+                                Platform.runLater(() -> {
+                                        Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
+                                        alert.setContentText("You're about to remove " + friend.getFullname());
+                                        alert.showAndWait().ifPresent(response -> {
+                                            if (response == ButtonType.OK){
+                                                try {
+                                                    // Perform the remove action for the person
+                                                    removeFriend(friend);
+                                                } catch (IOException ex) {
+                                                    Logger.getLogger(FriendsController.class.getName()).log(Level.SEVERE, null, ex);
+                                                }
+                                            }
+                                        });
+                                    });
+                            });
+                        }
+                        @Override
+                        protected void updateItem(Void item, boolean empty) {
+                            super.updateItem(item, empty);
+
+                            if (empty) {
+                                setGraphic(null);
+                            } else {
+                                setGraphic(removeButton);
+                            }
+                        }
+                    };
+                }
+                else{
+                    return new TableCell<User, Void>() {
+                        private final Button addButton = new Button("Add Friend");
+                        {
+                            addButton.setOnAction(event -> {
+                                // Get the row item associated with the clicked button
+                                User friend = getTableView().getItems().get(getIndex());
+
+                                Platform.runLater(() -> {
+                                        Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
+                                        alert.setContentText("You're about to add " + friend.getFullname());
+                                        alert.showAndWait().ifPresent(response -> {
+                                            if (response == ButtonType.OK){
+                                                try {
+                                                    // Perform the remove action for the person
+                                                    addFriend(friend);
+                                                } catch (IOException ex) {
+                                                    Logger.getLogger(FriendsController.class.getName()).log(Level.SEVERE, null, ex);
+                                                }
+                                            }
+                                        });
+                                    });
+                            });
+                        }
+                        @Override
+                        protected void updateItem(Void item, boolean empty) {
+                            super.updateItem(item, empty);
+
+                            if (empty) {
+                                setGraphic(null);
+                            } else {
+                                setGraphic(addButton);
+                            }
+                        }
+                    };
+                }
+            }            
+        });
+    }
 }
