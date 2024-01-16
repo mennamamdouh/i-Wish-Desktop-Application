@@ -22,7 +22,7 @@
                <image>
                   <Image url="@../resources/genie-lamp-icon.png" />
                </image></ImageView>
-            <TextField fx:id="searchTextField" alignment="CENTER" prefHeight="31.0" prefWidth="895.0" promptText="Search for people" />
+            <TextField fx:id="searchTextField" alignment="CENTER" prefHeight="31.0" prefWidth="895.0" promptText="Search for New Friends" />
          </children>
          <BorderPane.margin>
             <Insets bottom="2.0" left="2.0" right="2.0" top="10.0" />
