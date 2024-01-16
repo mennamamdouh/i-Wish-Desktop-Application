@@ -44,7 +44,7 @@ public class DataModification {
         
           boolean result = false;
         
-        Connection con = DriverManager.getConnection("jdbc:mysql://localhost:3306/iwish_first", "root", "root");
+        Connection con = DBConnection.getConnection();
         PreparedStatement statement = con.prepareCall("INSERT INTO users ( FullName, Email, Password, DateOfBirth) VALUES ( ?, ?, ?, ?)");
         statement.setString(1, user.getFullname());
         statement.setString(2, user.getEmail());
