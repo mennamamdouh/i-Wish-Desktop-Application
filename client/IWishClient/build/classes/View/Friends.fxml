@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import javafx.geometry.Insets?>
+<?import javafx.scene.Cursor?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.TableColumn?>
 <?import javafx.scene.control.TableView?>
@@ -38,6 +39,9 @@
           <TableColumn fx:id="nameColumn" minWidth="0.0" prefWidth="620.0" />
           <TableColumn fx:id="buttonColumn" minWidth="0.0" prefWidth="155.0" />
         </columns>
+         <cursor>
+            <Cursor fx:constant="HAND" />
+         </cursor>
       </TableView>
    </center>
 </BorderPane>
