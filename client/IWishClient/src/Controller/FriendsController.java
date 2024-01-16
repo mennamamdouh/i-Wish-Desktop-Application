@@ -21,18 +21,22 @@ import java.util.logging.Logger;
 import javafx.application.Platform;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.scene.Cursor;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.ButtonType;
 import javafx.scene.control.TableCell;
 import javafx.scene.control.TableColumn;
+import javafx.scene.control.TableRow;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.scene.input.MouseEvent;
 import javafx.util.Callback;
 
 /**
@@ -116,6 +120,26 @@ public class FriendsController implements Initializable {
                 searchForPeople(newValue);
             } catch (IOException ex) {
                 Logger.getLogger(FriendsController.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        });
+        
+        // Make the table's rows clickable to be able to visit the friend's profile
+        listOfFriends.setRowFactory(new Callback<TableView<User>, TableRow<User>>() {
+            @Override
+            public TableRow<User> call(TableView<User> tv) {
+                TableRow<User> userRow = new TableRow<>();
+                userRow.setOnMouseClicked(new EventHandler<MouseEvent>() {
+                    @Override
+                    public void handle(MouseEvent event) {
+                        if (event.getClickCount() == 1 && (! userRow.isEmpty()) ) {
+                            User rowData = userRow.getItem();
+                            System.out.println("You clicked on: " + rowData.getFullname());
+                            // Here should be the calling method of the FXML file of the Friend's Profile Scene
+                        }
+                    }
+                });                
+                
+                return userRow ;
             }
         });
     }
