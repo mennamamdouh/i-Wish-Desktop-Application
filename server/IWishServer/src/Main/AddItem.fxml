@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.shape.Rectangle?>
+<?import javafx.scene.text.Font?>
+
+<AnchorPane id="AnchorPane" prefHeight="650.0" prefWidth="410.0" style="-fx-background-color: #e3e1e1;" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Main.AddItemController">
+   <children>
+      <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#6e6e6e0f" height="679.0" layoutX="-10.0" layoutY="-6.0" stroke="BLACK" strokeType="INSIDE" visible="false" width="427.0" />
+      <Label alignment="CENTER" layoutX="132.0" layoutY="14.0" prefHeight="66.0" prefWidth="129.0" text="Add Item">
+         <font>
+            <Font name="System Bold" size="20.0" />
+         </font>
+      </Label>
+      <Label layoutX="38.0" layoutY="118.0" prefHeight="37.0" prefWidth="158.0" text="Item">
+         <font>
+            <Font size="18.0" />
+         </font>
+      </Label>
+      <TextField fx:id="itemField" layoutX="37.0" layoutY="155.0" prefHeight="45.0" prefWidth="343.0" promptText="Ex : Bycle">
+         <font>
+            <Font size="18.0" />
+         </font>
+      </TextField>
+      <Label layoutX="38.0" layoutY="247.0" prefHeight="37.0" prefWidth="129.0" text="Item Price">
+         <font>
+            <Font size="18.0" />
+         </font>
+      </Label>
+      <TextField fx:id="priceField" layoutX="37.0" layoutY="284.0" prefHeight="45.0" prefWidth="343.0">
+         <font>
+            <Font size="18.0" />
+         </font>
+      </TextField>
+      <Label layoutX="38.0" layoutY="362.0" prefHeight="37.0" prefWidth="129.0" text="Item Photo">
+         <font>
+            <Font size="18.0" />
+         </font>
+      </Label>
+      <Button fx:id="addButton" layoutX="37.0" layoutY="603.0" mnemonicParsing="false" prefHeight="45.0" prefWidth="343.0" style="-fx-background-color: #00a4d6;" text="Add" textFill="WHITE">
+         <font>
+            <Font name="System Bold" size="18.0" />
+         </font>
+      </Button>
+      <AnchorPane fx:id="cvvanchor" layoutX="251.0" layoutY="534.0" prefHeight="45.0" prefWidth="129.0" />
+      <Button fx:id="browseButton" layoutX="38.0" layoutY="399.0" mnemonicParsing="false" text="Browse" />
+      <ImageView fx:id="itemPhoto" fitHeight="150.0" fitWidth="200.0" layoutX="161.0" layoutY="399.0" pickOnBounds="true" preserveRatio="true" />
+   </children>
+</AnchorPane>
