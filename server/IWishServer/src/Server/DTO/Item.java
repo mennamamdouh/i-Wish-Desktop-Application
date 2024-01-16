@@ -24,6 +24,12 @@ public class Item {
         this.price = price;
     }
     
+    public Item(String itemname, double price, String itemphoto) {
+        this.itemname = itemname;
+        this.price = price;
+        this.itemphoto = itemphoto;
+    }
+    
     public int getItemid() {
         return itemid;
     }
