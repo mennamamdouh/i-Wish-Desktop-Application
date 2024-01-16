@@ -72,7 +72,7 @@ public class RequestHandler  {
                   login = DataRetrieval.login(user);
                   return loginReplyToJson(login); 
             }
-        } else if(modify != null & login)
+        } else if(modify != null )
         {
             /* 
                Recieve Data from json before calling any method
@@ -90,7 +90,10 @@ public class RequestHandler  {
                     return statusToJson(DataModification.contribute(),MessageProtocol.MODIFY.CONTRIBUTE );
                     
                 case REGISTER :
-                   return statusToJson(DataModification.register(),MessageProtocol.MODIFY.REGISTER); 
+                    System.out.println("why");
+                     user = gson.fromJson(client.get("data").getAsString(), User.class);
+                     
+                   return statusToJson(DataModification.register(user),MessageProtocol.MODIFY.REGISTER); 
                 
                 case REMOVE_FRIEND :
                     return statusToJson(DataModification.removeFriend(user, friend),MessageProtocol.MODIFY.REMOVE_FRIEND); 

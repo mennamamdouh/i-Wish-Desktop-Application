@@ -9,7 +9,7 @@ import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
-import com.mysql.jdbc.Driver;
+//import com.mysql.jdbc.Driver;
 
 /**
  *
@@ -28,7 +28,7 @@ public abstract class DBConnection {
      */
     public static Connection getConnection() throws SQLException{
         if(dbconnection == null)
-            dbconnection = DriverManager.getConnection("jdbc:mysql://localhost:3306/iwishdb", "root", "admin");
+            dbconnection = DriverManager.getConnection("jdbc:mysql://localhost:3306/iwish_first", "root", "admin");
         return dbconnection;
     }
     

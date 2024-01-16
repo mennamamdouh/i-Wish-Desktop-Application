@@ -5,6 +5,8 @@
  */
 package Model;
 
+import java.sql.Date;
+
 /**
  *
  * @author DELL
@@ -15,6 +17,7 @@ public class User {
     private String fullname;
     private String userphoto;
     private String password;
+    private Date DateOfBirth ;
 
     public User(String email, String password) {
         this.email = email;
@@ -25,6 +28,15 @@ public class User {
         this.userid = userid;
         this.fullname = fullname;
         this.userphoto = userphoto;
+    }
+     public User(  String email , String fullname , String password , Date date) {
+        
+        this.fullname = fullname;
+       
+        this.email = email ;
+        this.password = password ;
+        this.DateOfBirth = date ; 
+        
     }
     
     public int getUserid() {

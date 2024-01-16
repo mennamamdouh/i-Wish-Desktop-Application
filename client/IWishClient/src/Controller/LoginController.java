@@ -1,6 +1,6 @@
 package Controller;
 
-import Connection.Connection;
+import Connection.MyConnection;
 import Connection.MessageProtocol;
 import Model.User;
 import com.google.gson.*;
@@ -51,9 +51,9 @@ public class LoginController implements Initializable {
             primaryStage.setOnCloseRequest(new EventHandler<WindowEvent>(){
                 @Override
                 public void handle(WindowEvent event) {
-                    try {
-                        if(Connection.getStatus())
-                            Connection.getInstance().closeConnection();
+                    if(MyConnection.getStatus())
+                        try {
+                            MyConnection.getInstance().closeConnection();
                     } catch (IOException ex) {
                         Logger.getLogger(LoginController.class.getName()).log(Level.SEVERE, null, ex);
                     }
@@ -79,7 +79,7 @@ public class LoginController implements Initializable {
                     @Override
                     public void run() {
                         try {            
-                            Connection con = Connection.getInstance();
+                            MyConnection con = MyConnection.getInstance();
                             start= true;
                             String email =emailtf.getText() ;
                             String pass = passtf.getText() ;
@@ -127,9 +127,9 @@ public class LoginController implements Initializable {
         request.addProperty("request", gson.toJson(MessageProtocol.RETRIEVAL.LOGIN));
         request.addProperty("data", gson.toJson(user));
         // Send
-        Connection.getInstance().getOutputStream().println(request.toString());
+        MyConnection.getInstance().getOutputStream().println(request.toString());
         // Waiting for reply
-        String msg = Connection.getInstance().getInputStream().readLine();
+        String msg = MyConnection.getInstance().getInputStream().readLine();
         // Process reply
         JsonObject reply = gson.fromJson(msg, JsonObject.class);
         if(reply.get("status").getAsBoolean())

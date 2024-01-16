@@ -5,7 +5,7 @@
  */
 package Controller;
 
-import Connection.Connection;
+import Connection.MyConnection;
 import Connection.MessageProtocol;
 import Model.User;
 import com.google.gson.Gson;
@@ -63,7 +63,7 @@ public class FriendsController implements Initializable {
             @Override
             public void run() {
                 try{
-                    Connection con = Connection.getInstance();
+                    MyConnection con = MyConnection.getInstance();
                     // Getting the friend list of the current use
                     getFriendList();
                     // View the friends list into the table view through the Application Thread
@@ -128,10 +128,10 @@ public class FriendsController implements Initializable {
         request.addProperty("request", gson.toJson(MessageProtocol.RETRIEVAL.GET_FRIENDS));
         
         // Send the request
-        Connection.getInstance().getOutputStream().println(request.toString());
+        MyConnection.getInstance().getOutputStream().println(request.toString());
         
         // Wait for the reply
-        String msg = Connection.getInstance().getInputStream().readLine();
+        String msg = MyConnection.getInstance().getInputStream().readLine();
         
         // Process the reply
         JsonObject reply = gson.fromJson(msg, JsonObject.class);
@@ -157,10 +157,10 @@ public class FriendsController implements Initializable {
         request.addProperty("data", gson.toJson(friend));
                 
         // Send the request
-        Connection.getInstance().getOutputStream().println(request.toString());
+        MyConnection.getInstance().getOutputStream().println(request.toString());
         
         // Wait for the reply
-        String msg = Connection.getInstance().getInputStream().readLine();
+        String msg = MyConnection.getInstance().getInputStream().readLine();
         
         // Update the viewed list after removing the friend
         getFriendList();
@@ -178,10 +178,10 @@ public class FriendsController implements Initializable {
         request.addProperty("data", gson.toJson(friend));
                 
         // Send the request
-        Connection.getInstance().getOutputStream().println(request.toString());
+        MyConnection.getInstance().getOutputStream().println(request.toString());
         
         // Wait for the reply
-        String msg = Connection.getInstance().getInputStream().readLine();
+        String msg = MyConnection.getInstance().getInputStream().readLine();
         
         // Update the viewed list after removing the friend
         getFriendList();
@@ -207,10 +207,10 @@ public class FriendsController implements Initializable {
             request.addProperty("data", gson.toJson(searchText));
 
             // Send the request
-            Connection.getInstance().getOutputStream().println(request.toString());
+            MyConnection.getInstance().getOutputStream().println(request.toString());
 
             // Wait for the reply
-            String msg = Connection.getInstance().getInputStream().readLine();
+            String msg = MyConnection.getInstance().getInputStream().readLine();
 
             // Process the reply
             JsonObject reply = gson.fromJson(msg, JsonObject.class);
