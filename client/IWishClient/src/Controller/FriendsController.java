@@ -5,7 +5,7 @@
  */
 package Controller;
 
-import Connection.Connection;
+import Connection.MyConnection;
 import Connection.MessageProtocol;
 import Model.User;
 import com.google.gson.Gson;
@@ -21,18 +21,22 @@ import java.util.logging.Logger;
 import javafx.application.Platform;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.scene.Cursor;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.ButtonType;
 import javafx.scene.control.TableCell;
 import javafx.scene.control.TableColumn;
+import javafx.scene.control.TableRow;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.scene.input.MouseEvent;
 import javafx.util.Callback;
 
 /**
@@ -63,7 +67,7 @@ public class FriendsController implements Initializable {
             @Override
             public void run() {
                 try{
-                    Connection con = Connection.getInstance();
+                    MyConnection con = MyConnection.getInstance();
                     // Getting the friend list of the current use
                     getFriendList();
                     // View the friends list into the table view through the Application Thread
@@ -118,6 +122,26 @@ public class FriendsController implements Initializable {
                 Logger.getLogger(FriendsController.class.getName()).log(Level.SEVERE, null, ex);
             }
         });
+        
+        // Make the table's rows clickable to be able to visit the friend's profile
+        listOfFriends.setRowFactory(new Callback<TableView<User>, TableRow<User>>() {
+            @Override
+            public TableRow<User> call(TableView<User> tv) {
+                TableRow<User> userRow = new TableRow<>();
+                userRow.setOnMouseClicked(new EventHandler<MouseEvent>() {
+                    @Override
+                    public void handle(MouseEvent event) {
+                        if (event.getClickCount() == 1 && (! userRow.isEmpty()) ) {
+                            User rowData = userRow.getItem();
+                            System.out.println("You clicked on: " + rowData.getFullname());
+                            // Here should be the calling method of the FXML file of the Friend's Profile Scene
+                        }
+                    }
+                });                
+                
+                return userRow ;
+            }
+        });
     }
     
     private void getFriendList() throws IOException{
@@ -128,10 +152,10 @@ public class FriendsController implements Initializable {
         request.addProperty("request", gson.toJson(MessageProtocol.RETRIEVAL.GET_FRIENDS));
         
         // Send the request
-        Connection.getInstance().getOutputStream().println(request.toString());
+        MyConnection.getInstance().getOutputStream().println(request.toString());
         
         // Wait for the reply
-        String msg = Connection.getInstance().getInputStream().readLine();
+        String msg = MyConnection.getInstance().getInputStream().readLine();
         
         // Process the reply
         JsonObject reply = gson.fromJson(msg, JsonObject.class);
@@ -157,10 +181,10 @@ public class FriendsController implements Initializable {
         request.addProperty("data", gson.toJson(friend));
                 
         // Send the request
-        Connection.getInstance().getOutputStream().println(request.toString());
+        MyConnection.getInstance().getOutputStream().println(request.toString());
         
         // Wait for the reply
-        String msg = Connection.getInstance().getInputStream().readLine();
+        String msg = MyConnection.getInstance().getInputStream().readLine();
         
         // Update the viewed list after removing the friend
         getFriendList();
@@ -178,10 +202,10 @@ public class FriendsController implements Initializable {
         request.addProperty("data", gson.toJson(friend));
                 
         // Send the request
-        Connection.getInstance().getOutputStream().println(request.toString());
+        MyConnection.getInstance().getOutputStream().println(request.toString());
         
         // Wait for the reply
-        String msg = Connection.getInstance().getInputStream().readLine();
+        String msg = MyConnection.getInstance().getInputStream().readLine();
         
         // Update the viewed list after removing the friend
         getFriendList();
@@ -207,10 +231,10 @@ public class FriendsController implements Initializable {
             request.addProperty("data", gson.toJson(searchText));
 
             // Send the request
-            Connection.getInstance().getOutputStream().println(request.toString());
+            MyConnection.getInstance().getOutputStream().println(request.toString());
 
             // Wait for the reply
-            String msg = Connection.getInstance().getInputStream().readLine();
+            String msg = MyConnection.getInstance().getInputStream().readLine();
 
             // Process the reply
             JsonObject reply = gson.fromJson(msg, JsonObject.class);

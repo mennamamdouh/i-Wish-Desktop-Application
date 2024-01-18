@@ -5,6 +5,8 @@
  */
 package Server.DTO;
 
+import java.sql.Date;
+
 /**
  *
  * @author DELL
@@ -15,12 +17,24 @@ public class User {
     private String fullname;
     private String userphoto;
     private String password;
+    private Date DateOfBirth ;
     
-    public User(int userid, String fullname, String userphoto) {
+    public User(int userid, String fullname ,String userphoto) {
         this.userid = userid;
         this.fullname = fullname;
-        this.userphoto = userphoto;
+          this.userphoto = userphoto; 
     }
+    
+     public User(  String email , String fullname , String password , Date date) {
+        
+        this.fullname = fullname;
+       
+        this.email = email ;
+        this.password = password ;
+        this.DateOfBirth = date ; 
+        
+    }
+
 
     public int getUserid() {
         return userid;
@@ -61,5 +75,11 @@ public class User {
     public void setPassword(String password) {
         this.password = password;
     }
-    
+     public Date getDateOfBirth() {
+        return DateOfBirth;
+    }
+
+    public void setPassword(Date date) {
+        this.DateOfBirth = date;
+    }
 }

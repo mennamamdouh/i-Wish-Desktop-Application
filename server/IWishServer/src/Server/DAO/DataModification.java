@@ -7,6 +7,7 @@ package Server.DAO;
 
 import Server.DTO.User;
 import java.sql.Connection;
+import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
 
@@ -38,8 +39,23 @@ public class DataModification {
     public static boolean contribute(){
         return false;
     }
-    public static boolean register(){
-        return false;
+    public static boolean register(User user) throws SQLException{
+        
+        
+          boolean result = false;
+        
+        Connection con = DBConnection.getConnection();
+        PreparedStatement statement = con.prepareCall("INSERT INTO users ( FullName, Email, Password, DateOfBirth) VALUES ( ?, ?, ?, ?)");
+        statement.setString(1, user.getFullname());
+        statement.setString(2, user.getEmail());
+        statement.setString(3, user.getPassword());
+         statement.setDate(4, user.getDateOfBirth());
+
+         statement.executeUpdate();
+         result = true ;
+         
+        return result;
+        
     }
     public static boolean removeFriend(User user, User friend) throws SQLException{
         Connection con = DBConnection.getConnection();

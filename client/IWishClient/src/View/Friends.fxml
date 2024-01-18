@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import javafx.geometry.Insets?>
+<?import javafx.scene.Cursor?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.TableColumn?>
 <?import javafx.scene.control.TableView?>
@@ -21,7 +22,7 @@
                <image>
                   <Image url="@../resources/genie-lamp-icon.png" />
                </image></ImageView>
-            <TextField fx:id="searchTextField" alignment="CENTER" prefHeight="31.0" prefWidth="895.0" promptText="Search for people" />
+            <TextField fx:id="searchTextField" alignment="CENTER" prefHeight="31.0" prefWidth="895.0" promptText="Search for New Friends" />
          </children>
          <BorderPane.margin>
             <Insets bottom="2.0" left="2.0" right="2.0" top="10.0" />
@@ -38,6 +39,9 @@
           <TableColumn fx:id="nameColumn" minWidth="0.0" prefWidth="620.0" />
           <TableColumn fx:id="buttonColumn" minWidth="0.0" prefWidth="155.0" />
         </columns>
+         <cursor>
+            <Cursor fx:constant="HAND" />
+         </cursor>
       </TableView>
    </center>
 </BorderPane>

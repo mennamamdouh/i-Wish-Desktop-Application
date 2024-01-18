@@ -16,22 +16,22 @@ import java.util.logging.Logger;
  *
  * @author DELL
  */
-public class Connection {
-    private static Connection connection;
+public class MyConnection {
+    private static MyConnection connection;
     private Socket server;
     private DataInputStream input ;
     private DataInputStream notification ;
     private PrintStream output ;
 
-    private Connection() throws IOException {
+    private MyConnection() throws IOException {
         server = new Socket("127.0.0.1",55555) ;
         input = new DataInputStream(server.getInputStream());
         output  = new PrintStream(server.getOutputStream());
         notification  = new DataInputStream(server.getInputStream());
     }
-    public static Connection getInstance() throws IOException {
+    public static MyConnection getInstance() throws IOException {
         if(connection == null)
-            connection = new Connection();
+            connection = new MyConnection();
         return connection;
     }
     public void closeConnection() throws IOException{
