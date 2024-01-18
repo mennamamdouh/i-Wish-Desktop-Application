@@ -7,8 +7,10 @@ package Server.DAO;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
+import java.sql.PreparedStatement;
 import java.sql.SQLException;
-import com.mysql.jdbc.Driver;
+//import com.mysql.jdbc.Driver;
+
 /**
  *
  * @author DELL
@@ -26,7 +28,7 @@ public abstract class DBConnection {
      */
     public static Connection getConnection() throws SQLException{
         if(dbconnection == null)
-            dbconnection = DriverManager.getConnection("jdbc:mysql://localhost:3306/IWishDB", "root", "root");
+            dbconnection = DriverManager.getConnection("jdbc:mysql://localhost:3306/iwishdb", "root", "admin");
         return dbconnection;
     }
     
