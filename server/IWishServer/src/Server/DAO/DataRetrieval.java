@@ -11,6 +11,8 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /**
  *
@@ -21,7 +23,7 @@ public class DataRetrieval {
     public static boolean login(User user) throws SQLException{
         Connection con = DBConnection.getConnection();
         ResultSet result;
-        PreparedStatement statement = con.prepareCall("select * from users where email = ? and password = ? ");
+        PreparedStatement statement = con.prepareCall("select * from Users where email = ? and password = ? ");
         statement.setString(1, user.getEmail());
         statement.setString(2, user.getPassword());
          
@@ -63,16 +65,44 @@ public class DataRetrieval {
     }
     
     public static ArrayList<WishList> getWishList(User user) throws SQLException{
-        ArrayList<WishList> arr = new ArrayList<WishList>();
-        return arr ;
+        ArrayList<WishList> wishlistArr = new ArrayList<WishList>();
+        ResultSet result;
+        Connection con = DBConnection.getConnection();
         
+        PreparedStatement statement = con.prepareCall("select * from Wishlist where userid = ?" , ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_READ_ONLY);
+        statement.setString(1, Integer.toString(user.getUserid()));
+        result = statement.executeQuery();
+        if(result.next())
+        {
+            result.previous();
+            while(result.next()){
+                wishlistArr.add(new WishList(user.getUserid(),getItem(result.getInt(2)),result.getString(3)));
+
+            }
+            return wishlistArr;
+        }
+        statement.close();
+        
+        return wishlistArr;
+    }
+    
+    private static Item getItem(int itemId) throws SQLException{
+        Item item;
+            Connection con = DBConnection.getConnection();
+            ResultSet result;
+            PreparedStatement statement = con.prepareCall("select * from Items where itemid = ?" , ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_READ_ONLY);
+            statement.setString(1, Integer.toString(itemId));
+            result = statement.executeQuery();
+            result.next();
+            item = new Item(result.getInt(1),result.getString(2),result.getString(3),result.getDouble(4));
+        return item;
     }
     
     public static ArrayList<Item> getItems() throws SQLException{
         ArrayList<Item> items = new ArrayList<Item>();
         Connection con = DBConnection.getConnection();
         ResultSet result;
-        PreparedStatement statement = con.prepareCall("select * from items" , ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_READ_ONLY); 
+        PreparedStatement statement = con.prepareCall("select * from Items" , ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_READ_ONLY); 
         result = statement.executeQuery();
         if(result.next())
         {

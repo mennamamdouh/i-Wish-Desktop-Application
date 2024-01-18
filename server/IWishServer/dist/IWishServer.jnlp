@@ -8,10 +8,12 @@
   </information>
   <resources>
     <j2se version="1.6+" href="http://java.sun.com/products/autodl/j2se"/>
-    <jar href="IWishServer.jar" size="25231" download="eager" />
-    <jar href="lib\gson-2.8.0.jar" size="231952" download="eager" />
-    <jar href="lib\mysql-connector-java-8.0.11.jar" size="2036609" download="eager" />
-    <jar href="lib\protobuf-java-2.6.0.jar" size="596435" download="eager" />
+    <jar href="IWishServer.jar" size="25803" download="eager" />
+    <jar href="lib/gson-2.8.0-javadoc.jar" size="261988" download="eager" />
+    <jar href="lib/gson-2.8.0-sources.jar" size="146908" download="eager" />
+    <jar href="lib/gson-2.8.0.jar" size="231952" download="eager" />
+    <jar href="lib/mysql-connector-java-8.0.11.jar" size="2036609" download="eager" />
+    <jar href="lib/protobuf-java-2.6.0 (1).jar" size="596435" download="eager" />
   </resources>
   <applet-desc  width="800" height="600" main-class="com.javafx.main.NoJavaFXFallback"  name="IWishServer" >
     <param name="requiredFXVersion" value="8.0+"/>
