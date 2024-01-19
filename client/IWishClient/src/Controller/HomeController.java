@@ -36,10 +36,10 @@ public class HomeController implements Initializable {
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         try {
-            wishList.setContent(FXMLLoader.load(getClass().getResource("/View/WishList.fxml")));
-            notification.setContent(FXMLLoader.load(getClass().getResource("/View/Notification.fxml")));
+            wishList.setContent(FXMLLoader.load(getClass().getResource("/View/WishList.fxml"))); 
             friends.setContent(FXMLLoader.load(getClass().getResource("/View/Friends.fxml")));
             about.setContent(FXMLLoader.load(getClass().getResource("/View/About.fxml")));
+            notification.setContent(FXMLLoader.load(getClass().getResource("/View/Notification.fxml")));          
         } catch (IOException ex) {
             Logger.getLogger(HomeController.class.getName()).log(Level.SEVERE, null, ex);
         }

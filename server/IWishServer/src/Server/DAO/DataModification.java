@@ -20,8 +20,8 @@ public class DataModification {
     public static boolean addFriend(User user, User friend) throws SQLException{
         Connection con = DBConnection.getConnection();
         PreparedStatement statement = con.prepareStatement("INSERT INTO Friendship VALUES(?, ?, 'Pending')");
-        statement.setInt(1, user.getUserid());
-        statement.setInt(2, friend.getUserid());
+        statement.setInt(2, user.getUserid());
+        statement.setInt(1, friend.getUserid());
         int result = statement.executeUpdate();
         if(result == 1){
             statement.close();
@@ -42,7 +42,7 @@ public class DataModification {
     public static boolean register(User user) throws SQLException{
         
         
-          boolean result = false;
+        boolean result = false;
         
         Connection con = DBConnection.getConnection();
         PreparedStatement statement = con.prepareCall("INSERT INTO users ( FullName, Email, Password, DateOfBirth) VALUES ( ?, ?, ?, ?)");
@@ -72,5 +72,15 @@ public class DataModification {
             System.out.println("Friend wasn't deleted.");
             return false;
         }
+    }
+    public static boolean acceptFriend(User user, User friend) throws SQLException{
+        Connection con = DBConnection.getConnection();
+        PreparedStatement statement = con.prepareStatement("UPDATE friendship SET friendshipStatus = 'Accepted' WHERE userID = ? AND friendID = ?");
+        statement.setInt(1, user.getUserid());
+        statement.setInt(2, friend.getUserid());
+        int result = statement.executeUpdate();
+        if(result > 0)
+            return true;
+        return false;
     }
 }

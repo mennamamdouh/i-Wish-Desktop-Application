@@ -7,6 +7,7 @@ package Controller;
 
 import Connection.MyConnection;
 import Connection.MessageProtocol;
+import Connection.ReceiverHandler;
 import Model.User;
 import com.google.gson.Gson;
 import com.google.gson.JsonObject;
@@ -62,6 +63,7 @@ public class FriendsController implements Initializable {
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         
+        ReceiverHandler.setFriendscontroller(this);
         // Implement new thread to request a connection to the server
         Thread connect = new Thread(new Runnable(){
             @Override
@@ -71,9 +73,6 @@ public class FriendsController implements Initializable {
                     // Getting the friend list of the current use
                     getFriendList();
                     // View the friends list into the table view through the Application Thread
-                    Platform.runLater(() -> {
-                        listOfFriends.setItems(friends);
-                    });
                 } catch (IOException ex) {
                     Logger.getLogger(FriendsController.class.getName()).log(Level.SEVERE, null, ex);
                 }
@@ -154,10 +153,10 @@ public class FriendsController implements Initializable {
         // Send the request
         MyConnection.getInstance().getOutputStream().println(request.toString());
         
-        // Wait for the reply
-        String msg = MyConnection.getInstance().getInputStream().readLine();
-        
-        // Process the reply
+    }
+    public void getFriendListHandler(String msg ){
+        Gson gson = new Gson();
+         // Process the reply
         JsonObject reply = gson.fromJson(msg, JsonObject.class);
         
         if(reply.has("data")){
@@ -169,8 +168,10 @@ public class FriendsController implements Initializable {
         else{
             System.out.println("No data found");
         }
+        Platform.runLater(() -> {
+           listOfFriends.setItems(friends);
+        });
     }
-    
     
     // A method to remove friends from the friend list
     private void removeFriend(User friend) throws IOException {
@@ -182,18 +183,8 @@ public class FriendsController implements Initializable {
                 
         // Send the request
         MyConnection.getInstance().getOutputStream().println(request.toString());
-        
-        // Wait for the reply
-        String msg = MyConnection.getInstance().getInputStream().readLine();
-        
-        // Update the viewed list after removing the friend
-        getFriendList();
-        Platform.runLater(() -> {
-            resetButton(false);
-            listOfFriends.setItems(friends);
-        });
+
     }
-    
     private void addFriend(User friend) throws IOException {
         // Prepare the request
         Gson gson = new Gson();
@@ -214,6 +205,17 @@ public class FriendsController implements Initializable {
             listOfFriends.setItems(friends);
         });
     }
+     public void addAndRemoveFriendHandler(){
+        try {
+            // Update the viewed list after removing the friend
+            getFriendList();
+            Platform.runLater(() -> {
+                resetButton(false);
+            });
+        } catch (IOException ex) {
+            Logger.getLogger(FriendsController.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
     
     // A method to search for a specific friends
     private void searchForPeople(String searchText) throws IOException {
@@ -232,11 +234,11 @@ public class FriendsController implements Initializable {
 
             // Send the request
             MyConnection.getInstance().getOutputStream().println(request.toString());
-
-            // Wait for the reply
-            String msg = MyConnection.getInstance().getInputStream().readLine();
-
-            // Process the reply
+        }
+    }
+    public void searchHandler(String msg){
+           Gson gson = new Gson();
+        // Process the reply
             JsonObject reply = gson.fromJson(msg, JsonObject.class);
 
             if(reply.has("data")){
@@ -251,9 +253,7 @@ public class FriendsController implements Initializable {
             else{
                 System.out.println("No data found");
             }
-        }
     }
-    
     private void resetButton(Boolean searching){
         // Set the cell factory for the buttonColumn
         buttonColumn.setCellFactory(new Callback<TableColumn<User, Void>, TableCell<User, Void>>() {

@@ -7,10 +7,13 @@ package Server;
 
 import Server.DAO.DataModification;
 import Server.DAO.DataRetrieval;
+import Server.DTO.*;
 import Server.DTO.User;
 import com.google.gson.*;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /**
  *
@@ -20,7 +23,8 @@ public class RequestHandler  {
     
     private User user;
     private boolean login;
-    private boolean hasnotifications;
+    private boolean notifyon;
+    private ArrayList<Notification> notifications = new ArrayList<Notification>() ;
     private Gson gson;
     private JsonObject capsule;
 
@@ -61,7 +65,9 @@ public class RequestHandler  {
                         return dataToJson(DataRetrieval.getContribution(),MessageProtocol.RETRIEVAL.GET_CONTRIBUTION );
 
                     case GET_NOTIFICATIONS :
-                        return dataToJson(DataRetrieval.getNotifications(),MessageProtocol.RETRIEVAL.GET_NOTIFICATIONS );
+                        notifications = DataRetrieval.getNotifications(user);
+                        notifyon = true;
+                        return dataToJson(notifications,MessageProtocol.RETRIEVAL.GET_NOTIFICATIONS );
                     
                     case GET_USERS :
                         String searchedText = gson.fromJson(client.get("data").getAsString(), String.class);
@@ -90,13 +96,18 @@ public class RequestHandler  {
                     return statusToJson(DataModification.contribute(),MessageProtocol.MODIFY.CONTRIBUTE );
                     
                 case REGISTER :
-                    System.out.println("why");
-                     user = gson.fromJson(client.get("data").getAsString(), User.class);
-                     
-                   return statusToJson(DataModification.register(user),MessageProtocol.MODIFY.REGISTER); 
+                   user = gson.fromJson(client.get("data").getAsString(), User.class);   
+                   login = DataModification.register(user);
+                   return statusToJson(login,MessageProtocol.MODIFY.REGISTER); 
                 
                 case REMOVE_FRIEND :
                     return statusToJson(DataModification.removeFriend(user, friend),MessageProtocol.MODIFY.REMOVE_FRIEND); 
+                    
+                case ACCEPT_FRIEND :
+                    return statusToJson(DataModification.acceptFriend(user, friend),MessageProtocol.MODIFY.ACCEPT_FRIEND); 
+                    
+                case DENY_REQUEST:
+                     return statusToJson(DataModification.removeFriend(user, friend),MessageProtocol.MODIFY.DENY_REQUEST);
             }
         }
         
@@ -162,12 +173,18 @@ public class RequestHandler  {
         this.login = login;
     }
 
-    public boolean hasNotifications() {
-        return hasnotifications;
+    public boolean isNotifyOn() {
+        return notifyon;
     }
-
-    public void setHasnotifications(boolean hasnotifications) {
-        this.hasnotifications = hasnotifications;
+    public boolean hasNotifications() {  
+        try {
+            if(DataRetrieval.getNotifications(user).size() != notifications.size() ){
+                return true;
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(RequestHandler.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return false;
     }
     
     

@@ -5,8 +5,10 @@
  */
 package Connection;
 
+import java.io.BufferedReader;
 import java.io.DataInputStream;
 import java.io.IOException;
+import java.io.InputStreamReader;
 import java.io.PrintStream;
 import java.net.Socket;
 import java.util.logging.Level;
@@ -18,16 +20,19 @@ import java.util.logging.Logger;
  */
 public class MyConnection {
     private static MyConnection connection;
+    private static ReceiverHandler handler;
     private Socket server;
-    private DataInputStream input ;
-    private DataInputStream notification ;
+    private BufferedReader input ;
+    private BufferedReader notification ;
     private PrintStream output ;
 
     private MyConnection() throws IOException {
         server = new Socket("127.0.0.1",55555) ;
-        input = new DataInputStream(server.getInputStream());
+        InputStreamReader inputStreamReader = new InputStreamReader(server.getInputStream());
+        input = new BufferedReader(inputStreamReader);
         output  = new PrintStream(server.getOutputStream());
-        notification  = new DataInputStream(server.getInputStream());
+        notification  = new BufferedReader(inputStreamReader);
+        handler = new ReceiverHandler();
     }
     public static MyConnection getInstance() throws IOException {
         if(connection == null)
@@ -40,12 +45,13 @@ public class MyConnection {
             input.close();
             notification.close();
             output.close();
+            connection = null;
         }       
     }
     public static boolean getStatus(){
         return connection != null;
     }
-    public DataInputStream getInputStream() {
+    public BufferedReader getInputStream() {
         return input;
     }
     
@@ -53,8 +59,12 @@ public class MyConnection {
         return output;
     } 
 
-    public DataInputStream getNotification() {
+    public BufferedReader getNotification() {
         return notification;
+    }
+
+    public static ReceiverHandler getHandler() {
+        return handler;
     }
     
 }

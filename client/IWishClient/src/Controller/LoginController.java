@@ -2,6 +2,7 @@ package Controller;
 
 import Connection.MyConnection;
 import Connection.MessageProtocol;
+import Connection.ReceiverHandler;
 import Model.User;
 import com.google.gson.*;
 import java.io.IOException;
@@ -34,84 +35,66 @@ public class LoginController implements Initializable {
 
     @FXML
     private Button btnSignup;
-    
-    private boolean start ;
+
+    private boolean start;
     @FXML
     private TextField emailtf;
     @FXML
     private PasswordField passtf;
     @FXML
     private Pane mainnode;
+    private Gson gson = new Gson();
 
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         
+        ReceiverHandler.setLogincontroller(this);
         Platform.runLater(() -> {
             Stage primaryStage = (Stage) (mainnode.getScene().getWindow());
-            primaryStage.setOnCloseRequest(new EventHandler<WindowEvent>(){
+            primaryStage.setOnCloseRequest(new EventHandler<WindowEvent>() {
                 @Override
                 public void handle(WindowEvent event) {
-                    if(MyConnection.getStatus())
+                    if (MyConnection.getStatus()) {
                         try {
                             MyConnection.getInstance().closeConnection();
-                    } catch (IOException ex) {
-                        Logger.getLogger(LoginController.class.getName()).log(Level.SEVERE, null, ex);
+                        } catch (IOException ex) {
+                            Logger.getLogger(LoginController.class.getName()).log(Level.SEVERE, null, ex);
+                        }
                     }
                 }
-            });}
+            });
+        }
         );
-        
+
         btnSignup.addEventHandler(ActionEvent.ACTION, (ActionEvent event) -> {
             try {
                 Parent signupParent = FXMLLoader.load(getClass().getResource("/View/Signup.fxml"));
                 Scene signupScene = new Scene(signupParent);
-                Stage window = (Stage) ((Node)event.getSource()).getScene().getWindow();
+                Stage window = (Stage) ((Node) event.getSource()).getScene().getWindow();
                 window.setScene(signupScene);
                 window.show();
             } catch (IOException ex) {
                 Logger.getLogger(LoginController.class.getName()).log(Level.SEVERE, null, ex);
             }
         });
-        
+
         btnSignin.addEventHandler(ActionEvent.ACTION, (ActionEvent event) -> {
-            if(!start){
+            if (!start) {
                 Thread connect = new Thread(new Runnable() {
                     @Override
                     public void run() {
-                        try {            
-                            MyConnection con = MyConnection.getInstance();
-                            start= true;
-                            String email =emailtf.getText() ;
-                            String pass = passtf.getText() ;
-                            User log = new User(email,pass);
-                            if(login(log)){
-                                Platform.runLater(() -> {
-                                    try {           
-                                        Parent homeParent = FXMLLoader.load(getClass().getResource("/View/Home.fxml"));
-                                        Scene homeScene = new Scene(homeParent);
-                                        Stage window = (Stage) ((Node) event.getSource()).getScene().getWindow();
-                                        window.setScene(homeScene);
-                                        window.show();
-                                    } catch (IOException ex) {
-                                         Logger.getLogger(LoginController.class.getName()).log(Level.SEVERE, null, ex);
-                                    }
-                                });
-                            }
-                            else{
-                                Platform.runLater(() -> {
-                                    Alert alert = new Alert(AlertType.ERROR);
-                                    alert.setContentText("Invalid Email or Password");
-                                    alert.showAndWait();
-                                    start =false;
-                                    emailtf.setText("");
-                                    passtf.setText("");
-                                });
-                            }
+                        try {
+                            start = true;
+                            String email = emailtf.getText();
+                            String pass = passtf.getText();
+                            User log = new User(email, pass);
+                            login(log);
+
                         } catch (IOException ex) {
                             Platform.runLater(() -> {
-                               Alert alert = new Alert(AlertType.ERROR);
-                               alert.setContentText("Failed to connect to the server !!");
-                               alert.showAndWait();
+                                Alert alert = new Alert(AlertType.ERROR);
+                                alert.setContentText("Failed to connect to the server !!");
+                                alert.showAndWait();
                             });
                         }
                     }
@@ -120,24 +103,40 @@ public class LoginController implements Initializable {
             }
         });
     }
-    public boolean login(User user) throws IOException{
-        // Prepare Request
-        Gson gson = new Gson();
+
+    public void login(User user) throws IOException {
         JsonObject request = new JsonObject();
         request.addProperty("request", gson.toJson(MessageProtocol.RETRIEVAL.LOGIN));
         request.addProperty("data", gson.toJson(user));
-        // Send
         MyConnection.getInstance().getOutputStream().println(request.toString());
-        // Waiting for reply
-        String msg = MyConnection.getInstance().getInputStream().readLine();
-        // Process reply
+    }
+
+    public void waitForHandler(String msg) {
+        boolean status = false;
         JsonObject reply = gson.fromJson(msg, JsonObject.class);
-        if(reply.get("status").getAsBoolean())
-        {
-            //user = gson.fromJson(reply.get("data").getAsString(), User.class);
-            return true;
+        if (reply.get("status").getAsBoolean())
+            status= true;
+        if (status) {
+            Platform.runLater(() -> {
+                try {
+                    Parent homeParent = FXMLLoader.load(getClass().getResource("/View/Home.fxml"));
+                    Scene homeScene = new Scene(homeParent);
+                    Stage window = (Stage) (mainnode.getScene().getWindow());
+                    window.setScene(homeScene);
+                    window.show();
+                }catch (IOException ex) {
+                    Logger.getLogger(LoginController.class.getName()).log(Level.SEVERE, null, ex);
+                }
+            });
+        } else {
+            Platform.runLater(() -> {
+                Alert alert = new Alert(AlertType.ERROR);
+                alert.setContentText("Invalid Email or Password");
+                alert.showAndWait();
+                start = false;
+                emailtf.setText("");
+                passtf.setText("");
+            });
         }
-        else
-          return false;
     }
 }

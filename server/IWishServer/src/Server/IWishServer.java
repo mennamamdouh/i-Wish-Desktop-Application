@@ -7,8 +7,10 @@ package Server;
 
 import Server.DTO.User;
 import com.google.gson.*;
+import java.io.BufferedReader;
 import java.io.DataInputStream;
 import java.io.IOException;
+import java.io.InputStreamReader;
 import java.io.PrintStream;
 import java.net.ServerSocket;
 import java.net.Socket;
@@ -61,8 +63,9 @@ class Client extends Thread {
     
    private RequestHandler handler;
    private Socket client_socket;
-   private DataInputStream input ;
+   private BufferedReader input;
    private PrintStream output ;
+   private Thread notify ;
     /**
      *   
      * Create new client , add him to list of connected clients 
@@ -73,7 +76,7 @@ class Client extends Thread {
     public Client(Socket socket){
      
         try {
-            input = new DataInputStream(socket.getInputStream());
+            input = new BufferedReader(new InputStreamReader(socket.getInputStream()));
             output = new PrintStream(socket.getOutputStream());
             client_socket = socket;
             handler = new RequestHandler();
@@ -92,19 +95,23 @@ class Client extends Thread {
     public void run(){
         while(true){
             try {
+                notifyUser();
                 String msg = input.readLine();
+            //    System.out.println(msg);
                 if(msg == null){
                     terminate();
                     break;
                 }
                 String result = handler.process(msg);
+             // System.out.println(result);
                 output.println(result);
+                output.flush();
             } catch (IOException | SQLException ex) {
                 Logger.getLogger(Client.class.getName()).log(Level.SEVERE, null, ex);
-            }
-         }
-            
+         }           
         }
+            
+    }
     /**
      * Close Client's connection by removing him from list of clients 
      * and close every opened stream
@@ -120,6 +127,35 @@ class Client extends Thread {
             Logger.getLogger(Client.class.getName()).log(Level.SEVERE, null, ex);
         }
        
+    }
+    public void notifyUser(){
+        if(notify == null & handler.isLogin()){
+            
+            notify = new Thread(new Runnable() {
+            Gson gson = new Gson();
+            JsonObject jobject = new JsonObject();
+            @Override
+            public void run() {
+                while(handler.isLogin()){
+                    try {
+                        if(handler.isNotifyOn() & handler.hasNotifications()){
+                            jobject = new JsonObject();
+                            jobject.addProperty("request", gson.toJson(MessageProtocol.RETRIEVAL.GET_NOTIFICATIONS));//GET_NOTIFICATIONS));
+                            String notifications = handler.process(jobject.toString());
+                            output.println(notifications);
+                            output.flush();
+                        }
+                        Thread.sleep(10000);
+                    } catch (InterruptedException ex) {
+                        Logger.getLogger(Client.class.getName()).log(Level.SEVERE, null, ex);
+                    } catch (SQLException ex) {
+                        Logger.getLogger(Client.class.getName()).log(Level.SEVERE, null, ex);
+                    }
+                }
+            }
+        });
+        notify.start();
+      }
     }
 }
 

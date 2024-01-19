@@ -3,14 +3,11 @@
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
-            <file>file:/D:/iWish_git/i-Wish-Desktop-Application/client/IWishClient/src/Controller/FriendsController.java</file>
-            <file>file:/D:/iWish_git/i-Wish-Desktop-Application/client/IWishClient/src/Model/Item.java</file>
-            <file>file:/D:/iWish_git/i-Wish-Desktop-Application/client/IWishClient/src/Controller/LoginController.java</file>
-            <file>file:/D:/iWish_git/i-Wish-Desktop-Application/client/IWishClient/src/Model/User.java</file>
-            <file>file:/D:/iWish_git/i-Wish-Desktop-Application/client/IWishClient/src/Controller/HomeController.java</file>
-            <file>file:/D:/iWish_git/i-Wish-Desktop-Application/client/IWishClient/src/Connection/MyConnection.java</file>
-            <file>file:/D:/iWish_git/i-Wish-Desktop-Application/client/IWishClient/src/Controller/PaymentController.java</file>
-            <file>file:/D:/iWish_git/i-Wish-Desktop-Application/client/IWishClient/src/Controller/SignupController.java</file>
+            <file>file:/D:/ITI/9-Java%20II/Project%20-%20git/i-Wish-Desktop-Application/client/IWishClient/src/Model/User.java</file>
+            <file>file:/D:/ITI/9-Java%20II/Project%20-%20git/i-Wish-Desktop-Application/client/IWishClient/src/Connection/ReceiverHandler.java</file>
+            <file>file:/D:/ITI/9-Java%20II/Project%20-%20git/i-Wish-Desktop-Application/client/IWishClient/src/Controller/SignupController.java</file>
+            <file>file:/D:/ITI/9-Java%20II/Project%20-%20git/i-Wish-Desktop-Application/client/IWishClient/src/Controller/FriendsController.java</file>
+            <file>file:/D:/ITI/9-Java%20II/Project%20-%20git/i-Wish-Desktop-Application/client/IWishClient/src/Controller/NotificationController.java</file>
         </group>
     </open-files>
 </project-private>

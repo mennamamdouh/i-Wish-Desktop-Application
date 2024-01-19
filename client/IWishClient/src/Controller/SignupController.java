@@ -2,6 +2,7 @@ package Controller;
 
 import Connection.MessageProtocol;
 import Connection.MyConnection;
+import Connection.ReceiverHandler;
 import Model.User;
 import com.google.gson.Gson;
 import com.google.gson.JsonObject;
@@ -26,6 +27,7 @@ import java.time.LocalDate;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javafx.scene.control.Label;
+import javafx.scene.layout.AnchorPane;
 
 /**
  * FXML Controller class
@@ -33,7 +35,6 @@ import javafx.scene.control.Label;
  */
 public class SignupController implements Initializable {
 
-    @FXML
     private Label label;
 
     @FXML
@@ -52,17 +53,15 @@ public class SignupController implements Initializable {
 
     @FXML
     private DatePicker DateOfBirthField;
-
     @FXML
-    private void handleButtonAction(ActionEvent event) {
-        System.out.println("You clicked me!");
-        label.setText("Hello World!");
-    }
+    private AnchorPane mainnode;
+    @FXML
+    private Label RegisterLabel;
 
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         // TODO
-
+        ReceiverHandler.setSignupcontroller(this);
         RegisterButton.addEventHandler(ActionEvent.ACTION, (ActionEvent event) -> {
             if (!start) {
                 Thread connect = new Thread(() -> {
@@ -80,31 +79,9 @@ public class SignupController implements Initializable {
                             // Convert JavaFX LocalDate to java.sql.Date
                             sqlDate = Date.valueOf(localDate);
                         }
-                        
-                        User user = new User(name, email, pass, sqlDate);
-                        if (Register(user)) {
-                            Platform.runLater(() -> {
-                                try {
-                                    Parent homeParent = FXMLLoader.load(getClass().getResource("/View/Home.fxml"));
-                                    Scene homeScene = new Scene(homeParent);
-                                    Stage window = (Stage) ((Node) event.getSource()).getScene().getWindow();
-                                    window.setScene(homeScene);
-                                    window.show();
-                                } catch (IOException ex) {
-                                    Logger.getLogger(LoginController.class.getName()).log(Level.SEVERE, null, ex);
-                                }
-                            });
-                        } else {
-                            Platform.runLater(() -> {
-                                Alert alert = new Alert(Alert.AlertType.ERROR);
-                                alert.setContentText("Invalid date, try again");
-                                alert.showAndWait();
-                                start = false;
-                                NameField.setText("");
-                                EmailField.setText("");
-                                PasswordField.setText("");
-                            });
-                        }
+
+                        User user = new User(email,name, pass, sqlDate);
+                        Register(user);
                     } catch (IOException ex) {
                         Platform.runLater(() -> {
                             Alert alert = new Alert(Alert.AlertType.ERROR);
@@ -118,8 +95,7 @@ public class SignupController implements Initializable {
         });
     }
 
-    public boolean Register(User user) throws IOException {
-        System.out.println("goooo");
+    public void Register(User user) throws IOException {
         // Prepare Request
         Gson gson = new Gson();
         JsonObject request = new JsonObject();
@@ -127,10 +103,36 @@ public class SignupController implements Initializable {
         request.addProperty("data", gson.toJson(user));
         // Send
         MyConnection.getInstance().getOutputStream().println(request.toString());
-        // Waiting for reply
-        String msg = MyConnection.getInstance().getInputStream().readLine();
+    }
+
+    public void waitForHandler(String msg) {
         // Process reply
+        Gson gson = new Gson();
         JsonObject reply = gson.fromJson(msg, JsonObject.class);
-        return reply.get("status").getAsBoolean();
+        boolean status = reply.get("status").getAsBoolean();
+        if (status) {
+            Platform.runLater(() -> {
+                try {
+                    Parent homeParent = FXMLLoader.load(getClass().getResource("/View/Home.fxml"));
+                    Scene homeScene = new Scene(homeParent);
+                    Stage window = (Stage) (mainnode.getScene().getWindow());
+                    window.setScene(homeScene);
+                    window.show();
+                } catch (IOException ex) {
+                    Logger.getLogger(LoginController.class.getName()).log(Level.SEVERE, null, ex);
+                }
+            });
+        }
+        else {
+            Platform.runLater(() -> {
+                Alert alert = new Alert(Alert.AlertType.ERROR);
+                alert.setContentText("Invalid date, try again");
+                alert.showAndWait();
+                start = false;
+                NameField.setText("");
+                EmailField.setText("");
+                PasswordField.setText("");
+            });
+       }
     }
 }

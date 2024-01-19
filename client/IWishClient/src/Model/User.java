@@ -38,6 +38,10 @@ public class User {
         this.DateOfBirth = date ; 
         
     }
+     
+    public User(int userid) {
+        this.userid = userid;
+    }
     
     public int getUserid() {
         return userid;

@@ -5,6 +5,7 @@
  */
 package Controller;
 
+import Connection.ReceiverHandler;
 import java.io.File;
 import java.io.IOException;
 import java.net.URL;
@@ -64,6 +65,8 @@ public class WishListController implements Initializable {
 
     @Override
     public void initialize(URL url, ResourceBundle rb) {
+        ReceiverHandler.setWishListcontroller(this);
+        
         setupDefaultImage();
         addProfilePictureButtonHandler();
         signOutButtonHandler();
