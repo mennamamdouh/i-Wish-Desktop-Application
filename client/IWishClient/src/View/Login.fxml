@@ -14,6 +14,7 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.Pane?>
 <?import javafx.scene.text.Font?>
+<?import javafx.scene.text.Text?>
 
 <Pane fx:id="mainnode" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="780.0" prefWidth="1000.0" style="-fx-background-color: #2D0901;" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Controller.LoginController">
 
@@ -65,7 +66,7 @@
             <DropShadow color="#ff0606" height="23.335" radius="11.36125" width="24.11" />
          </effect>
       </AnchorPane>
-      <ImageView fitHeight="358.0" fitWidth="532.0" layoutX="-35.0" layoutY="343.0" opacity="0.24" pickOnBounds="true" preserveRatio="true">
+      <ImageView fitHeight="358.0" fitWidth="532.0" layoutX="-34.0" layoutY="368.0" opacity="0.24" pickOnBounds="true" preserveRatio="true">
          <image>
             <Image url="@../resources/3d-gift-box-scene-with-clouds.png" />
          </image>
@@ -73,17 +74,12 @@
             <Glow level="1.0" />
          </effect>
       </ImageView>
-      <Label layoutX="67.0" layoutY="143.0" text="Welcome to iWish" textFill="WHITE">
-         <font>
-            <Font size="41.0" />
-         </font>
-      </Label>
-      <Label layoutX="71.0" layoutY="212.0" prefHeight="77.0" prefWidth="321.0" text="Add your friends and enjoy contributing&#10;to each other's wishlist. Sign Up now!" textAlignment="CENTER" textFill="WHITE" textOverrun="CLIP">
+      <Label layoutX="71.0" layoutY="229.0" prefHeight="77.0" prefWidth="321.0" text="Add your friends and enjoy contributing&#10;to each other's wishlist. Sign Up now!" textAlignment="CENTER" textFill="WHITE" textOverrun="CLIP">
          <font>
             <Font size="18.0" />
          </font>
       </Label>
-      <Button fx:id="btnSignup" layoutX="166.0" layoutY="348.0" mnemonicParsing="false" prefHeight="31.0" prefWidth="131.0" style="-fx-background-color: #C8462B;" text="Sign Up" textFill="WHITE">
+      <Button fx:id="btnSignup" layoutX="166.0" layoutY="318.0" mnemonicParsing="false" prefHeight="31.0" prefWidth="131.0" style="-fx-background-color: #C8462B;" text="Sign Up" textFill="WHITE">
          <font>
             <Font size="23.0" />
          </font>
@@ -94,5 +90,10 @@
             <Cursor fx:constant="HAND" />
          </cursor>
       </Button>
+      <Text fill="WHITE" layoutX="34.0" layoutY="198.0" stroke="BLACK" strokeType="OUTSIDE" strokeWidth="5.0" text="Welcome to iWish" textAlignment="CENTER">
+         <font>
+            <Font name="Bell MT Bold" size="48.0" />
+         </font>
+      </Text>
    </children>
 </Pane>
