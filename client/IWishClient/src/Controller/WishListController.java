@@ -171,6 +171,7 @@ public class WishListController implements Initializable {
                 Stage window = (Stage) ((Node)event.getSource()).getScene().getWindow();
                 window.setScene(signinScene);
                 window.show();
+                MyConnection.getInstance().closeConnection();
             } catch (IOException ex) {
                 Logger.getLogger(LoginController.class.getName()).log(Level.SEVERE, null, ex);
             }
