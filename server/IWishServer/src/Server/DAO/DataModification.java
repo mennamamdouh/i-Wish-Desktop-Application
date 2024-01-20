@@ -5,6 +5,7 @@
  */
 package Server.DAO;
 
+import Server.DTO.Item;
 import Server.DTO.User;
 import java.sql.Connection;
 import java.sql.DriverManager;
@@ -20,8 +21,8 @@ public class DataModification {
     public static boolean addFriend(User user, User friend) throws SQLException{
         Connection con = DBConnection.getConnection();
         PreparedStatement statement = con.prepareStatement("INSERT INTO Friendship VALUES(?, ?, 'Pending')");
-        statement.setInt(2, user.getUserid());
         statement.setInt(1, friend.getUserid());
+        statement.setInt(2, user.getUserid());
         int result = statement.executeUpdate();
         if(result == 1){
             statement.close();
@@ -33,8 +34,21 @@ public class DataModification {
             return false;
         }
     }
-    public static boolean addToWishList(){
-        return false;
+    public static boolean addToWishList(User user, Item item) throws SQLException{
+        Connection con = DBConnection.getConnection();
+        PreparedStatement statement = con.prepareStatement("INSERT INTO Wishlist(UserID, ItemID) VALUES(?, ?)");
+        statement.setInt(1, user.getUserid());
+        statement.setInt(2, item.getItemid());
+        int result = statement.executeUpdate();
+        if(result == 1){
+            statement.close();
+            System.out.println("Item was added successfuly.");
+            return true;
+        }
+        else{
+            System.out.println("Item wasn't added.");
+            return false;
+        }
     }
     public static boolean contribute(){
         return false;
@@ -75,9 +89,11 @@ public class DataModification {
     }
     public static boolean acceptFriend(User user, User friend) throws SQLException{
         Connection con = DBConnection.getConnection();
-        PreparedStatement statement = con.prepareStatement("UPDATE friendship SET friendshipStatus = 'Accepted' WHERE userID = ? AND friendID = ?");
-        statement.setInt(1, user.getUserid());
-        statement.setInt(2, friend.getUserid());
+        PreparedStatement statement = con.prepareStatement("UPDATE friendship SET friendshipStatus = 'Accepted' WHERE (userID = ? AND friendID = ?) OR (userID = ? AND friendID = ?)");
+        statement.setInt(1, friend.getUserid());
+        statement.setInt(2, user.getUserid());
+        statement.setInt(4, friend.getUserid());
+        statement.setInt(3, user.getUserid());
         int result = statement.executeUpdate();
         if(result > 0)
             return true;
