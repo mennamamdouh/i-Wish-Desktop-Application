@@ -30,6 +30,7 @@ public class DataRetrieval {
             user.setUserid(result.getInt(1));
             user.setFullname(result.getString(3));
             user.setUserphoto(result.getString(4));
+            user.setDateOfBirth(result.getDate(6));
             statement.close();
             return true;
         } else {
