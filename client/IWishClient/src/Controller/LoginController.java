@@ -3,6 +3,7 @@ package Controller;
 import Connection.MyConnection;
 import Connection.MessageProtocol;
 import Connection.ReceiverHandler;
+import Main.IWishClient;
 import Model.User;
 import com.google.gson.*;
 import java.io.IOException;
@@ -117,6 +118,8 @@ public class LoginController implements Initializable {
         if (reply.get("status").getAsBoolean())
             status= true;
         if (status) {
+            String loggedInUser = reply.get("data").getAsString();
+            IWishClient.user = gson.fromJson(loggedInUser, User.class);
             Platform.runLater(() -> {
                 try {
                     Parent homeParent = FXMLLoader.load(getClass().getResource("/View/Home.fxml"));
