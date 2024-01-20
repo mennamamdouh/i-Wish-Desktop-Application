@@ -1,14 +1,58 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 
-<AnchorPane id="AnchorPane" prefHeight="714.0" prefWidth="1000.0" style="-fx-background-color: #FBF5F4;" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Controller.AboutController">
+<AnchorPane id="AnchorPane" prefHeight="714.0" prefWidth="1000.0" style="-fx-background-color: #2D0901;" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Controller.AboutController">
    <children>
-      <Text layoutX="33.0" layoutY="64.0" strokeType="OUTSIDE" strokeWidth="0.0" text="iWish is social platform that aims at bringing connections together and make the use of social media different and more fun.&#10;&#10;It was first released in 2024 by a group of trainees in the Information Technology Institution and later that year was published on app store.&#10;&#10;&#10;&#10;&#10;&#10;&#10;&#10;@Authors:&#10;&#10;Abdulla Attia&#10;Diyaa &#10;Mennatallah&#10;Omar&#10;Hatem" wrappingWidth="749.9580078125">
+      <Label layoutX="335.0" layoutY="54.0" text="Welcome to iWish" textFill="WHITE">
+         <font>
+            <Font size="41.0" />
+         </font>
+      </Label>
+      <Text fill="WHITE" layoutX="125.0" layoutY="197.0" strokeType="OUTSIDE" strokeWidth="0.0" text="iWish is a social platform that aims at bringing connections together and make the use of social media different and more fun.&#10;&#10;It was first released in 2024 by a group of trainees in the Information Technology Institution and later that year was published on app store.&#10;" textAlignment="CENTER" wrappingWidth="749.9580078125">
          <font>
             <Font size="22.0" />
-         </font></Text>
+         </font>
+      </Text>
+      <ImageView fx:id="presentImage" fitHeight="725.0" fitWidth="1000.0" layoutY="65.0" opacity="0.09" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@../resources/3d-gift-box-scene-with-clouds.png" />
+         </image>
+      </ImageView>
+      <ImageView fx:id="diaaImage" fitHeight="120.0" fitWidth="132.0" layoutX="303.0" layoutY="389.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@../resources/diaa.jpg" />
+         </image>
+      </ImageView>
+      <ImageView fx:id="mennaImage" fitHeight="120.0" fitWidth="119.0" layoutX="440.0" layoutY="389.0" pickOnBounds="true">
+         <image>
+            <Image url="@../resources/menna.jpeg" />
+         </image>
+      </ImageView>
+      <ImageView fx:id="hatemImage" fitHeight="120.0" fitWidth="132.0" layoutX="576.0" layoutY="389.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@../resources/hatem.jpg" />
+         </image>
+      </ImageView>
+      <ImageView fx:id="omarImage" fitHeight="120.0" fitWidth="132.0" layoutX="378.0" layoutY="539.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@../resources/omar.jpg" />
+         </image>
+      </ImageView>
+      <ImageView fx:id="abdullahImage" fitHeight="120.0" fitWidth="132.0" layoutX="516.0" layoutY="539.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@../resources/male-avatar.png" />
+         </image>
+      </ImageView>
+      <Text fill="WHITE" layoutX="322.0" layoutY="525.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Diaa Ahmed" />
+      <Text fill="WHITE" layoutX="438.0" layoutY="525.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Menna Mamdouh" />
+      <Text fill="WHITE" layoutX="578.0" layoutY="525.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Mahmoud Hatem" />
+      <Text fill="WHITE" layoutX="388.0" layoutY="675.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Omar Ramadan" />
+      <Text fill="WHITE" layoutX="531.0" layoutY="675.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Abdullah Attia" />
    </children>
 </AnchorPane>

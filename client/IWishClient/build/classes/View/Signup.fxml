@@ -74,7 +74,7 @@
       </Label>
       <ImageView fitHeight="112.0" fitWidth="127.0" layoutX="138.0" layoutY="200.0" pickOnBounds="true" preserveRatio="true">
          <image>
-            <Image url="@../../../profile3.png" />
+            <Image url="@../resources/3d-gift-box-scene-with-clouds.png" />
          </image>
       </ImageView>
    </children>
