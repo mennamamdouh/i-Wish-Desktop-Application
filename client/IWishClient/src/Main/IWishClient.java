@@ -5,6 +5,7 @@
  */
 package Main;
 
+import Model.User;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
@@ -16,7 +17,8 @@ import javafx.stage.Stage;
  * @author Diaa
  */
 public final class IWishClient extends Application {
-
+    
+    public static User user;
     @Override
     public void start(Stage stage) throws Exception {
        
