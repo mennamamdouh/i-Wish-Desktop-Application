@@ -82,5 +82,12 @@ public class User {
     public void setPassword(String password) {
         this.password = password;
     }
+     public Date getDateOfBirth() {
+        return DateOfBirth;
+    }
+
+    public void setDateOfBirth(Date date) {
+        this.DateOfBirth = date;
+    }
     
 }

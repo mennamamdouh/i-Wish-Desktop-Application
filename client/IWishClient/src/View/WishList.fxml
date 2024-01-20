@@ -24,12 +24,12 @@
                         <Font name="System Bold" size="18.0" />
                      </font>
                   </Label>
-                  <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Abdullah Attia" textAlignment="CENTER" wrappingWidth="134.7109375">
+                  <Text fx:id="txtFullName" strokeType="OUTSIDE" strokeWidth="0.0" textAlignment="CENTER" wrappingWidth="211.7109375">
                      <font>
                         <Font size="19.0" />
                      </font>
                   </Text>
-                  <Text strokeType="OUTSIDE" strokeWidth="0.0" text="24/11/1999" textAlignment="CENTER" wrappingWidth="96.744140625">
+                  <Text fx:id="txtBirthDate" strokeType="OUTSIDE" strokeWidth="0.0" textAlignment="CENTER" wrappingWidth="164.744140625">
                      <font>
                         <Font size="16.0" />
                      </font>
