@@ -124,7 +124,7 @@ public class ItemsController implements Initializable {
                                     alert.showAndWait().ifPresent(response -> {
                                         if (response == ButtonType.OK){
                                             try {
-                                                // Perform the remove action for the person
+                                                // Perform the add action for the item
                                                 addItem(item);
                                             } catch (IOException ex) {
                                                 Logger.getLogger(ItemsController.class.getName()).log(Level.SEVERE, null, ex);
@@ -161,7 +161,7 @@ public class ItemsController implements Initializable {
         
     }
     
-    public void getItemsListHandler(String msg ){
+    public void getItemsListHandler(String msg){
         // Prepare the request
         Gson gson = new Gson();
         
@@ -172,13 +172,14 @@ public class ItemsController implements Initializable {
             Type dataType = new TypeToken<ArrayList<Item>>(){}.getType();
             ArrayList<Item> itemsList = gson.fromJson(arr, dataType);
             items = FXCollections.observableArrayList(itemsList);
+            
+            Platform.runLater(() -> {
+                listOfItems.setItems(items);
+            });
         }
         else{
             System.out.println("No data found");
         }
-        Platform.runLater(() -> {
-           listOfItems.setItems(items);
-        });
     }
     
     private void addItem(Item item) throws IOException{
@@ -190,14 +191,24 @@ public class ItemsController implements Initializable {
                 
         // Send the request
         MyConnection.getInstance().getOutputStream().println(request.toString());
+    }
+    
+    public void addItemHandler(String msg) throws IOException{
+        // Prepare the request
+        Gson gson = new Gson();
         
-        // Wait for the reply
-        String msg = MyConnection.getInstance().getInputStream().readLine();
-        
-        // Update the viewed list after removing the friend
-        getItemsList();
-        Platform.runLater(() -> {
-            listOfItems.setItems(items);
-        });
+        // Process the reply
+        JsonObject reply = gson.fromJson(msg, JsonObject.class);
+        boolean successed = reply.get("status").getAsBoolean();
+        if(successed){
+            // Update the viewed list after adding the item
+            getItemsList();
+            Platform.runLater(() -> {
+                listOfItems.setItems(items);
+            });
+        }
+        else{
+            System.out.println("You couldn't add the item");
+        }
     }
 }

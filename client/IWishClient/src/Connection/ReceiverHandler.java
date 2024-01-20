@@ -71,6 +71,7 @@ public class ReceiverHandler {
                         } else if (modify != null) {
                             switch (modify) {
                                 case ADD_TO_WISHLIST:
+                                    itemscontroller.addItemHandler(received);
                                      break;
                                 case CONTRIBUTE:
                                      break;
