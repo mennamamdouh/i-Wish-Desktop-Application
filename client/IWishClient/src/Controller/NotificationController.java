@@ -83,7 +83,6 @@ public class NotificationController implements Initializable {
         String data = reply.get("data").getAsString();
         Type dataType = new TypeToken<ArrayList<Notification>>() {}.getType();
         notifications = gson.fromJson(data, dataType);
-        System.out.println(notifications);
         Platform.runLater(() -> {
            viewNotifications();
         });

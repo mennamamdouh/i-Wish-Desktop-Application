@@ -24,8 +24,12 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.Cursor;
+import javafx.scene.Node;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.ButtonType;
@@ -38,6 +42,7 @@ import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
+import javafx.stage.Stage;
 import javafx.util.Callback;
 
 /**
@@ -129,11 +134,20 @@ public class FriendsController implements Initializable {
                 TableRow<User> userRow = new TableRow<>();
                 userRow.setOnMouseClicked(new EventHandler<MouseEvent>() {
                     @Override
-                    public void handle(MouseEvent event) {
-                        if (event.getClickCount() == 1 && (! userRow.isEmpty()) ) {
-                            User rowData = userRow.getItem();
-                            System.out.println("You clicked on: " + rowData.getFullname());
-                            // Here should be the calling method of the FXML file of the Friend's Profile Scene
+                          public void handle(MouseEvent event) {
+                        if (event.getClickCount() == 1 && (!userRow.isEmpty())) {
+                            try {
+                                // User rowData = userRow.getItem();
+                                // System.out.println("You clicked on: " + rowData.getFullname());
+                                // Here should be the calling method of the FXML file of the Friend's Profile Scene
+                                Parent signupParent = FXMLLoader.load(getClass().getResource("/View/FriendProfile.fxml"));
+                                Scene signupScene = new Scene(signupParent);
+                                Stage window = (Stage) ((Node) event.getSource()).getScene().getWindow();
+                                window.setScene(signupScene);
+                                window.show();
+                            } catch (IOException ex) {
+                                Logger.getLogger(FriendsController.class.getName()).log(Level.SEVERE, null, ex);
+                            }
                         }
                     }
                 });                

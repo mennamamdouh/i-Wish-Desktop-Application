@@ -5,8 +5,7 @@
  */
 package Controller;
 
-import Connection.ReceiverHandler;
-import Main.IWishClient;
+import Connection.*;
 import java.io.File;
 import java.io.IOException;
 import java.net.URL;
@@ -14,7 +13,6 @@ import java.util.ArrayList;
 import java.util.ResourceBundle;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import javafx.application.Platform;
 import javafx.collections.FXCollections;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
@@ -34,7 +32,6 @@ import javafx.scene.image.ImageView;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Priority;
 import javafx.scene.shape.Circle;
-import javafx.scene.text.Text;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 
@@ -61,12 +58,6 @@ public class WishListController implements Initializable {
     private ListView wishlistList;
     @FXML
     private Button SignOutButton;
-    @FXML
-    private Text txtFullName;
-    @FXML
-    private Text txtBirthDate;
-    
-    
     
 
     private static final String DEFAULT_IMAGE_PATH = "file:src/Resources/blank.png";
@@ -75,14 +66,6 @@ public class WishListController implements Initializable {
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         ReceiverHandler.setWishListcontroller(this);
-        
-        Platform.runLater(() -> {
-               txtFullName.setText(IWishClient.user.getFullname());
-            });
-        
-        Platform.runLater(() -> {
-               txtBirthDate.setText(IWishClient.user.getDateOfBirth().toString());
-            });
         
         setupDefaultImage();
         addProfilePictureButtonHandler();
@@ -144,6 +127,7 @@ protected void updateItem(WishListItems item, boolean empty) {
                 Stage window = (Stage) ((Node)event.getSource()).getScene().getWindow();
                 window.setScene(signinScene);
                 window.show();
+                MyConnection.getInstance().closeConnection();
             } catch (IOException ex) {
                 Logger.getLogger(LoginController.class.getName()).log(Level.SEVERE, null, ex);
             }
