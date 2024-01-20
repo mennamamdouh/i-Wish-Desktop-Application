@@ -79,7 +79,7 @@ public class User {
         return DateOfBirth;
     }
 
-    public void setPassword(Date date) {
+    public void setDateOfBirth(Date date) {
         this.DateOfBirth = date;
     }
 }
