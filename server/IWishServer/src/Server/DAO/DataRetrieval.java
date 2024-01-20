@@ -84,9 +84,34 @@ public class DataRetrieval {
 
     }
 
-    public static ArrayList<Contribution> getContribution() {
+    public static ArrayList<Contribution> getContribution(User user, Item item) throws SQLException {
         ArrayList<Contribution> arr = new ArrayList<Contribution>();
+        Connection con = DBConnection.getConnection();
+        ResultSet result;
+        PreparedStatement statement = con.prepareCall("select * from contributions where userid= ? and itemid = ? order by contributionid", ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_READ_ONLY);
+        statement.setInt(1, user.getUserid());
+        statement.setInt(2, item.getItemid());
+        result = statement.executeQuery();
+        if (result.next()) {
+            result.previous();
+            while (result.next()) {
+                arr.add(new Contribution(getFriendData(result.getInt(3)),result.getDouble(5)));
+            }
+            return arr;
+        }
+        statement.close();
         return arr;
+    }
+
+    public static User getFriendData(int id) throws SQLException {
+        Connection con = DBConnection.getConnection();
+        ResultSet result;
+        PreparedStatement statement = con.prepareCall("select * from users where userid= ? ");
+        statement.setInt(1, id);
+        result = statement.executeQuery();
+        if (result.next())
+            return new User(id, result.getString(3), result.getString(4));
+        return null;
     }
 
     public static ArrayList<Notification> getNotifications(User user) throws SQLException {

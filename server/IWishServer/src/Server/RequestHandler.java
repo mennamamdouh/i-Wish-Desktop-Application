@@ -62,7 +62,8 @@ public class RequestHandler  {
                         return dataToJson(DataRetrieval.getItems(),MessageProtocol.RETRIEVAL.GET_ITEMS );
 
                     case GET_CONTRIBUTION :
-                        return dataToJson(DataRetrieval.getContribution(),MessageProtocol.RETRIEVAL.GET_CONTRIBUTION );
+                        Item item = gson.fromJson(client.get("data").getAsString() , Item.class); 
+                        return dataToJson(DataRetrieval.getContribution(user ,item),MessageProtocol.RETRIEVAL.GET_CONTRIBUTION );
 
                     case GET_NOTIFICATIONS :
                         notifications = DataRetrieval.getNotifications(user);
