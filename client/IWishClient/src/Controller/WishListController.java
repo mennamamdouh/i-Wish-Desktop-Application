@@ -5,10 +5,17 @@
  */
 package Controller;
 
+import Connection.MessageProtocol;
+import Connection.MyConnection;
 import Connection.ReceiverHandler;
 import Main.IWishClient;
+import Model.User;
+import com.google.gson.Gson;
+import com.google.gson.JsonObject;
+import com.google.gson.reflect.TypeToken;
 import java.io.File;
 import java.io.IOException;
+import java.lang.reflect.Type;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.ResourceBundle;
@@ -18,6 +25,7 @@ import javafx.application.Platform;
 import javafx.collections.FXCollections;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
+import javafx.event.EventType;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
@@ -29,6 +37,7 @@ import javafx.scene.control.Label;
 import javafx.scene.control.ListCell;
 import javafx.scene.control.ListView;
 import javafx.scene.control.ProgressBar;
+import javafx.scene.control.TextField;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.HBox;
@@ -36,6 +45,7 @@ import javafx.scene.layout.Priority;
 import javafx.scene.shape.Circle;
 import javafx.scene.text.Text;
 import javafx.stage.FileChooser;
+import javafx.stage.Modality;
 import javafx.stage.Stage;
 
 /**
@@ -65,12 +75,12 @@ public class WishListController implements Initializable {
     private Text txtFullName;
     @FXML
     private Text txtBirthDate;
+    @FXML
+    private Button searchItemsButton;
     
-    
-    
-
     private static final String DEFAULT_IMAGE_PATH = "file:src/Resources/blank.png";
     private static final double CIRCLE_CENTER = 0.5; // Center ratio for circular clipping
+
 
     @Override
     public void initialize(URL url, ResourceBundle rb) {
@@ -105,25 +115,42 @@ public class WishListController implements Initializable {
             }
 
             @Override
-protected void updateItem(WishListItems item, boolean empty) {
-    super.updateItem(item, empty);
-    if (empty || item == null) {
-        setGraphic(null);
-    } else {
-        label.setText(item.getName() + ", Price: $" + item.getPrice());
-        progressBar.setProgress(item.getProgress() / 100.0);
+            protected void updateItem(WishListItems item, boolean empty) {
+                super.updateItem(item, empty);
+                if (empty || item == null) {
+                    setGraphic(null);
+                } else {
+                    label.setText(item.getName() + ", Price: $" + item.getPrice());
+                    progressBar.setProgress(item.getProgress() / 100.0);
 
-        Image image = new Image(item.getPhoto());
-        ImageView imageView = new ImageView(image);
-        imageView.setFitHeight(50); // Adjust the height as needed
-        imageView.setPreserveRatio(true);
+                    Image image = new Image(item.getPhoto());
+                    ImageView imageView = new ImageView(image);
+                    imageView.setFitHeight(50); // Adjust the height as needed
+                    imageView.setPreserveRatio(true);
 
-        hbox.getChildren().setAll(imageView, label, progressBar);
-        HBox.setHgrow(progressBar, Priority.ALWAYS);
+                    hbox.getChildren().setAll(imageView, label, progressBar);
+                    HBox.setHgrow(progressBar, Priority.ALWAYS);
 
-        setGraphic(hbox);
-    }
-}
+                    setGraphic(hbox);
+                }
+            }
+        });
+        
+        // Configure the search for items button
+        searchItemsButton.addEventHandler(ActionEvent.ACTION, (ActionEvent event) -> {
+            Stage popup = new Stage();
+            popup.initModality(Modality.APPLICATION_MODAL);
+            Parent root;
+            try {
+                root = FXMLLoader.load(getClass().getResource("/View/Items.fxml"));
+                Scene scene = new Scene(root);
+                popup.setResizable(false);
+                popup.setScene(scene);
+                popup.setTitle("Items");
+                popup.show();
+            } catch (IOException ex) {
+                Logger.getLogger(WishListController.class.getName()).log(Level.SEVERE, null, ex);
+            }
         });
 
     }
