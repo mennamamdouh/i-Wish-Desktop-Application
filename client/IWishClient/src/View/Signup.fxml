@@ -12,26 +12,27 @@
 <?import javafx.scene.layout.GridPane?>
 <?import javafx.scene.layout.RowConstraints?>
 <?import javafx.scene.text.Font?>
+<?import javafx.scene.text.Text?>
 
-<AnchorPane fx:id="mainnode" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" style="-fx-background-color: #2D0901;" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Controller.SignupController">
+<AnchorPane fx:id="mainnode" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="714.0" prefWidth="1000.0" style="-fx-background-color: #2D0901;" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Controller.SignupController">
    <children>
-      <GridPane layoutX="365.0" layoutY="43.0" prefHeight="335.0" prefWidth="228.0" style="-fx-background-color: #601100;">
+      <GridPane layoutX="653.0" layoutY="189.0" prefHeight="457.0" prefWidth="296.0" style="-fx-background-color: #601100;">
         <columnConstraints>
-          <ColumnConstraints hgrow="SOMETIMES" maxWidth="260.0" minWidth="10.0" prefWidth="260.0" />
-          <ColumnConstraints hgrow="SOMETIMES" maxWidth="125.0" minWidth="1.0" prefWidth="1.0" />
+          <ColumnConstraints hgrow="SOMETIMES" maxWidth="296.0" minWidth="10.0" prefWidth="296.0" />
+          <ColumnConstraints hgrow="SOMETIMES" maxWidth="125.0" minWidth="0.0" prefWidth="0.0" />
         </columnConstraints>
         <rowConstraints>
-          <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-          <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+          <RowConstraints maxHeight="72.0" minHeight="10.0" prefHeight="72.0" vgrow="SOMETIMES" />
+          <RowConstraints maxHeight="85.0" minHeight="10.0" prefHeight="81.0" vgrow="SOMETIMES" />
             <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
           <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
             <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
             <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
         </rowConstraints>
          <children>
-            <Label fx:id="RegisterLabel" alignment="CENTER" contentDisplay="TEXT_ONLY" prefHeight="37.0" prefWidth="159.0" style="-fx-background-color: #601100;" text="Sign Up" textAlignment="CENTER" textFill="#f8f4f4" GridPane.halignment="CENTER" GridPane.valignment="CENTER">
+            <Label fx:id="RegisterLabel" alignment="CENTER" contentDisplay="TEXT_ONLY" prefHeight="37.0" prefWidth="159.0" style="-fx-background-color: #601100;" text="Register" textAlignment="CENTER" textFill="#f8f4f4" GridPane.halignment="CENTER" GridPane.valignment="CENTER">
                <font>
-                  <Font size="18.0" />
+                  <Font name="System Bold" size="24.0" />
                </font>
             </Label>
             <TextField fx:id="NameField" promptText="Name" GridPane.rowIndex="1">
@@ -50,31 +51,26 @@
                </GridPane.margin>
             </TextField>
             <Button fx:id="RegisterButton" mnemonicParsing="false" prefHeight="41.0" prefWidth="127.0" style="-fx-background-color: #C8462B#000000;" text="Sign Up" textFill="#fcf6f6" GridPane.halignment="CENTER" GridPane.rowIndex="5" GridPane.valignment="CENTER" />
-            <DatePicker fx:id="DateOfBirthField" promptText="Date Of Birth" GridPane.rowIndex="4">
+            <DatePicker fx:id="DateOfBirthField" prefHeight="31.0" prefWidth="257.0" promptText="Date Of Birth" GridPane.rowIndex="4">
                <GridPane.margin>
                   <Insets left="20.0" right="20.0" />
                </GridPane.margin>
             </DatePicker>
          </children>
       </GridPane>
-      <Label alignment="CENTER" layoutX="72.0" layoutY="42.0" prefHeight="93.0" prefWidth="243.0" text="Welcome to iWish" textFill="#f5f0f0">
+      <Text fill="WHITE" layoutX="316.0" layoutY="87.0" stroke="BLACK" strokeType="OUTSIDE" strokeWidth="5.0" text="Welcome to iWish" textAlignment="CENTER">
          <font>
-            <Font size="24.0" />
+            <Font name="Bell MT Bold" size="48.0" />
          </font>
-      </Label>
-      <Label layoutX="13.0" layoutY="115.0" lineSpacing="1.0" prefHeight="41.0" prefWidth="344.0" text="Add your friends and enjoy contributing to" textFill="#f8f1f1">
+      </Text>
+      <Text fill="WHITE" layoutX="120.0" layoutY="255.0" strokeType="OUTSIDE" strokeWidth="3.0" text="Add your friends and enjoy contributing to each other's wishlist." textAlignment="CENTER" wrappingWidth="457.8857421875">
          <font>
-            <Font size="18.0" />
+            <Font name="System Bold Italic" size="26.0" />
          </font>
-      </Label>
-      <Label alignment="CENTER" layoutX="88.0" layoutY="143.0" prefHeight="41.0" prefWidth="195.0" text="each other's wishlist ." textFill="#eee1e1">
-         <font>
-            <Font size="18.0" />
-         </font>
-      </Label>
-      <ImageView fitHeight="112.0" fitWidth="127.0" layoutX="138.0" layoutY="200.0" pickOnBounds="true" preserveRatio="true">
+      </Text>
+      <ImageView fitHeight="436.0" fitWidth="687.0" layoutY="277.0" opacity="0.26" pickOnBounds="true" preserveRatio="true">
          <image>
-            <Image url="@../../../profile3.png" />
+            <Image url="@../resources/3d-gift-box-scene-with-clouds.png" />
          </image>
       </ImageView>
    </children>
