@@ -9,7 +9,6 @@ import Connection.MessageProtocol;
 import Connection.MyConnection;
 import Connection.ReceiverHandler;
 import Model.Item;
-import Model.User;
 import com.google.gson.Gson;
 import com.google.gson.JsonObject;
 import com.google.gson.reflect.TypeToken;

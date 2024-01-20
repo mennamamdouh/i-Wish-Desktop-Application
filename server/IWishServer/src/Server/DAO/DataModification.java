@@ -8,7 +8,6 @@ package Server.DAO;
 import Server.DTO.Item;
 import Server.DTO.User;
 import java.sql.Connection;
-import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
 

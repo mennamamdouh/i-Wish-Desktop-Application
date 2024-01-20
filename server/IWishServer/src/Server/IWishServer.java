@@ -5,16 +5,13 @@
  */
 package Server;
 
-import Server.DTO.User;
 import com.google.gson.*;
 import java.io.BufferedReader;
-import java.io.DataInputStream;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.PrintStream;
 import java.net.ServerSocket;
 import java.net.Socket;
-import java.net.SocketException;
 import java.sql.SQLException;
 import java.util.Vector;
 import java.util.logging.Level;
