@@ -22,6 +22,7 @@ public class ReceiverHandler {
     private static FriendsController friendscontroller;
     private static WishListController wishlistcontroller;
     private static SignupController signupcontroller;
+    private static ItemsController itemscontroller;
     
     private Gson gson;
 
@@ -51,6 +52,7 @@ public class ReceiverHandler {
                                 case GET_WISHLIST: 
                                      break;
                                 case GET_ITEMS:
+                                    itemscontroller.getItemsListHandler(received);
                                     break;
                                 case GET_CONTRIBUTION:
                                      break;
@@ -121,4 +123,7 @@ public class ReceiverHandler {
         ReceiverHandler.signupcontroller = signupcontroller;
     }
     
+    public static void setItemscontroller(ItemsController itemscontroller) {
+        ReceiverHandler.itemscontroller = itemscontroller;
+    }
 }
