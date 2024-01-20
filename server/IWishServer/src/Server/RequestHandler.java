@@ -84,15 +84,19 @@ public class RequestHandler  {
                Recieve Data from json before calling any method
                ex : user = gson.fromJson(client.get("data").getAsString(), User.class); 
             */
-            User friend = gson.fromJson(client.get("data").getAsString(), User.class);
+            User friend;
+            Item item;
             switch(modify){
                 case ADD_FRIEND :
+                    friend  = gson.fromJson(client.get("data").getAsString(), User.class);
                     return statusToJson(DataModification.addFriend(user, friend),MessageProtocol.MODIFY.ADD_FRIEND );
                     
                 case ADD_TO_WISHLIST :
-                    return statusToJson(DataModification.addToWishList(),MessageProtocol.MODIFY.ADD_TO_WISHLIST );    
+                    item = gson.fromJson(client.get("data").getAsString(), Item.class);
+                    return statusToJson(DataModification.addToWishList(user, item),MessageProtocol.MODIFY.ADD_TO_WISHLIST );    
                     
                 case CONTRIBUTE :
+                    //friend  = gson.fromJson(client.get("data").getAsString(), User.class);
                     return statusToJson(DataModification.contribute(),MessageProtocol.MODIFY.CONTRIBUTE );
                     
                 case REGISTER :
@@ -101,12 +105,15 @@ public class RequestHandler  {
                    return statusToJson(login,MessageProtocol.MODIFY.REGISTER); 
                 
                 case REMOVE_FRIEND :
+                    friend  = gson.fromJson(client.get("data").getAsString(), User.class);
                     return statusToJson(DataModification.removeFriend(user, friend),MessageProtocol.MODIFY.REMOVE_FRIEND); 
                     
                 case ACCEPT_FRIEND :
+                    friend  = gson.fromJson(client.get("data").getAsString(), User.class);
                     return statusToJson(DataModification.acceptFriend(user, friend),MessageProtocol.MODIFY.ACCEPT_FRIEND); 
                     
                 case DENY_REQUEST:
+                    friend = gson.fromJson(client.get("data").getAsString(), User.class);
                      return statusToJson(DataModification.removeFriend(user, friend),MessageProtocol.MODIFY.DENY_REQUEST);
             }
         }
