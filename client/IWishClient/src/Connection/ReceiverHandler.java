@@ -50,6 +50,7 @@ public class ReceiverHandler {
                                     friendscontroller.getFriendListHandler(received);
                                     break;
                                 case GET_WISHLIST: 
+                                    wishlistcontroller.getWishListHandler(received);
                                     break;
                                 case GET_ITEMS:
                                     itemscontroller.getItemsListHandler(received);

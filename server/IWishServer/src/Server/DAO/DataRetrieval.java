@@ -67,10 +67,38 @@ public class DataRetrieval {
         return friends;
     }
 
-    public static ArrayList<WishList> getWishList(User user) throws SQLException {
-        ArrayList<WishList> arr = new ArrayList<WishList>();
-        return arr;
+    public static ArrayList<WishList> getWishList(User user) throws SQLException{
+        ArrayList<WishList> wishlistArr = new ArrayList<WishList>();
+        ResultSet result;
+        Connection con = DBConnection.getConnection();
+        
+        PreparedStatement statement = con.prepareCall("select * from wishlist where userid = ?" , ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_READ_ONLY);
+        statement.setString(1, Integer.toString(user.getUserid()));
+        result = statement.executeQuery();
+        if(result.next())
+        {
+            result.previous();
+            while(result.next()){
+                wishlistArr.add(new WishList(user.getUserid(),getItem(result.getInt(2)),result.getDouble(3), result.getDouble(4)));
 
+            }
+            return wishlistArr;
+        }
+        statement.close();
+        
+        return wishlistArr;
+    }
+    
+    private static Item getItem(int itemId) throws SQLException{
+        Item item;
+            Connection con = DBConnection.getConnection();
+            ResultSet result;
+            PreparedStatement statement = con.prepareCall("select * from items where itemid = ?" , ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_READ_ONLY);
+            statement.setString(1, Integer.toString(itemId));
+            result = statement.executeQuery();
+            result.next();
+            item = new Item(result.getInt(1),result.getString(2),result.getString(3),result.getDouble(4));
+        return item;
     }
 
     public static ArrayList<Item> getItems() throws SQLException {
