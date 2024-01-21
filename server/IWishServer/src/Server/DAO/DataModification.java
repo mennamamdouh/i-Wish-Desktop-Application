@@ -53,22 +53,25 @@ public class DataModification {
         return false;
     }
     public static boolean register(User user) throws SQLException{
-        
-        
-        boolean result = false;
-        
+        int result;
         Connection con = DBConnection.getConnection();
-        PreparedStatement statement = con.prepareCall("INSERT INTO users ( FullName, Email, Password, DateOfBirth) VALUES ( ?, ?, ?, ?)");
+        PreparedStatement statement = con.prepareCall("INSERT INTO users (FullName, Email, Password, DateOfBirth) VALUES (?, ?, ?, ?)");
         statement.setString(1, user.getFullname());
         statement.setString(2, user.getEmail());
         statement.setString(3, user.getPassword());
-         statement.setDate(4, user.getDateOfBirth());
-
-         statement.executeUpdate();
-         result = true ;
-         
-        return result;
-        
+        statement.setDate(4, user.getDateOfBirth());
+        try{
+            result = statement.executeUpdate();
+            if(result == 1){
+                return true;
+            }
+            else{
+                return false;
+            }
+        }
+        catch(SQLException ex){
+            return false;
+        }
     }
     public static boolean removeFriend(User user, User friend) throws SQLException{
         Connection con = DBConnection.getConnection();

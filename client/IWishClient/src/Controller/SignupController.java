@@ -25,7 +25,9 @@ import javafx.stage.Stage;
 import java.time.LocalDate;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javafx.scene.control.ButtonType;
 import javafx.scene.control.Label;
+import javafx.scene.image.Image;
 import javafx.scene.layout.AnchorPane;
 
 /**
@@ -125,12 +127,24 @@ public class SignupController implements Initializable {
         else {
             Platform.runLater(() -> {
                 Alert alert = new Alert(Alert.AlertType.ERROR);
-                alert.setContentText("Invalid date, try again");
-                alert.showAndWait();
+                alert.setContentText("Your email already exists, login please.");
+                alert.setHeaderText("Invalid email!");
+                Stage stage = (Stage) alert.getDialogPane().getScene().getWindow();
+                stage.getIcons().add(new Image(this.getClass().getResource("/resources/genie-lamp-icon.png").toString()));
+                alert.showAndWait().ifPresent(response -> {
+                    if (response == ButtonType.OK){
+                        try {
+                            Parent homeParent = FXMLLoader.load(getClass().getResource("/View/Login.fxml"));
+                            Scene homeScene = new Scene(homeParent);
+                            Stage window = (Stage) (mainnode.getScene().getWindow());
+                            window.setScene(homeScene);
+                            window.show();
+                        } catch (IOException ex) {
+                            Logger.getLogger(FriendsController.class.getName()).log(Level.SEVERE, null, ex);
+                        }
+                    }
+                });
                 start = false;
-                NameField.setText("");
-                EmailField.setText("");
-                PasswordField.setText("");
             });
        }
     }
