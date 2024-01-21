@@ -47,43 +47,42 @@ public class ReceiverHandler {
                         if (retriev != null) {
                             switch (retriev) {
                                 case GET_FRIENDS:
-                                     friendscontroller.getFriendListHandler(received);
-                                     break;
+                                    friendscontroller.getFriendListHandler(received);
+                                    break;
                                 case GET_WISHLIST: 
-                                     break;
+                                    break;
                                 case GET_ITEMS:
                                     itemscontroller.getItemsListHandler(received);
                                     break;
                                 case GET_CONTRIBUTION:
-                                     break;
+                                    break;
                                 case GET_NOTIFICATIONS:
                                     notificationcontroller.waitForHandler(received);
                                     friendscontroller.addAndRemoveFriendHandler();
                                     break;
                                 case GET_USERS:
                                     friendscontroller.searchHandler(received);
-                                     break;
+                                    break;
                                 case LOGIN:
                                     logincontroller.waitForHandler(received);
                                     break;
-
                             }
                         } else if (modify != null) {
                             switch (modify) {
                                 case ADD_TO_WISHLIST:
                                     itemscontroller.addItemHandler(received);
-                                     break;
+                                    break;
                                 case CONTRIBUTE:
-                                     break;
+                                    break;
                                 case REGISTER:
                                     signupcontroller.waitForHandler(received);
-                                     break;
+                                    break;
                                 case ADD_FRIEND:
                                     friendscontroller.addAndRemoveFriendHandler();
                                     break;
                                 case REMOVE_FRIEND:
                                     friendscontroller.addAndRemoveFriendHandler();
-                                     break;
+                                    break;
                                 case ACCEPT_FRIEND :
                                     notificationcontroller.nodeHandler(received);
                                     friendscontroller.addAndRemoveFriendHandler();
