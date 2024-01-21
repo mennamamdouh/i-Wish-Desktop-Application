@@ -134,14 +134,15 @@ public class FriendsController implements Initializable {
                 userRow.setOnMouseClicked(new EventHandler<MouseEvent>() {
                     @Override
                           public void handle(MouseEvent event) {
-                        if (event.getClickCount() == 1 && (!userRow.isEmpty())) {
+                         if (event.getClickCount() == 1 && (!userRow.isEmpty())) {
                             try {
                                 User friend = userRow.getItem();
-                                System.out.println("You clicked on: " + friend.getFullname());
-                                // Calling the friend's profile scene
+                                // System.out.println("You clicked on: " + rowData.getFullname());
+                                // Here should be the calling method of the FXML file of the Friend's Profile Scene
                                 FXMLLoader loader = new FXMLLoader(getClass().getResource("/View/FriendProfile.fxml"));
                                 Parent temp = loader.load();
                                 FriendProfileController controller = loader.getController();
+                                System.out.println(friend.getUserid());
                                 controller.setFriend(friend);
                                 Scene friendProfileScene = new Scene(temp);
                                 Stage window = (Stage) ((Node) event.getSource()).getScene().getWindow();

@@ -5,14 +5,27 @@
  */
 package Controller;
 
+import Connection.MessageProtocol;
+import Connection.MyConnection;
 import Connection.ReceiverHandler;
+import Model.Item;
 import Model.User;
+import Model.WishList;
+import com.google.gson.Gson;
+import com.google.gson.JsonObject;
+import com.google.gson.reflect.TypeToken;
 import java.io.IOException;
+import java.lang.reflect.Type;
 import java.net.URL;
+import java.util.ArrayList;
 import java.util.ResourceBundle;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javafx.application.Platform;
+import javafx.beans.property.SimpleDoubleProperty;
+import javafx.beans.property.SimpleStringProperty;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -23,12 +36,19 @@ import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.ButtonType;
+import javafx.scene.control.ProgressBar;
+import javafx.scene.control.TableCell;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
+import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
+import javafx.scene.shape.Circle;
+import javafx.scene.text.Text;
+import javafx.stage.Modality;
 import javafx.stage.Stage;
+import javafx.util.Callback;
 
 /**
  * FXML Controller class
@@ -37,6 +57,7 @@ import javafx.stage.Stage;
  */
 public class FriendProfileController implements Initializable {
 
+    private User friend;
     @FXML
     private ImageView imageView;
     @FXML
@@ -44,26 +65,33 @@ public class FriendProfileController implements Initializable {
     @FXML
     private Button backhome;
     @FXML
-    private TableView<?> wishlistTable;
+    private TableView<WishList> wishlistTable;
     @FXML
-    private TableColumn<?, ?> imageColumn;
+    private TableColumn<WishList, String> imageColumn;
     @FXML
-    private TableColumn<?, ?> nameColumn;
+    private TableColumn<WishList, String> nameColumn;
     @FXML
-    private TableColumn<?, ?> priceColumn;
+    private TableColumn<WishList, Double> priceColumn;
     @FXML
-    private TableColumn<?, ?> progressColumn;
+    private TableColumn<WishList, Double> progressColumn;
     @FXML
-    private TableColumn<?, ?> contributeColumn;
-    
-    private User friend;
+    private TableColumn<WishList, Void> contributeColumn;
+    @FXML
+    private Text friendname;
+    @FXML
+    private Text friendbd;
+    @FXML
+    private Circle friendimg;
+    private ArrayList<WishList> receivedlist;
+
+    private ObservableList<WishList> hiswishlist;
 
     /**
      * Initializes the controller class.
      */
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-        
+        ReceiverHandler.setFriendprofilecontroller(this);
         FriendsController friendsController = ReceiverHandler.getFriendscontroller();
         
         backhome.setOnMouseClicked(new EventHandler<MouseEvent>() {
@@ -80,7 +108,6 @@ public class FriendProfileController implements Initializable {
                 }
             }
         });
-        
         RemoveFriendButton.setOnAction(event -> {
             Platform.runLater(() -> {
                     Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
@@ -110,6 +137,131 @@ public class FriendProfileController implements Initializable {
                 }
             });
         });
+
+        imageColumn.setCellValueFactory(cellData ->
+                new SimpleStringProperty(cellData.getValue().getItem().getItemphoto()));
+
+        // Set the cell factory for the imageColumn
+    
+        // Set the cell value factory for the Columns
+        nameColumn.setCellValueFactory(cellData -> 
+                new SimpleStringProperty(cellData.getValue().getItem().getItemname()));
+        
+        priceColumn.setCellValueFactory(cellData ->
+                new SimpleDoubleProperty(cellData.getValue().getItem().getPrice()).asObject());
+        
+        progressColumn.setCellValueFactory(
+                new PropertyValueFactory<>("progress")
+        );
+            // Set the cell value factory for the progressColumn
+            progressColumn.setCellFactory(param -> new TableCell<WishList, Double>() {
+                private final ProgressBar progressBar = new ProgressBar();
+
+                {
+                    // Set up the ProgressBar in the cell
+                    progressBar.setMaxWidth(Double.MAX_VALUE);
+                    setGraphic(progressBar);
+                }
+    
+            @Override
+            protected void updateItem(Double progress, boolean empty) {
+                super.updateItem(progress, empty);
+
+                if (empty || progress == null) {
+                    setGraphic(null);
+                } else {
+                    // Update the ProgressBar with the current progress
+                    progressBar.setProgress(progress / 100.0);
+                    setText(String.format("%.1f%%", progress)); // Display the percentage
+                }
+            }
+        });
+            
+        contributeColumn.setCellFactory(new Callback<TableColumn<WishList, Void>, TableCell<WishList, Void>>() {
+            @Override
+            public TableCell<WishList, Void> call(TableColumn<WishList, Void> param) {
+                return new TableCell<WishList, Void>() {
+                    private final Button payButton = new Button("Pay");
+
+                    {
+                        payButton.setOnAction(event -> {
+                            try {
+                                // Get the row item associated with the clicked button
+                                WishList selected = getTableView().getItems().get(getIndex());
+                                
+                                Stage popup = new Stage();
+                                popup.initModality(Modality.APPLICATION_MODAL);
+                                FXMLLoader loader = new FXMLLoader(getClass().getResource("/View/Payment.fxml"));
+                                Parent temp = loader.load();
+                                PaymentController controller = loader.getController();
+                                controller.setFriend(friend);
+                                controller.setItem(selected);
+                                Scene scene = new Scene(temp);
+                                popup.setScene(scene);
+                                popup.setResizable(false);
+                                popup.showAndWait();
+
+                            } catch (IOException ex) {
+                                Logger.getLogger(FriendProfileController.class.getName()).log(Level.SEVERE, null, ex);
+                            }
+                        });
+                    }
+
+                    @Override
+                    protected void updateItem(Void item, boolean empty) {
+                        super.updateItem(item, empty);
+
+                        if (empty) {
+                            setGraphic(null);
+                        } else {
+                            WishList selected = getTableView().getItems().get(getIndex());
+                            if(selected.getProgress()!= 100.00)
+                                setGraphic(payButton);
+                        }
+                    }
+                };
+            }
+
+        });
+        
+        Platform.runLater(() -> {
+            requestWishlist();
+            friendname.setText(friend.getFullname());
+        });
+
+    }
+
+    public void requestWishlist() {
+
+        try {
+            Gson gson = new Gson();
+            JsonObject request = new JsonObject();
+            request.addProperty("request", gson.toJson(MessageProtocol.RETRIEVAL.GET_FRIEND_WISHLIST));
+            request.addProperty("data", gson.toJson(friend));
+            MyConnection.getInstance().getOutputStream().println(request.toString());
+        } catch (IOException ex) {
+            Logger.getLogger(FriendProfileController.class.getName()).log(Level.SEVERE, null, ex);
+        }
+
+    }
+
+    public void waitForHandler(String msg) {
+        Gson gson = new Gson();
+        // Process the reply
+        JsonObject reply = gson.fromJson(msg, JsonObject.class);
+
+        if (reply.has("data")) {
+            String arr = reply.get("data").getAsString();
+            Type dataType = new TypeToken<ArrayList<WishList>>() {
+            }.getType();
+            receivedlist = gson.fromJson(arr, dataType);
+            hiswishlist = FXCollections.observableArrayList(receivedlist);
+        } else {
+            System.out.println("No data found");
+        }
+        Platform.runLater(() -> {
+            wishlistTable.setItems(hiswishlist);
+        });
     }
 
     public User getFriend() {
@@ -119,4 +271,5 @@ public class FriendProfileController implements Initializable {
     public void setFriend(User friend) {
         this.friend = friend;
     }
+
 }

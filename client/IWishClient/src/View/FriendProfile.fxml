@@ -24,12 +24,12 @@
                         <Font name="System Bold" size="18.0" />
                      </font>
                   </Label>
-                  <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Abdullah Attia" textAlignment="CENTER" wrappingWidth="134.7109375">
+                  <Text fx:id="friendname" strokeType="OUTSIDE" strokeWidth="0.0" text="Abdullah Attia" textAlignment="CENTER" wrappingWidth="134.7109375">
                      <font>
                         <Font size="19.0" />
                      </font>
                   </Text>
-                  <Text strokeType="OUTSIDE" strokeWidth="0.0" text="24/11/1999" textAlignment="CENTER" wrappingWidth="96.744140625">
+                  <Text fx:id="friendbd" strokeType="OUTSIDE" strokeWidth="0.0" text="24/11/1999" textAlignment="CENTER" visible="false" wrappingWidth="96.744140625">
                      <font>
                         <Font size="16.0" />
                      </font>
@@ -37,7 +37,7 @@
                </children>
             </VBox>
             <ImageView fx:id="imageView" fitHeight="178.0" fitWidth="178.0" layoutX="39.0" layoutY="24.0" pickOnBounds="true" preserveRatio="true" />
-            <Circle fill="#1f93ff00" layoutX="128.0" layoutY="194.0" radius="89.0" stroke="BLACK" strokeType="INSIDE" strokeWidth="0.15" />
+            <Circle fx:id="friendimg" fill="#1f93ff00" layoutX="128.0" layoutY="194.0" radius="89.0" stroke="BLACK" strokeType="INSIDE" strokeWidth="0.15" />
             <Button fx:id="RemoveFriendButton" layoutX="61.0" layoutY="649.0" mnemonicParsing="false" prefHeight="31.0" prefWidth="134.0" style="-fx-background-color: #601100;" text="Remove Friend" textFill="WHITE">
                <cursor>
                   <Cursor fx:constant="HAND" />
@@ -58,7 +58,7 @@
                 <TableColumn fx:id="nameColumn" prefWidth="188.0" text="Name" />
                   <TableColumn fx:id="priceColumn" prefWidth="88.0" text="Price" />
                   <TableColumn fx:id="progressColumn" prefWidth="161.0" text="Progress" />
-                  <TableColumn fx:id="contributeColumn" prefWidth="85.0" text="Contribute" />
+                  <TableColumn fx:id="contributeColumn" prefWidth="134.0" text="Contribute" />
               </columns>
             </TableView>
          </children>

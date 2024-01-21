@@ -23,6 +23,8 @@ public class ReceiverHandler {
     private static WishListController wishlistcontroller;
     private static SignupController signupcontroller;
     private static ItemsController itemscontroller;
+    private static FriendProfileController friendprofilecontroller;
+    private static PaymentController paymentcontroller;
     
     private Gson gson;
 
@@ -52,6 +54,9 @@ public class ReceiverHandler {
                                 case GET_WISHLIST: 
                                     wishlistcontroller.getWishListHandler(received);
                                     break;
+                                case GET_FRIEND_WISHLIST :
+                                    friendprofilecontroller.waitForHandler(received);
+                                    break;
                                 case GET_ITEMS:
                                     itemscontroller.getItemsListHandler(received);
                                     break;
@@ -74,7 +79,8 @@ public class ReceiverHandler {
                                     itemscontroller.addItemHandler(received);
                                     break;
                                 case CONTRIBUTE:
-                                    break;
+                                    paymentcontroller.waitForHandler(received);
+                                     break;
                                 case REGISTER:
                                     signupcontroller.waitForHandler(received);
                                     break;
@@ -133,5 +139,17 @@ public class ReceiverHandler {
 
     public static FriendsController getFriendscontroller() {
         return friendscontroller;
+    }
+
+    public static void setFriendprofilecontroller(FriendProfileController friendprofilecontroller) {
+        ReceiverHandler.friendprofilecontroller = friendprofilecontroller;
+    }
+
+    public static void setPaymentcontroller(PaymentController paymentcontroller) {
+        ReceiverHandler.paymentcontroller = paymentcontroller;
+    }
+    
+    public static FriendProfileController getFriendprofilecontroller() {
+        return friendprofilecontroller;
     }
 }

@@ -49,7 +49,20 @@ public class DataModification {
             return false;
         }
     }
-    public static boolean contribute(){
+    public static boolean contribute(User user , User friend , Item item ,double amount ) throws SQLException{
+    
+        Connection con = DBConnection.getConnection();
+        PreparedStatement result = con.prepareCall("INSERT INTO contributions ( userid, friendid, itemid, amount) VALUES ( ?, ?, ?, ?)");
+        result.setInt(1, friend.getUserid());
+        result.setInt(2, user.getUserid());
+        result.setInt(3, item.getItemid()); 
+        result.setDouble(4,amount);
+
+         int out = result.executeUpdate();
+         
+         if(out == 1){
+            result.close();
+            return true ;}
         return false;
     }
     public static boolean register(User user) throws SQLException{
@@ -75,9 +88,11 @@ public class DataModification {
     }
     public static boolean removeFriend(User user, User friend) throws SQLException{
         Connection con = DBConnection.getConnection();
-        PreparedStatement statement = con.prepareStatement("DELETE FROM Friendship WHERE UserID = ? AND FriendID = ?");
-        statement.setInt(1, user.getUserid());
-        statement.setInt(2, friend.getUserid());
+        PreparedStatement statement = con.prepareStatement("DELETE FROM Friendship WHERE ((userID = ? AND friendID = ?) OR (userID = ? AND friendID = ? )) ");
+        statement.setInt(1, friend.getUserid());
+        statement.setInt(2, user.getUserid());
+        statement.setInt(4, friend.getUserid());
+        statement.setInt(3, user.getUserid());
         int result = statement.executeUpdate();
         if(result == 1){
             statement.close();

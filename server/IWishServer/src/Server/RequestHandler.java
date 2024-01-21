@@ -57,7 +57,11 @@ public class RequestHandler  {
 
                     case GET_WISHLIST :
                         return dataToJson(DataRetrieval.getWishList(user),MessageProtocol.RETRIEVAL.GET_WISHLIST );
-
+                   
+                    case GET_FRIEND_WISHLIST :
+                        User friend  = gson.fromJson(client.get("data").getAsString(), User.class);
+                        return dataToJson(DataRetrieval.getWishList(friend),MessageProtocol.RETRIEVAL.GET_FRIEND_WISHLIST );
+        
                     case GET_ITEMS :
                         return dataToJson(DataRetrieval.getItems(),MessageProtocol.RETRIEVAL.GET_ITEMS );
 
@@ -97,9 +101,11 @@ public class RequestHandler  {
                     return statusToJson(DataModification.addToWishList(user, item),MessageProtocol.MODIFY.ADD_TO_WISHLIST );    
                     
                 case CONTRIBUTE :
-                    //friend  = gson.fromJson(client.get("data").getAsString(), User.class);
-                    return statusToJson(DataModification.contribute(),MessageProtocol.MODIFY.CONTRIBUTE );
-                    
+                    friend  = gson.fromJson(client.get("friend_data").getAsString(), User.class);
+                    Item conitem  = gson.fromJson(client.get("item_data").getAsString(), Item.class);
+                    double amount  = client.get("amount").getAsDouble();
+                 return statusToJson(DataModification.contribute(user ,friend , conitem , amount),MessageProtocol.MODIFY.CONTRIBUTE );
+                     
                 case REGISTER :
                    user = gson.fromJson(client.get("data").getAsString(), User.class);   
                    login = DataModification.register(user);

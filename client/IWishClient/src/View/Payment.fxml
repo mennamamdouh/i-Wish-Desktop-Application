@@ -24,7 +24,7 @@
             <Font size="18.0" />
          </font>
       </Label>
-      <TextField fx:id="nametxtfield" layoutX="37.0" layoutY="331.0" prefHeight="45.0" prefWidth="343.0" promptText="Ex : Diaa Ahmed">
+      <TextField fx:id="nametxtfield" layoutX="37.0" layoutY="331.0" prefHeight="45.0" prefWidth="232.0" promptText="Ex : Diaa Ahmed">
          <font>
             <Font size="18.0" />
          </font>
@@ -111,5 +111,15 @@
             </Label>
          </children>
       </AnchorPane>
+      <Label layoutX="291.0" layoutY="286.0" prefHeight="37.0" prefWidth="87.0" text="Amount">
+         <font>
+            <Font size="18.0" />
+         </font>
+      </Label>
+      <TextField fx:id="amounttf" layoutX="291.0" layoutY="331.0" prefHeight="45.0" prefWidth="87.0" promptText="50">
+         <font>
+            <Font size="18.0" />
+         </font>
+      </TextField>
    </children>
 </AnchorPane>

@@ -49,7 +49,7 @@ public class DataRetrieval {
                                                     "    ON F.FriendID = U.UserID\n" +
                                                     "WHERE F.UserID = ? AND FriendshipStatus = 'Accepted'\n" +
                                                     "UNION\n" +
-                                                    "SELECT F.FriendID, U.FullName, U.UserPhoto, F.FriendshipStatus\n" +
+                                                    "SELECT F.UserID, U.FullName, U.UserPhoto, F.FriendshipStatus\n" +
                                                     "FROM Users AS U\n" +
                                                     "INNER JOIN Friendship AS F\n" +
                                                     "    ON F.UserID = U.UserID\n" +
