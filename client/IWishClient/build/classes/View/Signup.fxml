@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import javafx.geometry.Insets?>
+<?import javafx.scene.Cursor?>
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.DatePicker?>
 <?import javafx.scene.control.Label?>
@@ -50,7 +51,10 @@
                   <Insets left="20.0" right="20.0" />
                </GridPane.margin>
             </TextField>
-            <Button fx:id="RegisterButton" mnemonicParsing="false" prefHeight="41.0" prefWidth="127.0" style="-fx-background-color: #C8462B#000000;" text="Sign Up" textFill="#fcf6f6" GridPane.halignment="CENTER" GridPane.rowIndex="5" GridPane.valignment="CENTER" />
+            <Button fx:id="RegisterButton" mnemonicParsing="false" prefHeight="41.0" prefWidth="127.0" style="-fx-background-color: #C8462B#000000;" text="Sign Up" textFill="#fcf6f6" GridPane.halignment="CENTER" GridPane.rowIndex="5" GridPane.valignment="CENTER">
+               <cursor>
+                  <Cursor fx:constant="HAND" />
+               </cursor></Button>
             <DatePicker fx:id="DateOfBirthField" prefHeight="31.0" prefWidth="257.0" promptText="Date Of Birth" GridPane.rowIndex="4">
                <GridPane.margin>
                   <Insets left="20.0" right="20.0" />
