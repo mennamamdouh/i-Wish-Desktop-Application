@@ -286,6 +286,9 @@ public class FriendsController implements Initializable {
                                 Platform.runLater(() -> {
                                         Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
                                         alert.setContentText("You're about to remove " + friend.getFullname());
+                                        Stage stage = (Stage) alert.getDialogPane().getScene().getWindow();
+                                        stage.setTitle("Remove Friend");
+                                        stage.getIcons().add(new Image(this.getClass().getResource("/resources/genie-lamp-icon.png").toString()));
                                         alert.showAndWait().ifPresent(response -> {
                                             if (response == ButtonType.OK){
                                                 try {
@@ -322,6 +325,9 @@ public class FriendsController implements Initializable {
                                 Platform.runLater(() -> {
                                         Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
                                         alert.setContentText("You're about to add " + friend.getFullname());
+                                        Stage stage = (Stage) alert.getDialogPane().getScene().getWindow();
+                                        stage.setTitle("Add Friend");
+                                        stage.getIcons().add(new Image(this.getClass().getResource("/resources/genie-lamp-icon.png").toString()));
                                         alert.showAndWait().ifPresent(response -> {
                                             if (response == ButtonType.OK){
                                                 try {

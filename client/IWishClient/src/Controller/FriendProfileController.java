@@ -25,6 +25,7 @@ import javafx.scene.control.Button;
 import javafx.scene.control.ButtonType;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
+import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.stage.Stage;
@@ -84,6 +85,9 @@ public class FriendProfileController implements Initializable {
             Platform.runLater(() -> {
                     Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
                     alert.setContentText("You're about to remove " + friend.getFullname());
+                    Stage stage = (Stage) alert.getDialogPane().getScene().getWindow();
+                    stage.getIcons().add(new Image(this.getClass().getResource("/resources/genie-lamp-icon.png").toString()));
+                    stage.setTitle("Remove Friend");
                     alert.showAndWait().ifPresent(response -> {
                         if (response == ButtonType.OK){
                             try {
