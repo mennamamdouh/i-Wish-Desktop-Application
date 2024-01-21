@@ -43,9 +43,5 @@ public class HomeController implements Initializable {
         } catch (IOException ex) {
             Logger.getLogger(HomeController.class.getName()).log(Level.SEVERE, null, ex);
         }
-    }    
-
-    
-    
-    
+    }
 }

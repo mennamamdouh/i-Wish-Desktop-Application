@@ -16,6 +16,7 @@ import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
+import javafx.scene.image.Image;
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
@@ -79,7 +80,8 @@ public class ServerGUIController implements Initializable {
 
                     Stage blockingWindow = new Stage();
                     blockingWindow.initModality(Modality.APPLICATION_MODAL);
-                    blockingWindow.setTitle("Add Item");
+                    blockingWindow.getIcons().add(new Image("/resources/genie-lamp-icon.png"));
+                    blockingWindow.setTitle("Add Items");
                     blockingWindow.setScene(new Scene(addItemScene));
                 blockingWindow.showAndWait();
                 } catch (Exception e) {
@@ -87,6 +89,5 @@ public class ServerGUIController implements Initializable {
                 }
              } 
         });
-    }    
-    
+    } 
 }

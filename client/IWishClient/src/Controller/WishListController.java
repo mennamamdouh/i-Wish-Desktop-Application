@@ -136,6 +136,8 @@ public class WishListController implements Initializable {
                 root = FXMLLoader.load(getClass().getResource("/View/Items.fxml"));
                 Scene scene = new Scene(root);
                 popup.setResizable(false);
+                popup.getIcons().add(new Image("/resources/genie-lamp-icon.png"));
+                popup.setTitle("iWish Items");
                 popup.setScene(scene);
                 popup.setTitle("Items");
                 popup.show();

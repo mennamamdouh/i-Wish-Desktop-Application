@@ -26,6 +26,7 @@ import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.Button;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
+import javafx.scene.image.Image;
 import javafx.scene.layout.Pane;
 import javafx.stage.WindowEvent;
 
@@ -64,14 +65,15 @@ public class LoginController implements Initializable {
                     }
                 }
             });
-        }
-        );
+        });
 
         btnSignup.addEventHandler(ActionEvent.ACTION, (ActionEvent event) -> {
             try {
                 Parent signupParent = FXMLLoader.load(getClass().getResource("/View/Signup.fxml"));
                 Scene signupScene = new Scene(signupParent);
                 Stage window = (Stage) ((Node) event.getSource()).getScene().getWindow();
+                window.setTitle("iWish Sign-up");
+                window.getIcons().add(new Image("/resources/genie-lamp-icon.png"));
                 window.setScene(signupScene);
                 window.show();
             } catch (IOException ex) {
