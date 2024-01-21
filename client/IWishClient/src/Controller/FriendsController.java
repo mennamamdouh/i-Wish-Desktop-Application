@@ -136,13 +136,16 @@ public class FriendsController implements Initializable {
                           public void handle(MouseEvent event) {
                         if (event.getClickCount() == 1 && (!userRow.isEmpty())) {
                             try {
-                                // User rowData = userRow.getItem();
-                                // System.out.println("You clicked on: " + rowData.getFullname());
-                                // Here should be the calling method of the FXML file of the Friend's Profile Scene
-                                Parent signupParent = FXMLLoader.load(getClass().getResource("/View/FriendProfile.fxml"));
-                                Scene signupScene = new Scene(signupParent);
+                                User friend = userRow.getItem();
+                                System.out.println("You clicked on: " + friend.getFullname());
+                                // Calling the friend's profile scene
+                                FXMLLoader loader = new FXMLLoader(getClass().getResource("/View/FriendProfile.fxml"));
+                                Parent temp = loader.load();
+                                FriendProfileController controller = loader.getController();
+                                controller.setFriend(friend);
+                                Scene friendProfileScene = new Scene(temp);
                                 Stage window = (Stage) ((Node) event.getSource()).getScene().getWindow();
-                                window.setScene(signupScene);
+                                window.setScene(friendProfileScene);
                                 window.show();
                             } catch (IOException ex) {
                                 Logger.getLogger(FriendsController.class.getName()).log(Level.SEVERE, null, ex);
@@ -187,7 +190,7 @@ public class FriendsController implements Initializable {
     }
     
     // A method to remove friends from the friend list
-    private void removeFriend(User friend) throws IOException {
+    public void removeFriend(User friend) throws IOException {
         // Prepare the request
         Gson gson = new Gson();
         JsonObject request = new JsonObject();
@@ -218,7 +221,7 @@ public class FriendsController implements Initializable {
             listOfFriends.setItems(friends);
         });
     }
-     public void addAndRemoveFriendHandler(){
+    public void addAndRemoveFriendHandler(){
         try {
             // Update the viewed list after removing the friend
             getFriendList();

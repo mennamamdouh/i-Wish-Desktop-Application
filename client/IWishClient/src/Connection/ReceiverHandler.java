@@ -126,4 +126,8 @@ public class ReceiverHandler {
     public static void setItemscontroller(ItemsController itemscontroller) {
         ReceiverHandler.itemscontroller = itemscontroller;
     }
+
+    public static FriendsController getFriendscontroller() {
+        return friendscontroller;
+    }
 }
