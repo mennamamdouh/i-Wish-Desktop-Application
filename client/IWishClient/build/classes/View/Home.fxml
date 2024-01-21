@@ -7,7 +7,7 @@
 
 <TabPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="800.0" prefWidth="1000.0" side="BOTTOM" tabClosingPolicy="UNAVAILABLE" tabMinHeight="75.0" tabMinWidth="228.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Controller.HomeController">
   <tabs>
-    <Tab fx:id="wishList" style="-fx-background-color: 406770;" text="My Wish List">
+    <Tab fx:id="wishList" style="-fx-background-color: #406770;" text="My Wish List">
       <content>
         <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" />
       </content>

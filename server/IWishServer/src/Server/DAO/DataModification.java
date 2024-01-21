@@ -101,4 +101,20 @@ public class DataModification {
             return true;
         return false;
     }
+    
+    public static boolean clearWishlist (User user) throws SQLException {
+        Connection con = DBConnection.getConnection();
+        PreparedStatement statement = con.prepareStatement("delete from wishlist where userID = ? and Progress in (0.00);");
+        statement.setInt(1, user.getUserid());
+        int result = statement.executeUpdate();
+        if (result > 0){
+            statement.close();
+            System.out.println("Wishlist successfully cleared!");
+            return true;
+        }
+        else {
+            System.out.println("No item affected, your friends already contributed!");
+            return false;
+        }
+    }
 }

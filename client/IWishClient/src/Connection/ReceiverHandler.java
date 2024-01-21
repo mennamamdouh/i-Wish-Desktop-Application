@@ -50,6 +50,7 @@ public class ReceiverHandler {
                                     friendscontroller.getFriendListHandler(received);
                                     break;
                                 case GET_WISHLIST: 
+                                    wishlistcontroller.getWishListHandler(received);
                                     break;
                                 case GET_ITEMS:
                                     itemscontroller.getItemsListHandler(received);
@@ -90,6 +91,9 @@ public class ReceiverHandler {
                                 case DENY_REQUEST :
                                     notificationcontroller.nodeHandler(received);
                                     friendscontroller.addAndRemoveFriendHandler();
+                                    break;
+                                case CLEAR_WISHLIST:
+                                    wishlistcontroller.getWishlist();
                                     break;
                             }
                         }
