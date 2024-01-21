@@ -11,7 +11,7 @@
 <?import javafx.scene.shape.Rectangle?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane id="AnchorPane" prefHeight="650.0" prefWidth="410.0" style="-fx-background-color: #e3e1e1;" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Controller.PaymentController">
+<AnchorPane id="AnchorPane" prefHeight="650.0" prefWidth="410.0" style="-fx-background-color: #FDF8F6;" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Controller.PaymentController">
    <children>
       <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#6e6e6e0f" height="679.0" layoutX="-10.0" layoutY="-6.0" stroke="BLACK" strokeType="INSIDE" visible="false" width="427.0" />
       <Label alignment="CENTER" layoutX="14.0" prefHeight="66.0" prefWidth="165.0" text="Make Payment">
@@ -50,7 +50,7 @@
             <Font size="18.0" />
          </font>
       </Label>
-      <Button fx:id="submitbtn" layoutX="37.0" layoutY="603.0" mnemonicParsing="false" prefHeight="45.0" prefWidth="343.0" style="-fx-background-color: #00a4d6;" text="Submit" textFill="WHITE">
+      <Button fx:id="submitbtn" layoutX="37.0" layoutY="603.0" mnemonicParsing="false" prefHeight="45.0" prefWidth="343.0" style="-fx-background-color: #C8462B#000000;" text="Submit" textFill="WHITE">
          <font>
             <Font name="System Bold" size="18.0" />
          </font>
