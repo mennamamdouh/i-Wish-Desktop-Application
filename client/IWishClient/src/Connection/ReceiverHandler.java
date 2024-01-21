@@ -92,6 +92,9 @@ public class ReceiverHandler {
                                     notificationcontroller.nodeHandler(received);
                                     friendscontroller.addAndRemoveFriendHandler();
                                     break;
+                                case CLEAR_WISHLIST:
+                                    wishlistcontroller.getWishlist();
+                                    break;
                             }
                         }
                     } catch (IOException ex) {

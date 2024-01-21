@@ -116,6 +116,9 @@ public class RequestHandler  {
                 case DENY_REQUEST:
                     friend = gson.fromJson(client.get("data").getAsString(), User.class);
                      return statusToJson(DataModification.removeFriend(user, friend),MessageProtocol.MODIFY.DENY_REQUEST);
+                case CLEAR_WISHLIST:
+                     return statusToJson(DataModification.clearWishlist(user),MessageProtocol.MODIFY.CLEAR_WISHLIST);
+            
             }
         }
         

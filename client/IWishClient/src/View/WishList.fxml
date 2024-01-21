@@ -59,7 +59,7 @@
                <font>
                   <Font name="System Bold" size="13.0" />
                </font></Text>
-            <Button fx:id="ClearMyWishlistButton" layoutX="570.0" layoutY="511.0" mnemonicParsing="false" style="-fx-background-color: #601100;" text="Clear My Wishlist" textFill="WHITE">
+            <Button fx:id="btnClearMyWishlist" layoutX="570.0" layoutY="511.0" mnemonicParsing="false" style="-fx-background-color: #601100;" text="Clear My Wishlist" textFill="WHITE">
                <cursor>
                   <Cursor fx:constant="HAND" />
                </cursor>

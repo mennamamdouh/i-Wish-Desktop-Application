@@ -59,7 +59,7 @@ public class WishListController implements Initializable {
     @FXML
     private ImageView imageView;
     @FXML
-    private Button ClearMyWishlistButton;
+    private Button btnClearMyWishlist;
     @FXML
     private ListView wishlistList;
     @FXML
@@ -95,6 +95,29 @@ public class WishListController implements Initializable {
                 txtFullName.setText(IWishClient.user.getFullname());
                 txtBirthDate.setText(IWishClient.user.getDateOfBirth().toString());
             });
+            
+            signOutButtonHandler();
+            addProfilePictureButtonHandler();
+           
+            
+            
+            Platform.runLater(() -> {                                   //New method <-----------------------------------
+            String imagePath = IWishClient.user.getUserphoto();
+            Image userImage = new Image(imagePath);
+            System.out.println(imagePath);
+            imageView.setImage(userImage);
+            Circle defaultClip = createCircularClip();
+            imageView.setClip(defaultClip);
+
+            });        
+
+        btnClearMyWishlist.addEventHandler(ActionEvent.ACTION, (ActionEvent event) -> {     //New <--------------------
+            try {
+                clearWishlist(IWishClient.user);
+            } catch (IOException ex) {
+                Logger.getLogger(WishListController.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        });
               
             // adding few items in the list
             Platform.runLater(() -> {
@@ -193,7 +216,7 @@ searchItemsButton.addEventHandler(ActionEvent.ACTION, (ActionEvent event) -> {
         }
 
     }
-     private void getWishlist() throws IOException {
+     public void getWishlist() throws IOException {
         // Populate wishlist and contributions with data
         // Prepare the request
         Gson gson = new Gson();
@@ -248,6 +271,17 @@ searchItemsButton.addEventHandler(ActionEvent.ACTION, (ActionEvent event) -> {
             }
         });
     }
+    
+    private void clearWishlist(User user) throws IOException {
+        // Prepare the request
+        Gson gson = new Gson();
+        JsonObject request = new JsonObject();
+        request.addProperty("request", gson.toJson(MessageProtocol.MODIFY.CLEAR_WISHLIST));
+        request.addProperty("data", gson.toJson(user));
+                
+        // Send the request
+        MyConnection.getInstance().getOutputStream().println(request.toString());
+    }
 
     private void addProfilePictureButtonHandler() {
         ProfilePictureButton.addEventHandler(ActionEvent.ACTION, (ActionEvent event) -> {
@@ -268,7 +302,7 @@ searchItemsButton.addEventHandler(ActionEvent.ACTION, (ActionEvent event) -> {
     }
 
     private void ClearMyWishlistButtonHandler() {
-        ClearMyWishlistButton.addEventHandler(ActionEvent.ACTION, (ActionEvent event) -> {
+        btnClearMyWishlist.addEventHandler(ActionEvent.ACTION, (ActionEvent event) -> {
             myWishList.clear();
             wishlistList.getItems().clear();
         });
