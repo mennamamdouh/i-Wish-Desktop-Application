@@ -101,11 +101,12 @@ public class DataRetrieval {
         return item;
     }
 
-    public static ArrayList<Item> getItems() throws SQLException {
+    public static ArrayList<Item> getItems(User user) throws SQLException {
         ArrayList<Item> items = new ArrayList<Item>();
         Connection con = DBConnection.getConnection();
         ResultSet result;
-        PreparedStatement statement = con.prepareCall("select * from items", ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_READ_ONLY);
+        PreparedStatement statement = con.prepareCall("SELECT * FROM Items WHERE ItemID NOT IN (SELECT ItemID FROM Wishlist WHERE UserID = ?)", ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_READ_ONLY);
+        statement.setInt(1, user.getUserid());
         result = statement.executeQuery();
         if (result.next()) {
             result.previous();

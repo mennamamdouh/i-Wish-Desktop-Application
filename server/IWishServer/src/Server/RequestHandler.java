@@ -63,7 +63,7 @@ public class RequestHandler  {
                         return dataToJson(DataRetrieval.getWishList(friend),MessageProtocol.RETRIEVAL.GET_FRIEND_WISHLIST );
         
                     case GET_ITEMS :
-                        return dataToJson(DataRetrieval.getItems(),MessageProtocol.RETRIEVAL.GET_ITEMS );
+                        return dataToJson(DataRetrieval.getItems(user),MessageProtocol.RETRIEVAL.GET_ITEMS );
 
                     case GET_CONTRIBUTION :
                         Item item = gson.fromJson(client.get("data").getAsString() , Item.class); 
