@@ -2,6 +2,13 @@
 <project-private xmlns="http://www.netbeans.org/ns/project-private/1">
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
-        <group/>
+        <group>
+<<<<<<< HEAD
+            <file>file:/D:/ITI/9-Java%20II/Project_last_last_final/i-Wish-Desktop-Application/client/IWishClient/src/Controller/PaymentController.java</file>
+=======
+            <file>file:/home/attia/Documents/iti/Java/java2/code/Last-Day/i-Wish-Desktop-Application/client/IWishClient/src/Controller/WishListController.java</file>
+            <file>file:/home/attia/Documents/iti/Java/java2/code/Last-Day/i-Wish-Desktop-Application/client/IWishClient/src/Controller/FriendsController.java</file>
+>>>>>>> 32b72d6 (changed the friends profile picture dimensions, and set it to be circular, also added a picture)
+        </group>
     </open-files>
 </project-private>

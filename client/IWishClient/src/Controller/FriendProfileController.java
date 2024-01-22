@@ -245,6 +245,8 @@ public class FriendProfileController implements Initializable {
                             WishList selected = getTableView().getItems().get(getIndex());
                             if(selected.getProgress()!= 100.00)
                                 setGraphic(payButton);
+                            else
+                                setGraphic(null);
                         }
                     }
                 };

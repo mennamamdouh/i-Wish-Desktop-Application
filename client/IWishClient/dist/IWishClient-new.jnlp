@@ -8,8 +8,19 @@
   </information>
   <resources>
     <j2se version="1.6+" href="http://java.sun.com/products/autodl/j2se"/>
+<<<<<<< HEAD
     <jar href="IWishClient-new.jar" size="4163485" download="eager" />
+=======
+<<<<<<< HEAD
+    <jar href="IWishClient-new.jar" size="4111011" download="eager" />
+>>>>>>> fe136ce134a7b25032824bb2c7fd96416201e0d0
     <jar href="lib\gson-2.8.0.jar" size="231952" download="eager" />
+=======
+    <jar href="IWishClient-new.jar" size="4491498" download="eager" />
+    <jar href="lib/gson-2.8.0-javadoc.jar" size="261988" download="eager" />
+    <jar href="lib/gson-2.8.0-sources.jar" size="146908" download="eager" />
+    <jar href="lib/gson-2.8.0.jar" size="231952" download="eager" />
+>>>>>>> 32b72d6 (changed the friends profile picture dimensions, and set it to be circular, also added a picture)
   </resources>
   <applet-desc  width="800" height="600" main-class="com.javafx.main.NoJavaFXFallback"  name="IWishClient-new" >
     <param name="requiredFXVersion" value="8.0+"/>

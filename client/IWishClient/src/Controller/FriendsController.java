@@ -4,7 +4,6 @@
  * and open the template in the editor.
  */
 package Controller;
-
 import Connection.MyConnection;
 import Connection.MessageProtocol;
 import Connection.ReceiverHandler;
@@ -41,6 +40,7 @@ import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
+import javafx.scene.shape.Circle;
 import javafx.stage.Stage;
 import javafx.util.Callback;
 
@@ -104,13 +104,25 @@ public class FriendsController implements Initializable {
                             setGraphic(null);
                         } else {
                             Image image = new Image(imagePath);
+                            // declaring width and height for the image 
+                            double width = 50;
+                            double height = 50;
+                            double radius = 50;
                             imageView.setImage(image);
+                            // setting the width and height for the image
+                            imageView.setFitWidth(width);
+                            imageView.setFitHeight(height);
+                            //Circle defaultClip = createCircularClip();
+                            //imageView.setClip(defaultClip);
+                            imageView.setClip(createCircularImageView(radius));
+
                             setGraphic(imageView);
                         }
                     }
                 };
             }   
         });
+        
 
         // Set the cell value factory for the nameColumn
         nameColumn.setCellValueFactory(
@@ -342,5 +354,12 @@ public class FriendsController implements Initializable {
                 }
             }            
         });
+        
+    }
+     private Circle createCircularImageView(double size) {
+        Circle clip = new Circle(size / 2);
+        clip.setCenterX(size / 2);
+        clip.setCenterY(size / 2);
+        return clip;
     }
 }

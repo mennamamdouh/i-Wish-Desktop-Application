@@ -19,7 +19,7 @@ public class DataModification {
     
     public static boolean addFriend(User user, User friend) throws SQLException{
         Connection con = DBConnection.getConnection();
-        PreparedStatement statement = con.prepareStatement("INSERT INTO Friendship VALUES(?, ?, 'Pending')");
+        PreparedStatement statement = con.prepareStatement("INSERT INTO friendship VALUES(?, ?, 'Pending')");
         statement.setInt(1, friend.getUserid());
         statement.setInt(2, user.getUserid());
         try{

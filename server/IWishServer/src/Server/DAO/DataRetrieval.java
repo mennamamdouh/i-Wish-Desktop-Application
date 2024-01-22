@@ -43,15 +43,15 @@ public class DataRetrieval {
         ArrayList<User> friends = new ArrayList<User>();
         Connection con = DBConnection.getConnection();
         ResultSet result;
-        PreparedStatement statement = con.prepareCall("SELECT F.FriendID, U.FullName, U.UserPhoto, F.FriendshipStatus\n" +
-                                                    "FROM Users AS U\n" +
-                                                    "INNER JOIN Friendship AS F\n" +
+        PreparedStatement statement = con.prepareCall("SELECT F.FriendID, U.FullName, U.UserPhoto, F.friendshipStatus\n" +
+                                                    "FROM users AS U\n" +
+                                                    "INNER JOIN friendship AS F\n" +
                                                     "    ON F.FriendID = U.UserID\n" +
-                                                    "WHERE F.UserID = ? AND FriendshipStatus = 'Accepted'\n" +
+                                                    "WHERE F.UserID = ? AND friendshipStatus = 'Accepted'\n" +
                                                     "UNION\n" +
-                                                    "SELECT F.UserID, U.FullName, U.UserPhoto, F.FriendshipStatus\n" +
-                                                    "FROM Users AS U\n" +
-                                                    "INNER JOIN Friendship AS F\n" +
+                                                    "SELECT F.UserID, U.FullName, U.UserPhoto, F.friendshipStatus\n" +
+                                                    "FROM users AS U\n" +
+                                                    "INNER JOIN friendship AS F\n" +
                                                     "    ON F.UserID = U.UserID\n" +
                                                     "WHERE F.FriendID = ? AND FriendshipStatus = 'Accepted'", ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_READ_ONLY);
         statement.setInt(1, user.getUserid());
