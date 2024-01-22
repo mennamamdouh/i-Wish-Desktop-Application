@@ -25,16 +25,16 @@ public class User {
           this.userphoto = userphoto; 
     }
     
-     public User(  String email , String fullname , String password , Date date) {
+       public User(  String email , String fullname , String password ,String userphoto , Date date) {
         
         this.fullname = fullname;
        
         this.email = email ;
         this.password = password ;
+        this.userphoto = userphoto ;
         this.DateOfBirth = date ; 
         
     }
-
 
     public int getUserid() {
         return userid;

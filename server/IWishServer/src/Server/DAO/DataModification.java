@@ -9,6 +9,7 @@ import Server.DTO.Item;
 import Server.DTO.User;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.sql.SQLException;
 
 /**
@@ -68,15 +69,32 @@ public class DataModification {
     public static boolean register(User user) throws SQLException{
         int result;
         Connection con = DBConnection.getConnection();
-        PreparedStatement statement = con.prepareCall("INSERT INTO users (FullName, Email, Password, DateOfBirth) VALUES (?, ?, ?, ?)");
+        PreparedStatement statement = con.prepareCall("INSERT INTO users (FullName, Email, Password, DateOfBirth , UserPhoto) VALUES (?, ?, ?, ? , ?)");
         statement.setString(1, user.getFullname());
         statement.setString(2, user.getEmail());
         statement.setString(3, user.getPassword());
         statement.setDate(4, user.getDateOfBirth());
+        statement.setString(5, user.getUserphoto());
         try{
             result = statement.executeUpdate();
             if(result == 1){
-                return true;
+                ResultSet LoginResult;
+                PreparedStatement statement2 = con.prepareCall("select * from users where email = ? and password = ? ");
+                statement2.setString(1, user.getEmail());
+                statement2.setString(2, user.getPassword());
+                
+                LoginResult = statement2.executeQuery();
+                if (LoginResult.next()) {
+                    user.setUserid(LoginResult.getInt(1));
+                    user.setFullname(LoginResult.getString(3));
+                    user.setUserphoto(LoginResult.getString(4));
+                    user.setDateOfBirth(LoginResult.getDate(6));
+                    statement2.close();
+                    return true;
+                } else {
+                    statement2.close();
+                    return false;
+                }
             }
             else{
                 return false;
@@ -86,6 +104,7 @@ public class DataModification {
             return false;
         }
     }
+   
     public static boolean removeFriend(User user, User friend) throws SQLException{
         Connection con = DBConnection.getConnection();
         PreparedStatement statement = con.prepareStatement("DELETE FROM Friendship WHERE ((userID = ? AND friendID = ?) OR (userID = ? AND friendID = ? )) ");

@@ -29,12 +29,13 @@ public class User {
         this.fullname = fullname;
         this.userphoto = userphoto;
     }
-     public User(  String email , String fullname , String password , Date date) {
+     public User(  String email , String fullname , String password ,String userphoto , Date date) {
         
         this.fullname = fullname;
        
         this.email = email ;
         this.password = password ;
+        this.userphoto = userphoto ;
         this.DateOfBirth = date ; 
         
     }

@@ -3,9 +3,11 @@ package Controller;
 import Connection.MessageProtocol;
 import Connection.MyConnection;
 import Connection.ReceiverHandler;
+import Main.IWishClient;
 import Model.User;
 import com.google.gson.Gson;
 import com.google.gson.JsonObject;
+import java.io.File;
 import java.io.IOException;
 import java.net.URL;
 import java.sql.Date; // Import java.sql.Date for Date class
@@ -25,10 +27,14 @@ import javafx.stage.Stage;
 import java.time.LocalDate;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javafx.event.EventHandler;
+import javafx.scene.Node;
 import javafx.scene.control.ButtonType;
 import javafx.scene.control.Label;
 import javafx.scene.image.Image;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
+import javafx.stage.FileChooser;
 
 /**
  * FXML Controller class
@@ -41,6 +47,12 @@ public class SignupController implements Initializable {
     @FXML
     private Button RegisterButton;
 
+     @FXML
+    private Button BackToLoginButton;
+     
+      @FXML
+    private Button ChoosePhotoButton;
+      
     private boolean start;
 
     @FXML
@@ -59,20 +71,32 @@ public class SignupController implements Initializable {
     @FXML
     private Label RegisterLabel;
 
+    private String selectedPhotoPath;
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         // TODO
         ReceiverHandler.setSignupcontroller(this);
         RegisterButton.addEventHandler(ActionEvent.ACTION, (ActionEvent event) -> {
             if (!start) {
+          
+            
                 Thread connect = new Thread(() -> {
                     try {
                         MyConnection con = MyConnection.getInstance();
                         start = true;
-                        String email = EmailField.getText();
-                        String pass = PasswordField.getText();
+                                String email = EmailField.getText();
+        
+        // Check if the email contains "@" sign
+        if (!email.contains("@") || !email.contains(".com")) {
+            Platform.runLater(() -> {
+                Alert alert = new Alert(Alert.AlertType.ERROR);
+                alert.setContentText("Invalid email format. Please enter a valid email address.");
+                alert.showAndWait();
+            });
+        }else{
+             String pass = PasswordField.getText();
                         String name = NameField.getText();
-
+                        String PhotoPath = getSelectedFilePath();
                         java.sql.Date sqlDate = null;
                         LocalDate localDate = DateOfBirthField.getValue();
 
@@ -81,8 +105,9 @@ public class SignupController implements Initializable {
                             sqlDate = Date.valueOf(localDate);
                         }
 
-                        User user = new User(email,name, pass, sqlDate);
-                        Register(user);
+                        IWishClient.user = new User(email,name, pass,PhotoPath , sqlDate);
+                        Register(IWishClient.user);}
+                   
                     } catch (IOException ex) {
                         Platform.runLater(() -> {
                             Alert alert = new Alert(Alert.AlertType.ERROR);
@@ -94,8 +119,48 @@ public class SignupController implements Initializable {
                 connect.start();
             }
         });
+         BackToLoginButton.setOnMouseClicked(new EventHandler<MouseEvent>() {
+            @Override
+            public void handle(MouseEvent event) {
+                try {
+                    Parent signupParent = FXMLLoader.load(getClass().getResource("/View/Login.fxml"));
+                    Scene signupScene = new Scene(signupParent);
+                    Stage window = (Stage) ((Node) event.getSource()).getScene().getWindow();
+                    window.setScene(signupScene);
+                    window.show();
+                } catch (IOException ex) {
+                    Logger.getLogger(FriendProfileController.class.getName()).log(Level.SEVERE, null, ex);
+                }
+            }
+        });
+          ChoosePhotoButton.setOnMouseClicked(new EventHandler<MouseEvent>() {
+            @Override
+            public void handle(MouseEvent event) {
+                FileChooser fileChooser = new FileChooser();
+                fileChooser.setTitle("Choose an Image File");
+               
+                // Now 'substring' contains the path starting from "resources"
+           
+                // Set the extension filter for image files
+                FileChooser.ExtensionFilter extFilter = new FileChooser.ExtensionFilter("Image Files", "*.png", "*.jpg", "*.jpeg");
+                fileChooser.getExtensionFilters().add(extFilter);
+                // Show open dialog
+                File selectedFile = fileChooser.showOpenDialog(new Stage());
+                if (selectedFile != null) {
+                    selectedPhotoPath = selectedFile.getAbsolutePath();
+                    int indexOfResourcesString = selectedPhotoPath.indexOf("resources");
+                    selectedPhotoPath = selectedPhotoPath.substring(indexOfResourcesString).replace("\\", "/");
+                    System.out.println("Selected Image File: " + selectedPhotoPath);
+                    // You can now use the 'selectedFilePath' variable as needed
+                }
+            }
+        });
+         
     }
 
+     public String getSelectedFilePath() {
+        return selectedPhotoPath;
+    }
     public void Register(User user) throws IOException {
         // Prepare Request
         Gson gson = new Gson();
