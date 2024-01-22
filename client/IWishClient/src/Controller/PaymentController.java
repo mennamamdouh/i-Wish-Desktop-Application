@@ -102,7 +102,7 @@ public class PaymentController implements Initializable {
                 Alert alert = new Alert(Alert.AlertType.ERROR);
                 if(cardnumber.getText().length() < 25)
                   alert.setContentText("Please Enter Your Card Number Corrrect !!");
-                if(cardname.getText().length() >= 10)
+                if(cardname.getText().length() <= 10)
                   alert.setContentText("Please Enter Your Name on Card Corrrect\n Ex : Diaa Ahmed");
                 if(cvvtextfield.getText().length() == 3 )
                   alert.setContentText("CVV isn't correct ..");              

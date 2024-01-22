@@ -25,7 +25,7 @@ public class ReceiverHandler {
     private static ItemsController itemscontroller;
     private static FriendProfileController friendprofilecontroller;
     private static PaymentController paymentcontroller;
-    
+    private boolean flag;
     private Gson gson;
 
     public ReceiverHandler() {
@@ -64,9 +64,19 @@ public class ReceiverHandler {
                                     wishlistcontroller.getContributionHandler(received);
                                     break;
                                 case GET_NOTIFICATIONS:
-                                    notificationcontroller.waitForHandler(received);
-                                    friendscontroller.addAndRemoveFriendHandler();
+                        /**/
+                                    // Refresh when Receiving any notifications
+                                    if(flag){
+                                        notificationcontroller.waitForHandler(received);
+                                        friendscontroller.addAndRemoveFriendHandler();
+                                        wishlistcontroller.getWishlist();
+                                    }else
+                                    {
+                                        notificationcontroller.waitForHandler(received);
+                                        flag = true;
+                                    }
                                     break;
+                        /**/
                                 case GET_USERS:
                                     friendscontroller.searchHandler(received);
                                     break;
@@ -152,5 +162,9 @@ public class ReceiverHandler {
     
     public static FriendProfileController getFriendprofilecontroller() {
         return friendprofilecontroller;
+    }
+
+    public static WishListController getWishlistcontroller() {
+        return wishlistcontroller;
     }
 }

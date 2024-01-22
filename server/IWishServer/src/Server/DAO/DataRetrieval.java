@@ -43,17 +43,17 @@ public class DataRetrieval {
         ArrayList<User> friends = new ArrayList<User>();
         Connection con = DBConnection.getConnection();
         ResultSet result;
-        PreparedStatement statement = con.prepareCall("SELECT F.FriendID, U.FullName, U.UserPhoto, F.FriendshipStatus\n" +
-                                                    "FROM Users AS U\n" +
-                                                    "INNER JOIN Friendship AS F\n" +
+        PreparedStatement statement = con.prepareCall("SELECT F.FriendID, U.FullName, U.UserPhoto, F.friendshipStatus\n" +
+                                                    "FROM users AS U\n" +
+                                                    "INNER JOIN friendship AS F\n" +
                                                     "    ON F.FriendID = U.UserID\n" +
-                                                    "WHERE F.UserID = ? AND FriendshipStatus = 'Accepted'\n" +
+                                                    "WHERE F.UserID = ? AND friendshipStatus = 'Accepted'\n" +
                                                     "UNION\n" +
-                                                    "SELECT F.UserID, U.FullName, U.UserPhoto, F.FriendshipStatus\n" +
-                                                    "FROM Users AS U\n" +
-                                                    "INNER JOIN Friendship AS F\n" +
+                                                    "SELECT F.UserID, U.FullName, U.UserPhoto, F.friendshipStatus\n" +
+                                                    "FROM users AS U\n" +
+                                                    "INNER JOIN friendship AS F\n" +
                                                     "    ON F.UserID = U.UserID\n" +
-                                                    "WHERE F.FriendID = ? AND FriendshipStatus = 'Accepted';", ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_READ_ONLY);
+                                                    "WHERE F.FriendID = ? AND FriendshipStatus = 'Accepted'", ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_READ_ONLY);
         statement.setInt(1, user.getUserid());
         statement.setInt(2, user.getUserid());
         result = statement.executeQuery();
@@ -170,27 +170,41 @@ public class DataRetrieval {
         ArrayList<User> users = new ArrayList<User>();
         Connection con = DBConnection.getConnection();
         ResultSet result;
-        PreparedStatement statement = con.prepareCall("WITH friends AS(\n"
-                + "    SELECT F.FriendID, U.FullName, U.UserPhoto, F.FriendshipStatus\n"
-                + "    FROM Users AS U\n"
-                + "    INNER JOIN Friendship AS F\n"
-                + "        ON F.FriendID = U.userID\n"
-                + "    WHERE F.UserID = ? AND FriendshipStatus = 'Accepted'\n"
-                + "),\n"
-                + "pending AS(\n"
-                + "    SELECT F.FriendID, U.FullName, U.UserPhoto, F.FriendshipStatus\n"
-                + "    FROM Users AS U\n"
-                + "    INNER JOIN Friendship AS F\n"
-                + "        ON F.FriendID = U.userID\n"
-                + "    WHERE F.UserID = ? AND FriendshipStatus = 'Pending'\n"
-                + ")\n"
-                + "SELECT U.UserID, U.FullName, U.UserPhoto\n"
-                + "FROM Users AS U\n"
-                + "WHERE (U.UserID NOT IN(SELECT FriendID FROM friends) AND U.UserID NOT IN(SELECT FriendID FROM pending)) AND U.UserID != ? AND U.FullName LIKE ?;", ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_READ_ONLY);
+        PreparedStatement statement = con.prepareCall("WITH friends AS(\n" +
+                                                    "    SELECT F.FriendID, U.FullName, U.UserPhoto, F.FriendshipStatus\n" +
+                                                    "    FROM Users AS U\n" +
+                                                    "    INNER JOIN Friendship AS F\n" +
+                                                    "        ON F.FriendID = U.UserID\n" +
+                                                    "    WHERE F.UserID = ? AND FriendshipStatus = 'Accepted'\n" +
+                                                    "    UNION\n" +
+                                                    "    SELECT F.UserID, U.FullName, U.UserPhoto, F.FriendshipStatus\n" +
+                                                    "    FROM Users AS U\n" +
+                                                    "    INNER JOIN Friendship AS F\n" +
+                                                    "        ON F.UserID = U.UserID\n" +
+                                                    "    WHERE F.FriendID = ? AND FriendshipStatus = 'Accepted'\n" +
+                                                    "),\n" +
+                                                    "pending AS(\n" +
+                                                    "    SELECT F.FriendID, U.FullName, U.UserPhoto, F.FriendshipStatus\n" +
+                                                    "    FROM Users AS U\n" +
+                                                    "    INNER JOIN Friendship AS F\n" +
+                                                    "        ON F.FriendID = U.UserID\n" +
+                                                    "    WHERE F.UserID = ? AND FriendshipStatus = 'Pending'\n" +
+                                                    "    UNION\n" +
+                                                    "    SELECT F.UserID, U.FullName, U.UserPhoto, F.FriendshipStatus\n" +
+                                                    "    FROM Users AS U\n" +
+                                                    "    INNER JOIN Friendship AS F\n" +
+                                                    "        ON F.UserID = U.UserID\n" +
+                                                    "    WHERE F.FriendID = ? AND FriendshipStatus = 'Pending'\n" +
+                                                    ")\n" +
+                                                    "SELECT U.UserID, U.FullName, U.UserPhoto\n" +
+                                                    "FROM Users AS U\n" +
+                                                    "WHERE (U.UserID NOT IN(SELECT FriendID FROM friends)) AND (U.UserID NOT IN(SELECT FriendID FROM pending)) AND (U.UserID != ?) AND (U.FullName LIKE ?);", ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_READ_ONLY);
         statement.setInt(1, user.getUserid());
         statement.setInt(2, user.getUserid());
         statement.setInt(3, user.getUserid());
-        statement.setString(4, searchedText + '%');
+        statement.setInt(4, user.getUserid());
+        statement.setInt(5, user.getUserid());
+        statement.setString(6, searchedText + '%');
         result = statement.executeQuery();
         if (result.next()) {
             result.previous();
