@@ -8,7 +8,15 @@
   </information>
   <resources>
     <j2se version="1.6+" href="http://java.sun.com/products/autodl/j2se"/>
+<<<<<<< HEAD
     <jar href="IWishClient-new.jar" size="4112641" download="eager" />
+=======
+<<<<<<< HEAD
+    <jar href="IWishClient-new.jar" size="4116345" download="eager" />
+=======
+    <jar href="IWishClient-new.jar" size="4487300" download="eager" />
+>>>>>>> 653d488011ab2986ed9ed8756f8452873b6acbe3
+>>>>>>> 6551d41ea175a07d9b0fc6856525001cd2583483
     <jar href="lib\gson-2.8.0.jar" size="231952" download="eager" />
   </resources>
   <applet-desc  width="800" height="600" main-class="com.javafx.main.NoJavaFXFallback"  name="IWishClient-new" >

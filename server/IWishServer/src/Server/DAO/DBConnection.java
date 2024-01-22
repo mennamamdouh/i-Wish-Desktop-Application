@@ -27,7 +27,7 @@ public abstract class DBConnection {
      */
     public static Connection getConnection() throws SQLException{
         if(dbconnection == null)
-            dbconnection = DriverManager.getConnection("jdbc:mysql://localhost:3306/iwishdb", "root", "admin");
+            dbconnection = DriverManager.getConnection("jdbc:mysql://localhost:3306/iwishdb", "root", "root");
         return dbconnection;
     }
     

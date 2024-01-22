@@ -216,17 +216,7 @@ searchItemsButton.addEventHandler(ActionEvent.ACTION, (ActionEvent event) -> {
         popup.getIcons().add(new Image("/resources/genie-lamp-icon.png"));
         popup.setTitle("iWish Items");
         popup.setScene(scene);
-        popup.setTitle("Items");
-        popup.setOnCloseRequest(new EventHandler<WindowEvent>() {
-                @Override
-                public void handle(WindowEvent event) {
-                    try {
-                        getWishlist();
-                    } catch (IOException ex) {
-                        Logger.getLogger(WishListController.class.getName()).log(Level.SEVERE, null, ex);
-                    }
-                }
-            });
+        popup.setTitle("Items"); // Deleted Listener and put it in itemscontroller
         popup.show();
         
     } catch (IOException ex) {
