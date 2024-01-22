@@ -22,14 +22,19 @@ public class DataModification {
         PreparedStatement statement = con.prepareStatement("INSERT INTO Friendship VALUES(?, ?, 'Pending')");
         statement.setInt(1, friend.getUserid());
         statement.setInt(2, user.getUserid());
-        int result = statement.executeUpdate();
-        if(result == 1){
-            statement.close();
-            System.out.println("Friend was added successfuly.");
-            return true;
-        }
-        else{
-            System.out.println("Friend wasn't added.");
+        try{
+            int result = statement.executeUpdate();
+            if(result == 1){
+                statement.close();
+                System.out.println("Friend was added successfuly.");
+                return true;
+            }
+            else{
+                System.out.println("Friend wasn't added.");
+                return false;
+            }
+        } catch(SQLException ex){
+            System.out.println("You've already added this friend.");
             return false;
         }
     }
