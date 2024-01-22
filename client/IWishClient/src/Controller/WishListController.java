@@ -36,14 +36,19 @@ import javafx.application.Platform;
 import javafx.scene.control.cell.PropertyValueFactory;
 import Connection.MyConnection;
 import Main.IWishClient;
+import javafx.beans.property.SimpleStringProperty;
 import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.text.Text;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
+import javafx.stage.WindowEvent;
+import javafx.util.Callback;
 
 /**
  * FXML Controller class
@@ -60,7 +65,6 @@ public class WishListController implements Initializable {
     private ImageView imageView;
     @FXML
     private Button btnClearMyWishlist;
-    @FXML
     private ListView wishlistList;
     @FXML
     private Button SignOutButton;
@@ -85,6 +89,13 @@ public class WishListController implements Initializable {
 
     private static final String DEFAULT_IMAGE_PATH = "file:src/Resources/blank.png";
     private static final double CIRCLE_CENTER = 0.5; // Center ratio for circular clipping
+    @FXML
+    private TableView<Contribution> contributionsTable;
+    @FXML
+    private TableColumn<Contribution, String> contributorColumn;
+    @FXML
+    private TableColumn<Contribution, Double> amountColumn;
+    private ObservableList<Contribution> contlist;
 
     @Override
     public void initialize(URL url, ResourceBundle rb) {
@@ -98,13 +109,11 @@ public class WishListController implements Initializable {
             
             signOutButtonHandler();
             addProfilePictureButtonHandler();
-           
-            
             
             Platform.runLater(() -> {                                   //New method <-----------------------------------
             String imagePath = IWishClient.user.getUserphoto();
             Image userImage = new Image(imagePath);
-            System.out.println(imagePath);
+            //System.out.println(imagePath);
             imageView.setImage(userImage);
             Circle defaultClip = createCircularClip();
             imageView.setClip(defaultClip);
@@ -121,6 +130,7 @@ public class WishListController implements Initializable {
               
             // adding few items in the list
             Platform.runLater(() -> {
+            initContribution();
             imageColumn.setCellValueFactory(new PropertyValueFactory<>("image"));
             
             imageColumn.setCellFactory(param -> new TableCell<WishListItem, String>() {
@@ -130,9 +140,9 @@ public class WishListController implements Initializable {
                 protected void updateItem(String imagePath, boolean empty) {
                     super.updateItem(imagePath, empty);
                     
-                    System.out.println("Image path: " + imagePath);
+            //        System.out.println("Image path: " + imagePath);
                     
-                    if (empty || imagePath == null) {
+                    if (empty || imagePath == null) {                      
                         setGraphic(null);
                     } else {
                         try {
@@ -147,7 +157,7 @@ public class WishListController implements Initializable {
                             setGraphic(imageView);
                             
                         } catch (Exception e) {
-                            System.err.println("Error loading image: " + e.getMessage());
+                           // System.err.println("Error loading image: " + e.getMessage());
                             setGraphic(null);
                         }
                     }
@@ -183,6 +193,7 @@ public class WishListController implements Initializable {
                 super.updateItem(progress, empty);
 
                 if (empty || progress == null) {
+                    setText(null);
                     setGraphic(null);
                 } else {
                     // Update the ProgressBar with the current progress
@@ -206,7 +217,18 @@ searchItemsButton.addEventHandler(ActionEvent.ACTION, (ActionEvent event) -> {
         popup.setTitle("iWish Items");
         popup.setScene(scene);
         popup.setTitle("Items");
+        popup.setOnCloseRequest(new EventHandler<WindowEvent>() {
+                @Override
+                public void handle(WindowEvent event) {
+                    try {
+                        getWishlist();
+                    } catch (IOException ex) {
+                        Logger.getLogger(WishListController.class.getName()).log(Level.SEVERE, null, ex);
+                    }
+                }
+            });
         popup.show();
+        
     } catch (IOException ex) {
         Logger.getLogger(WishListController.class.getName()).log(Level.SEVERE, null, ex);
     }
@@ -237,11 +259,10 @@ searchItemsButton.addEventHandler(ActionEvent.ACTION, (ActionEvent event) -> {
             ArrayList<WishList> itemList = gson.fromJson(arr, dataType);
             ArrayList<WishListItem> wList = new ArrayList<WishListItem>();
             for(WishList wl : itemList)
-                wList.add(new WishListItem(wl.getItem().getItemphoto(),wl.getItem().getItemname(),wl.getItem().getPrice(),wl.getProgress()));
+                wList.add(new WishListItem(wl.getItem().getItemid(),wl.getItem().getItemphoto(),wl.getItem().getItemname(),wl.getItem().getPrice(),wl.getProgress()));
             
             wishlist = FXCollections.observableArrayList(wList);
             Platform.runLater(() -> {
-               
                wishlistTable.setItems(wishlist);  
             });
         }
@@ -315,6 +336,55 @@ searchItemsButton.addEventHandler(ActionEvent.ACTION, (ActionEvent event) -> {
         clip.setCenterY(imageView.getFitHeight() / 2);
         clip.setRadius(radius);
         return clip;
+    }
+
+    private void initContribution(){
+      contributorColumn.setCellValueFactory(cellData ->
+                new SimpleStringProperty(cellData.getValue().getFriend().getFullname()));
+      amountColumn.setCellValueFactory(
+                new PropertyValueFactory<>("amount")
+        );  
+      wishlistTable.setRowFactory(new Callback<TableView<WishListItem>, TableRow<WishListItem>>() {
+            @Override
+            public TableRow<WishListItem> call(TableView<WishListItem> tv) {
+                TableRow<WishListItem> itemRow = new TableRow<>();
+                itemRow.setOnMouseEntered(new EventHandler<MouseEvent>() {
+                    @Override
+                          public void handle(MouseEvent event) {
+                         if (!itemRow.isEmpty()) {
+                             WishListItem item = itemRow.getItem();
+                             getContribution(new Item(item.getItemid()));
+                        }
+                    }
+                });                
+                
+                return itemRow ;
+            }
+        });
+    }
+     public void getContribution(Item choosen){
+        try {
+            Gson gson = new Gson();
+            JsonObject request = new JsonObject();
+            request.addProperty("request",gson.toJson(MessageProtocol.RETRIEVAL.GET_CONTRIBUTION));
+            request.addProperty("data",gson.toJson(choosen));
+            MyConnection.getInstance().getOutputStream().println(request.toString());
+        } catch (IOException ex) {
+            Logger.getLogger(WishListController.class.getName()).log(Level.SEVERE, null, ex);
+        }      
+    }
+    public void getContributionHandler(String msg){
+        Gson gson = new Gson();
+        JsonObject reply = gson.fromJson(msg, JsonObject.class);
+        if(reply.has("data")){
+            String arr = reply.get("data").getAsString();
+            Type dataType = new TypeToken<ArrayList<Contribution>>(){}.getType();
+            ArrayList<Contribution> contributionList = gson.fromJson(arr, dataType);
+            contlist = FXCollections.observableArrayList(contributionList);
+            Platform.runLater(() -> {     
+               contributionsTable.setItems(contlist);  
+            });
+        }
     }
 }
 // items class to add few items to the wishlist

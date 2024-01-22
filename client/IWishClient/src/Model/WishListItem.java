@@ -50,11 +50,20 @@ public class WishListItem{
         this.progress = progress;
     }
 
-    public WishListItem(String image, String name, double price, double progress) {
+    public WishListItem( int itemid ,String image, String name, double price, double progress) {
         this.image = image;
         this.name = name;
         this.price = price;
         this.progress = progress;
+        this.itemid = itemid;
     }
 
+    public int getItemid() {
+        return itemid;
+    }
+
+    public void setItemid(int itemid) {
+        this.itemid = itemid;
+    }
+    
 }

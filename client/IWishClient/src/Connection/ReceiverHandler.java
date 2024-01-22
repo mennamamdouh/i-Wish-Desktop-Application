@@ -61,6 +61,7 @@ public class ReceiverHandler {
                                     itemscontroller.getItemsListHandler(received);
                                     break;
                                 case GET_CONTRIBUTION:
+                                    wishlistcontroller.getContributionHandler(received);
                                     break;
                                 case GET_NOTIFICATIONS:
                                     notificationcontroller.waitForHandler(received);

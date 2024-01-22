@@ -98,6 +98,16 @@ public class PaymentController implements Initializable {
         submitbtn.setOnAction(event -> {
             if(cardnumber.getText().length() == 25 && cardname.getText().length() >= 10 && cvvtextfield.getText().length() == 3 && Integer.parseInt(amounttf.getText()) > 0 && !datepicker.getValue().toString().equals(null) )
                 contribute();
+            else{
+                Alert alert = new Alert(Alert.AlertType.ERROR);
+                if(cardnumber.getText().length() < 25)
+                  alert.setContentText("Please Enter Your Card Number Corrrect !!");
+                if(cardname.getText().length() >= 10)
+                  alert.setContentText("Please Enter Your Name on Card Corrrect\n Ex : Diaa Ahmed");
+                if(cvvtextfield.getText().length() == 3 )
+                  alert.setContentText("CVV isn't correct ..");              
+                alert.showAndWait();
+            }
         });
         Platform.runLater(() -> {
             Stage stage = (Stage) (submitbtn.getScene().getWindow());

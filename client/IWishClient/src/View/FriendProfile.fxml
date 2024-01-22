@@ -36,14 +36,14 @@
                   </Text>
                </children>
             </VBox>
-            <ImageView fx:id="imageView" fitHeight="178.0" fitWidth="178.0" layoutX="39.0" layoutY="24.0" pickOnBounds="true" preserveRatio="true" />
+            <ImageView fx:id="imageView" fitHeight="178.0" fitWidth="178.0" layoutX="39.0" layoutY="105.0" pickOnBounds="true" preserveRatio="true" />
             <Circle fx:id="friendimg" fill="#1f93ff00" layoutX="128.0" layoutY="194.0" radius="89.0" stroke="BLACK" strokeType="INSIDE" strokeWidth="0.15" />
             <Button fx:id="RemoveFriendButton" layoutX="61.0" layoutY="649.0" mnemonicParsing="false" prefHeight="31.0" prefWidth="134.0" style="-fx-background-color: #601100;" text="Remove Friend" textFill="WHITE">
                <cursor>
                   <Cursor fx:constant="HAND" />
                </cursor>
             </Button>
-            <Button fx:id="backhome" layoutX="64.0" layoutY="34.0" mnemonicParsing="false" prefHeight="31.0" prefWidth="134.0" style="-fx-background-color: #601100;" text="Back To Home" textFill="WHITE">
+            <Button fx:id="backhome" layoutX="61.0" layoutY="34.0" mnemonicParsing="false" prefHeight="31.0" prefWidth="134.0" style="-fx-background-color: #601100;" text="Back To Home" textFill="WHITE">
                <cursor>
                   <Cursor fx:constant="HAND" />
                </cursor>

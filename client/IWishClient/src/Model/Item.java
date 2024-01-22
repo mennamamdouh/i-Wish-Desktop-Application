@@ -23,6 +23,10 @@ public class Item {
         this.itemphoto = itemphoto;
         this.price = price;
     }
+
+    public Item(int itemid) {
+        this.itemid = itemid;
+    }
     
     public int getItemid() {
         return itemid;

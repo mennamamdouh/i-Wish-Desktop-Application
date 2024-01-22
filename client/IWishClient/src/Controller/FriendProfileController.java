@@ -11,6 +11,7 @@ import Connection.ReceiverHandler;
 import Model.Item;
 import Model.User;
 import Model.WishList;
+import Model.WishListItem;
 import com.google.gson.Gson;
 import com.google.gson.JsonObject;
 import com.google.gson.reflect.TypeToken;
@@ -142,6 +143,33 @@ public class FriendProfileController implements Initializable {
                 new SimpleStringProperty(cellData.getValue().getItem().getItemphoto()));
 
         // Set the cell factory for the imageColumn
+        imageColumn.setCellFactory(param -> new TableCell<WishList, String>() {
+                private final ImageView imageView = new ImageView();
+                
+                @Override
+                protected void updateItem(String imagePath, boolean empty) {
+                    super.updateItem(imagePath, empty);   
+                    if (empty || imagePath == null) {
+                        setGraphic(null);
+                    } else {
+                        try {
+                            // Load the image using the correct class loader
+                            Image image = new Image(getClass().getClassLoader().getResourceAsStream(imagePath));
+                            // Set properties for the ImageView
+                            imageView.setImage(image);
+                            imageView.setFitWidth(50); // Adjust the width as needed
+                            imageView.setFitHeight(50); // Adjust the height as needed
+                            
+                            // Set the ImageView as the graphic for the cell
+                            setGraphic(imageView);
+                            
+                        } catch (Exception e) {
+                           // System.err.println("Error loading image: " + e.getMessage());
+                            setGraphic(null);
+                        }
+                    }
+                }
+            });
     
         // Set the cell value factory for the Columns
         nameColumn.setCellValueFactory(cellData -> 
@@ -227,6 +255,11 @@ public class FriendProfileController implements Initializable {
         Platform.runLater(() -> {
             requestWishlist();
             friendname.setText(friend.getFullname());
+            String imagePath = friend.getUserphoto();
+            Image userImage = new Image(imagePath);
+            imageView.setImage(userImage);
+            Circle defaultClip = createCircularClip();
+            imageView.setClip(defaultClip);
         });
 
     }
@@ -262,6 +295,14 @@ public class FriendProfileController implements Initializable {
         Platform.runLater(() -> {
             wishlistTable.setItems(hiswishlist);
         });
+    }
+    private Circle createCircularClip() {
+        double radius = Math.min(imageView.getFitWidth(), imageView.getFitHeight()) * 0.5;
+        Circle clip = new Circle();
+        clip.setCenterX(imageView.getFitWidth() / 2);
+        clip.setCenterY(imageView.getFitHeight() / 2);
+        clip.setRadius(radius);
+        return clip;
     }
 
     public User getFriend() {
