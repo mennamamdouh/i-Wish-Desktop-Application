@@ -200,7 +200,6 @@ public class FriendsController implements Initializable {
                 
         // Send the request
         MyConnection.getInstance().getOutputStream().println(request.toString());
-
     }
     private void addFriend(User friend) throws IOException {
         // Prepare the request
@@ -211,24 +210,11 @@ public class FriendsController implements Initializable {
                 
         // Send the request
         MyConnection.getInstance().getOutputStream().println(request.toString());
-        
-        // Wait for the reply
-        String msg = MyConnection.getInstance().getInputStream().readLine();
-        
-        // Update the viewed list after removing the friend
-        getFriendList();
-        Platform.runLater(() -> {
-            resetButton(false);
-            listOfFriends.setItems(friends);
-        });
     }
     public void addAndRemoveFriendHandler(){
         try {
-            // Update the viewed list after removing the friend
+            // Update the viewed list after removing or adding a friend
             getFriendList();
-            Platform.runLater(() -> {
-                resetButton(false);
-            });
         } catch (IOException ex) {
             Logger.getLogger(FriendsController.class.getName()).log(Level.SEVERE, null, ex);
         }
