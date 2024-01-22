@@ -28,6 +28,7 @@ public final class IWishClient extends Application {
         stage.getIcons().add(new Image("/resources/genie-lamp-icon.png"));
         stage.setTitle("iWish");
         stage.setScene(scene);
+        stage.setResizable(false);
         stage.show();
     }
     
