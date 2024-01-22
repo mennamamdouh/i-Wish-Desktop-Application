@@ -71,7 +71,7 @@ public class AboutController implements Initializable {
         omarImage.setClip(omarCircle);
         
         Circle abdullahCircle = createCircularClip();
-        Image abdullah = new Image("resources/male-avatar.png");
+        Image abdullah = new Image("resources/abdullah.png");
         abdullahImage.setImage(abdullah);
         abdullahImage.setClip(abdullahCircle);
     }
