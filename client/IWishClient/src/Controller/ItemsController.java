@@ -125,6 +125,8 @@ public class ItemsController implements Initializable {
                                             try {
                                                 // Perform the add action for the item
                                                 addItem(item);
+                                  /**/          // Refresh data in wishlist after adding item
+                                  /**/          ReceiverHandler.getWishlistcontroller().getWishlist();
                                             } catch (IOException ex) {
                                                 Logger.getLogger(ItemsController.class.getName()).log(Level.SEVERE, null, ex);
                                             }
