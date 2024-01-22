@@ -5,30 +5,28 @@
 <?import javafx.scene.control.TabPane?>
 <?import javafx.scene.layout.AnchorPane?>
 
-<TabPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="800.0" prefWidth="1000.0" side="BOTTOM" tabClosingPolicy="UNAVAILABLE" tabMinHeight="75.0" tabMinWidth="228.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Controller.HomeController">
-  <tabs>
-    <Tab fx:id="wishList" style="-fx-background-color: 406770;" text="My Wish List">
-      <content>
-        <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" />
-      </content>
-    </Tab>
-    <Tab fx:id="friends" style="-fx-background-color: 406770;" text="Friends">
-      <content>
-        <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" />
-      </content>
-    </Tab>
-      <Tab fx:id="notification" style="-fx-background-color: 406770;" text="Notification">
-        <content>
-          <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" />
-        </content>
-      </Tab>
-      <Tab fx:id="about" style="-fx-background-color: 406770;" text="About">
-        <content>
-          <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" />
-        </content>
-      </Tab>
-  </tabs>
-   <cursor>
-      <Cursor fx:constant="DEFAULT" />
-   </cursor>
+<TabPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="800.0" prefWidth="1000.0" side="BOTTOM" tabClosingPolicy="UNAVAILABLE" tabMinHeight="75.0" tabMinWidth="228.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Controller.HomeController" stylesheets="@../resources/css%20files/home.css">
+    <tabs>
+        <Tab fx:id="wishList" text="My Wish List">
+            <content>
+                <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" />
+            </content>
+        </Tab>
+        <Tab fx:id="friends" text="Friends">
+            <content>
+                <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" />
+            </content>
+        </Tab>
+        <Tab fx:id="notification"  text="Notification">
+            <content>
+                <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" />
+            </content>
+        </Tab>
+        <Tab fx:id="about"  text="About">
+            <content>
+                <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" />
+            </content>
+        </Tab>
+    </tabs>
+    
 </TabPane>

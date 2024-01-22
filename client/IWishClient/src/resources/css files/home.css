@@ -1,0 +1,32 @@
+/* home.css */
+
+  .tab-pane {
+    -fx-background-color: #601100; /* Set background color */
+}
+
+/* Style for the tabs */
+.tab {
+    -fx-background-color:   #dddddd; /* Set tab background color */
+    -fx-text-base-color: black; /* Set tab text color */
+    -fx-font-weight: bold; /* Set tab text bold */
+    
+}
+
+.tab:hover {
+    -fx-background-color: #A6A6A6; /* Set background color on hover */
+}
+
+/* Style for the selected tab */
+.tab:selected {
+    -fx-background-color: #A6A6A6; /* Set selected tab background color */
+}
+
+/* Style for the content area */
+.tab-content-area {
+    -fx-background-color: #ffffff; /* Set content area background color */
+}
+
+/* Style for the cursor */
+.cursor {
+    -fx-cursor: hand; /* Set cursor to hand (pointer) */
+}

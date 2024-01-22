@@ -24,7 +24,7 @@
                         <Font name="System Bold" size="18.0" />
                      </font>
                   </Label>
-                  <Text fx:id="friendname" strokeType="OUTSIDE" strokeWidth="0.0" text="Abdullah Attia" textAlignment="CENTER" wrappingWidth="134.7109375">
+                  <Text fx:id="friendname" strokeType="OUTSIDE" strokeWidth="0.0" text="Abdullah Attia" textAlignment="CENTER" wrappingWidth="167.7109375">
                      <font>
                         <Font size="19.0" />
                      </font>

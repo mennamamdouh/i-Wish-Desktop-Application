@@ -1,0 +1,39 @@
+/* items.css */
+
+.table-cell {
+    -fx-alignment: CENTER; /* Set cell alignment */
+    -fx-padding: 5px; /* Set cell padding */
+}
+
+/* Apply alternating row colors */
+.table-row-cell:even {
+    -fx-background-color: #f0f0f0; /* Set background color for even rows */
+}
+
+.table-row-cell:odd {
+    -fx-background-color: #ffffff; /* Set background color for odd rows */
+}
+
+.table-row-cell:hover {
+    -fx-background-color: #e0e0e0; /* Set hover background color */
+}
+
+.table-cell {
+    -fx-border-width: 0.5px; /* Set border width */
+    -fx-border-color: #d0d0d0; /* Set border color */
+}
+
+
+.table-cell {
+    -fx-wrap-text: true; /* Enable text wrapping */
+}
+
+
+.column-header {
+    -fx-background-color:  #E5A888; /* Set header background color */
+    -fx-text-fill: White; /* Set header text color */
+    -fx-font-weight: bold; /* Make header text bold */
+}
+
+
+

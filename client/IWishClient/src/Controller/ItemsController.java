@@ -147,6 +147,8 @@ public class ItemsController implements Initializable {
             }
             
         });
+                addItemButton.setMinWidth(133);
+
     }
     
     private void getItemsList() throws IOException{
