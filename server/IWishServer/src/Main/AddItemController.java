@@ -76,6 +76,10 @@ public class AddItemController implements Initializable {
             File selectedFile = fileChooser.showOpenDialog(null);
             if (selectedFile != null) {
                 imageURI = selectedFile.toURI().toString();
+                System.out.println("Before: " + imageURI);
+                int indexOfResourcesString = imageURI.indexOf("resources");
+                imageURI = imageURI.substring(indexOfResourcesString);
+                System.out.println("After: " + imageURI);
                 Image image = new Image(imageURI);
                 itemPhoto.setImage(image);
             }

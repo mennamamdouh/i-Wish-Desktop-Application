@@ -142,7 +142,7 @@ class Client extends Thread {
                             output.println(notifications);
                             output.flush();
                         }
-                        Thread.sleep(10000);
+                        Thread.sleep(3000);
                     } catch (InterruptedException ex) {
                         Logger.getLogger(Client.class.getName()).log(Level.SEVERE, null, ex);
                     } catch (SQLException ex) {
