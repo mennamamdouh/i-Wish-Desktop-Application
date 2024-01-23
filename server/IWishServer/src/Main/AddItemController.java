@@ -96,7 +96,7 @@ public class AddItemController implements Initializable {
         });
     }
     
-    private boolean addNewItem(Item item) throws SQLException{
+    public boolean addNewItem(Item item) throws SQLException{
         Connection con = DBConnection.getConnection();
         PreparedStatement statement = con.prepareStatement("INSERT INTO Items(ItemName, ItemPhoto, Price) VALUES(?, ?, ?)");
         statement.setString(1, item.getItemname());

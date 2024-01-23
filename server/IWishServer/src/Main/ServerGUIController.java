@@ -5,9 +5,23 @@
  */
 package Main;
 
+import Server.DTO.Item;
 import Server.IWishServer;
+import com.google.gson.JsonArray;
+import com.google.gson.JsonObject;
+import com.google.gson.JsonParser;
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
+import java.net.HttpURLConnection;
+import java.net.MalformedURLException;
+import java.net.ProtocolException;
 import java.net.URL;
+import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.ResourceBundle;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
@@ -35,6 +49,8 @@ public class ServerGUIController implements Initializable {
     @FXML
     private Button additembtn;
     private boolean running;
+    @FXML
+    private Button loaddata;
 
     /**
      * Initializes the controller class.
@@ -89,5 +105,73 @@ public class ServerGUIController implements Initializable {
                 }
              } 
         });
-    } 
+        loaddata.setOnAction(new EventHandler<ActionEvent>() {
+            int i = 0;
+            @Override
+            public void handle(ActionEvent value) {
+                if(i==0)
+                 new Thread(new Runnable() {
+                    @Override
+                    public void run() {
+                        try {
+                            i++;
+                            AddItemController itemcon = new AddItemController();
+                            ArrayList<Item> data = loadData();
+                            System.out.println(data.size());
+                            for(Item i : data)
+                                itemcon.addNewItem(i);
+                                } catch (IOException ex) {
+                            Logger.getLogger(ServerGUIController.class.getName()).log(Level.SEVERE, null, ex);
+                        } catch (SQLException ex) {
+                            Logger.getLogger(ServerGUIController.class.getName()).log(Level.SEVERE, null, ex);
+                        }
+                            
+                    }
+                    
+                 }).start();
+            }
+        });
+    }
+    public ArrayList<Item> loadData() throws ProtocolException, IOException{
+        ArrayList<Item> itemlist = new ArrayList<Item>();
+        try {
+            URL url = new URL("https://api.escuelajs.co/api/v1/products");
+            HttpURLConnection connection = (HttpURLConnection) url.openConnection();
+
+            // Set the request method to GET
+            connection.setRequestMethod("GET");
+
+            int responseCode = connection.getResponseCode();
+
+            if (responseCode == HttpURLConnection.HTTP_OK) {
+                // If the response code is HTTP_OK (200), read the response data
+                BufferedReader reader = new BufferedReader(new InputStreamReader(connection.getInputStream()));
+                String line;
+                line = reader.readLine();
+                reader.close();
+                connection.disconnect();
+
+                JsonParser jp = new JsonParser();
+                JsonArray arr = jp.parse(line).getAsJsonArray();
+                
+                for (int i = 1; i < arr.size() - 15; i++) {
+                    JsonObject item = arr.get(i).getAsJsonObject();
+                    String name = item.get("title").getAsString();
+                    String image = "/resources/genie-lamp-icon.png";
+                    if (image.startsWith("[\"") || image.endsWith("\"]")) {
+                        image = image.replace("[\"", "");
+                        image = image.replace("\"]", "");
+                        image = image.replace("\"", "");
+                    }
+                    double price = item.get("price").getAsDouble() * 40 /* Dollar :( */;
+
+                    itemlist.add(new Item(name, price,image));                
+                }
+                 return itemlist;
+                
+            }   } catch (MalformedURLException ex) {
+            Logger.getLogger(ServerGUIController.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return itemlist;
+    }
 }
