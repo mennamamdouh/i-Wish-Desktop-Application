@@ -56,7 +56,7 @@
                   <Font name="System Bold" size="27.0" />
                </font>
             </Label>
-            <Hyperlink layoutX="139.0" layoutY="344.0" text="Forgot your password?" textFill="#f8f8f8" underline="true">
+            <Hyperlink fx:id="forgetpass" layoutX="139.0" layoutY="344.0" text="Forgot your password?" textFill="#f8f8f8" underline="true">
                <font>
                   <Font size="13.0" />
                </font>

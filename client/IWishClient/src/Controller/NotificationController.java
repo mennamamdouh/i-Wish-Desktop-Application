@@ -91,4 +91,7 @@ public class NotificationController implements Initializable {
         NotificationUnitController curr = (NotificationUnitController) currnode.getUserData();
         curr.acceptAndDenyHandler(msg);
     }
+    public int numOfNotification(){
+        return notifications.size();
+    }
 }

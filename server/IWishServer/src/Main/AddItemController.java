@@ -18,12 +18,14 @@ import java.util.logging.Logger;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.TextField;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.FileChooser;
+import javafx.stage.Stage;
 
 /**
  * FXML Controller class
@@ -59,7 +61,19 @@ public class AddItemController implements Initializable {
             System.out.println("Item: " + itemName + " - Price: " + itemPrice);
             Item item = new Item(itemName, itemPrice, imageURI);
             try {
-                addNewItem(item);
+                if(addNewItem(item))
+                {
+                    Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
+                    alert.setContentText("An item was added successfuly.");
+                    alert.showAndWait();
+                    Stage stage = (Stage) (addButton.getScene().getWindow());
+                    stage.close();
+                }else
+                {
+                    Alert alert = new Alert(Alert.AlertType.ERROR);
+                    alert.setContentText("Item wasn't added.");
+                    alert.showAndWait();
+                }
             } catch (SQLException ex) {
                 Logger.getLogger(AddItemController.class.getName()).log(Level.SEVERE, null, ex);
             }
@@ -82,7 +96,7 @@ public class AddItemController implements Initializable {
         });
     }
     
-    private void addNewItem(Item item) throws SQLException{
+    private boolean addNewItem(Item item) throws SQLException{
         Connection con = DBConnection.getConnection();
         PreparedStatement statement = con.prepareStatement("INSERT INTO Items(ItemName, ItemPhoto, Price) VALUES(?, ?, ?)");
         statement.setString(1, item.getItemname());
@@ -92,9 +106,11 @@ public class AddItemController implements Initializable {
         if(result == 1){
             statement.close();
             System.out.println("An item was added successfuly.");
+            return true;
         }
         else{
             System.out.println("Item wasn't added.");
+            return false;
         }
     }
 }

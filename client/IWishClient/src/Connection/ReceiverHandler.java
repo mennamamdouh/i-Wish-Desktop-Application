@@ -10,6 +10,9 @@ import com.google.gson.*;
 import java.io.IOException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javafx.application.Platform;
+import javafx.scene.control.Alert;
+import javafx.stage.Stage;
 
 /**
  *
@@ -25,6 +28,7 @@ public class ReceiverHandler {
     private static ItemsController itemscontroller;
     private static FriendProfileController friendprofilecontroller;
     private static PaymentController paymentcontroller;
+    private static HomeController homecontroller;
     private boolean flag;
     private Gson gson;
 
@@ -67,7 +71,9 @@ public class ReceiverHandler {
                         /**/
                                     // Refresh when Receiving any notifications
                                     if(flag){
+                                        int size  = notificationcontroller.numOfNotification();
                                         notificationcontroller.waitForHandler(received);
+                                        homecontroller.createTabGraphic(size , notificationcontroller.numOfNotification()); 
                                         friendscontroller.addAndRemoveFriendHandler();
                                         wishlistcontroller.getWishlist();
                                     }else
@@ -118,6 +124,17 @@ public class ReceiverHandler {
                         if (!ex.getMessage().toLowerCase().equals("socket closed") & !ex.getMessage().toLowerCase().equals("stream closed") ) {
                             Logger.getLogger(NotificationController.class.getName()).log(Level.SEVERE, null, ex);
                         }
+                        else if ( ex.getMessage().toLowerCase().equals("connection reset"))
+                        {
+                            Platform.runLater(() -> {
+                                Alert alert = new Alert(Alert.AlertType.INFORMATION);
+                                alert.setHeaderText("");
+                                alert.setContentText("Server Disconnected .. Sorry we need to log you out :(");
+                                alert.showAndWait();
+                                Stage stage = (Stage) (logincontroller.getMainnode().getScene().getWindow());
+                                stage.close();
+                            });
+                        }
                     }
                 }
             }
@@ -167,4 +184,13 @@ public class ReceiverHandler {
     public static WishListController getWishlistcontroller() {
         return wishlistcontroller;
     }
+
+    public static HomeController getHomecontroller() {
+        return homecontroller;
+    }
+
+    public static void setHomecontroller(HomeController homecontroller) {
+        ReceiverHandler.homecontroller = homecontroller;
+    }
+    
 }

@@ -93,6 +93,7 @@ public class ItemsController implements Initializable {
                         if (empty || imagePath == null) {
                             setGraphic(null);
                         } else {
+                            System.out.println(imagePath);
                             Image image = new Image(imagePath);
                             imageView.setImage(image);
                             setGraphic(imageView);
