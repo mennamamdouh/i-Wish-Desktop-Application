@@ -22,7 +22,7 @@ import java.util.logging.Logger;
 public class RequestHandler  {
     
     private User user;
-    private boolean login;
+    private volatile boolean login;
     private boolean notifyon;
     private ArrayList<Notification> notifications = new ArrayList<Notification>() ;
     private Gson gson;

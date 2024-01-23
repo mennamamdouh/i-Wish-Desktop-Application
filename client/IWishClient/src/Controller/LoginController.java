@@ -24,6 +24,7 @@ import javafx.fxml.Initializable;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.Button;
+import javafx.scene.control.Hyperlink;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
 import javafx.scene.image.Image;
@@ -46,6 +47,8 @@ public class LoginController implements Initializable {
     @FXML
     private Pane mainnode;
     private Gson gson = new Gson();
+    @FXML
+    private Hyperlink forgetpass;
 
     @Override
     public void initialize(URL url, ResourceBundle rb) {
@@ -66,7 +69,13 @@ public class LoginController implements Initializable {
                 }
             });
         });
-
+        forgetpass.setOnMouseClicked((event) -> {
+            Alert alert = new Alert(Alert.AlertType.INFORMATION);
+            alert.setHeaderText("");
+            alert.setContentText("Please contact our System Administrator to change your password.\n"
+                    + "mahmoudhatem96@iwish.edu");
+            alert.showAndWait();
+        });
         btnSignup.addEventHandler(ActionEvent.ACTION, (ActionEvent event) -> {
             try {
                 Parent signupParent = FXMLLoader.load(getClass().getResource("/View/Signup.fxml"));
@@ -143,5 +152,9 @@ public class LoginController implements Initializable {
                 passtf.setText("");
             });
         }
+    }
+
+    public Pane getMainnode() {
+        return mainnode;
     }
 }

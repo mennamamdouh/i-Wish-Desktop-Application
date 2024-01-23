@@ -8,7 +8,7 @@
 
 <AnchorPane id="AnchorPane" prefHeight="500.0" prefWidth="600.0" style="-fx-background-color: #B9F8D4;" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Main.ServerGUIController">
    <children>
-      <Button fx:id="startbtn" layoutX="152.0" layoutY="222.0" mnemonicParsing="false" prefHeight="60.0" prefWidth="119.0" style="-fx-background-radius: 50; -fx-background-color: #1D1E1D;" text="Start" textFill="#b9f8d4">
+      <Button fx:id="startbtn" layoutX="145.0" layoutY="222.0" mnemonicParsing="false" prefHeight="60.0" prefWidth="119.0" style="-fx-background-radius: 50; -fx-background-color: #1D1E1D;" text="Start" textFill="#b9f8d4">
          <font>
             <Font name="System Bold" size="22.0" />
          </font>
@@ -16,7 +16,7 @@
             <Cursor fx:constant="HAND" />
          </cursor>
       </Button>
-      <Button fx:id="stopbtn" layoutX="329.0" layoutY="222.0" mnemonicParsing="false" prefHeight="60.0" prefWidth="119.0" style="-fx-background-radius: 50; -fx-background-color: #1D1E1D;" text="Stop" textFill="#b9f8d4">
+      <Button fx:id="stopbtn" layoutX="338.0" layoutY="222.0" mnemonicParsing="false" prefHeight="60.0" prefWidth="119.0" style="-fx-background-radius: 50; -fx-background-color: #1D1E1D;" text="Stop" textFill="#b9f8d4">
          <font>
             <Font name="System Bold" size="22.0" />
          </font>
@@ -24,7 +24,7 @@
             <Cursor fx:constant="HAND" />
          </cursor>
       </Button>
-      <Button fx:id="additembtn" layoutX="212.0" layoutY="327.0" mnemonicParsing="false" prefHeight="51.0" prefWidth="177.0" style="-fx-background-color: #1D1E1D; -fx-background-radius: 70;" text="Add Item" textFill="#b9f8d4">
+      <Button fx:id="additembtn" layoutX="123.0" layoutY="331.0" mnemonicParsing="false" prefHeight="51.0" prefWidth="177.0" style="-fx-background-color: #1D1E1D; -fx-background-radius: 70;" text="Add Item" textFill="#b9f8d4">
          <font>
             <Font name="System Bold" size="20.0" />
          </font>
@@ -42,5 +42,13 @@
             <Font name="Bauhaus 93" size="18.0" />
          </font>
       </Text>
+      <Button fx:id="loaddata" layoutX="309.0" layoutY="331.0" mnemonicParsing="false" prefHeight="51.0" prefWidth="177.0" style="-fx-background-color: #1D1E1D; -fx-background-radius: 70;" text="Load Data" textFill="#b9f8d4">
+         <font>
+            <Font name="System Bold" size="20.0" />
+         </font>
+         <cursor>
+            <Cursor fx:constant="HAND" />
+         </cursor>
+      </Button>
    </children>
 </AnchorPane>

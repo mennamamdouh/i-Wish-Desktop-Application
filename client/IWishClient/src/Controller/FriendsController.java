@@ -56,6 +56,7 @@ public class FriendsController implements Initializable {
     @FXML private TableColumn<User, String> nameColumn;
     @FXML private TableColumn<User, Void> buttonColumn;
     @FXML private TextField searchTextField;
+    boolean flag = true;
     boolean searching = false;
     
     // Define the observable list that holds the friends data
@@ -149,17 +150,24 @@ public class FriendsController implements Initializable {
                          if (event.getClickCount() == 1 && (!userRow.isEmpty())) {
                             try {
                                 User friend = userRow.getItem();
-                                // System.out.println("You clicked on: " + rowData.getFullname());
-                                // Here should be the calling method of the FXML file of the Friend's Profile Scene
-                                FXMLLoader loader = new FXMLLoader(getClass().getResource("/View/FriendProfile.fxml"));
-                                Parent temp = loader.load();
-                                FriendProfileController controller = loader.getController();
-                                System.out.println(friend.getUserid());
-                                controller.setFriend(friend);
-                                Scene friendProfileScene = new Scene(temp);
-                                Stage window = (Stage) ((Node) event.getSource()).getScene().getWindow();
-                                window.setScene(friendProfileScene);
-                                window.show();
+                                if(flag){
+                                    // Here should be the calling method of the FXML file of the Friend's Profile Scene
+                                    FXMLLoader loader = new FXMLLoader(getClass().getResource("/View/FriendProfile.fxml"));
+                                    Parent temp = loader.load();
+                                    FriendProfileController controller = loader.getController();
+                                    System.out.println(friend.getUserid());
+                                    controller.setFriend(friend);
+                                    Scene friendProfileScene = new Scene(temp);
+                                    Stage window = (Stage) ((Node) event.getSource()).getScene().getWindow();
+                                    window.setScene(friendProfileScene);
+                                    window.show();
+                                }else
+                                {
+                                    Alert alert = new Alert(Alert.AlertType.INFORMATION);
+                                    alert.setHeaderText("");
+                                    alert.setContentText("You Can't View "+ friend.getFullname() +"'s profile unless you are friends");
+                                    alert.showAndWait();
+                                }
                             } catch (IOException ex) {
                                 Logger.getLogger(FriendsController.class.getName()).log(Level.SEVERE, null, ex);
                             }
@@ -236,10 +244,13 @@ public class FriendsController implements Initializable {
     private void searchForPeople(String searchText) throws IOException {
         
         if(searchText.isEmpty()){
-            resetButton(false);
+            resetButton(false); 
+            flag = true;
             listOfFriends.setItems(friends);
+           
         }
         else{
+            flag = false;
             resetButton(true);
             // Prepare the request
             Gson gson = new Gson();

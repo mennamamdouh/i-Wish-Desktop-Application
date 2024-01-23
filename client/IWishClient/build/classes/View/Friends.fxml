@@ -30,7 +30,7 @@
       </FlowPane>
    </top>
    <center>
-      <TableView fx:id="listOfFriends" prefHeight="344.0" prefWidth="600.0" stylesheets="@../resources/css%20files/customize-table.css" BorderPane.alignment="CENTER">
+      <TableView fx:id="listOfFriends" prefHeight="344.0" prefWidth="600.0" stylesheets="@../resources/css%20files/friends.css" BorderPane.alignment="CENTER">
         <placeholder>
             <Label text="You have no friends yet" />
         </placeholder>
