@@ -1,0 +1,92 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.Cursor?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.DatePicker?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.ColumnConstraints?>
+<?import javafx.scene.layout.GridPane?>
+<?import javafx.scene.layout.RowConstraints?>
+<?import javafx.scene.text.Font?>
+<?import javafx.scene.text.Text?>
+
+<AnchorPane fx:id="mainnode" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="780.0" prefWidth="1000.0" style="-fx-background-color: #2D0901;" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Controller.SignupController">
+   <children>
+      <GridPane layoutX="653.0" layoutY="189.0" prefHeight="561.0" prefWidth="296.0" style="-fx-background-color: #601100;">
+        <columnConstraints>
+          <ColumnConstraints hgrow="SOMETIMES" maxWidth="296.0" minWidth="10.0" prefWidth="296.0" />
+          <ColumnConstraints hgrow="SOMETIMES" maxWidth="125.0" minWidth="0.0" prefWidth="0.0" />
+        </columnConstraints>
+        <rowConstraints>
+          <RowConstraints maxHeight="72.0" minHeight="10.0" prefHeight="72.0" vgrow="SOMETIMES" />
+          <RowConstraints maxHeight="85.0" minHeight="10.0" prefHeight="81.0" vgrow="SOMETIMES" />
+            <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+          <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+            <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+            <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+            <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+        </rowConstraints>
+         <children>
+            <Label fx:id="RegisterLabel" alignment="CENTER" contentDisplay="TEXT_ONLY" prefHeight="37.0" prefWidth="159.0" style="-fx-background-color: #601100;" text="Register" textAlignment="CENTER" textFill="#f8f4f4" GridPane.halignment="CENTER" GridPane.valignment="CENTER">
+               <font>
+                  <Font name="System Bold" size="24.0" />
+               </font>
+            </Label>
+            <TextField fx:id="NameField" promptText="Name" GridPane.rowIndex="1">
+               <GridPane.margin>
+                  <Insets left="20.0" right="20.0" />
+               </GridPane.margin>
+            </TextField>
+            <TextField fx:id="EmailField" promptText="Email" GridPane.rowIndex="2">
+               <GridPane.margin>
+                  <Insets left="20.0" right="20.0" />
+               </GridPane.margin>
+            </TextField>
+            <TextField fx:id="PasswordField" promptText="Password" GridPane.rowIndex="3">
+               <GridPane.margin>
+                  <Insets left="20.0" right="20.0" />
+               </GridPane.margin>
+            </TextField>
+            <Button fx:id="RegisterButton" mnemonicParsing="false" prefHeight="55.0" prefWidth="214.0" style="-fx-background-color: #C8462B#000000;" text="Sign Up" textFill="#fcf6f6" GridPane.halignment="CENTER" GridPane.rowIndex="6" GridPane.valignment="CENTER">
+               <cursor>
+                  <Cursor fx:constant="HAND" />
+               </cursor></Button>
+            <DatePicker fx:id="DateOfBirthField" prefHeight="31.0" prefWidth="257.0" promptText="Date Of Birth" GridPane.rowIndex="4">
+               <GridPane.margin>
+                  <Insets left="20.0" right="20.0" />
+               </GridPane.margin>
+            </DatePicker>
+            <Button fx:id="ChoosePhotoButton" mnemonicParsing="false" prefHeight="44.0" prefWidth="119.0" style="-fx-background-color: #C8462B#000000;" text="Choose photo" textFill="#f2eeee" GridPane.rowIndex="5">
+               <GridPane.margin>
+                  <Insets left="85.0" />
+               </GridPane.margin>
+            </Button>
+         </children>
+      </GridPane>
+      <Text fill="WHITE" layoutX="316.0" layoutY="87.0" stroke="BLACK" strokeType="OUTSIDE" strokeWidth="5.0" text="Welcome to iWish" textAlignment="CENTER">
+         <font>
+            <Font name="Bell MT Bold" size="48.0" />
+         </font>
+      </Text>
+      <Text fill="WHITE" layoutX="120.0" layoutY="255.0" strokeType="OUTSIDE" strokeWidth="3.0" text="Add your friends and enjoy contributing to each other's wishlist." textAlignment="CENTER" wrappingWidth="457.8857421875">
+         <font>
+            <Font name="System Bold Italic" size="26.0" />
+         </font>
+      </Text>
+      <ImageView fitHeight="436.0" fitWidth="687.0" layoutY="277.0" opacity="0.26" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@../resources/3d-gift-box-scene-with-clouds.png" />
+         </image>
+      </ImageView>
+      <Button fx:id="BackToLoginButton" alignment="CENTER" layoutX="99.0" layoutY="75.0" mnemonicParsing="false" prefHeight="69.0" prefWidth="125.0" style="-fx-background-color: #C8462B#000 #C8462B#000000;" text="Back to log in " textFill="#f5eeee">
+         <cursor>
+            <Cursor fx:constant="HAND" />
+         </cursor>
+      </Button>
+   </children>
+</AnchorPane>

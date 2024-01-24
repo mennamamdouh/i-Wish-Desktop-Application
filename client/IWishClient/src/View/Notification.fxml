@@ -1,14 +1,42 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import javafx.scene.control.Label?>
+<?import javafx.scene.control.ScrollPane?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane id="AnchorPane" prefHeight="714.0" prefWidth="1000.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Controller.NotificationController">
-   <children>
-      <Label alignment="CENTER" contentDisplay="CENTER" layoutX="287.0" layoutY="312.0" prefHeight="90.0" prefWidth="426.0" text="Hi from Notifications tab!">
-         <font>
-            <Font size="30.0" />
-         </font></Label>
-   </children>
-</AnchorPane>
+<ScrollPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="714.0" prefWidth="1000.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Controller.NotificationController">
+   <content>
+      <VBox fx:id="vcontainer" prefHeight="712.0" prefWidth="981.0">
+         <children>
+            <AnchorPane prefHeight="646.0" prefWidth="981.0">
+               <children>
+                  <Label alignment="CENTER" layoutX="226.0" layoutY="435.0" prefHeight="92.0" prefWidth="530.0" text="No Notifications Found" textAlignment="CENTER">
+                     <font>
+                        <Font name="System Bold" size="32.0" />
+                     </font>
+                  </Label>
+                  <Label layoutX="347.0" layoutY="514.0" text="You have currently no notifications .">
+                     <font>
+                        <Font size="18.0" />
+                     </font>
+                  </Label>
+                  <Label layoutX="311.0" layoutY="541.0" text="we'll notify you when something new arrives!">
+                     <font>
+                        <Font size="18.0" />
+                     </font>
+                  </Label>
+                  <ImageView fitHeight="375.0" fitWidth="500.0" layoutX="240.0" layoutY="106.0">
+                     <image>
+                        <Image url="@../resources/no_notification.png" />
+                     </image>
+                  </ImageView>
+               </children>
+            </AnchorPane>
+         </children>
+      </VBox>
+   </content>
+</ScrollPane>

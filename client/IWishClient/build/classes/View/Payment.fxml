@@ -1,0 +1,125 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.DatePicker?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.control.Tooltip?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.shape.Rectangle?>
+<?import javafx.scene.text.Font?>
+
+<AnchorPane id="AnchorPane" prefHeight="650.0" prefWidth="410.0" style="-fx-background-color: #FDF8F6;" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Controller.PaymentController">
+   <children>
+      <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#6e6e6e0f" height="679.0" layoutX="-10.0" layoutY="-6.0" stroke="BLACK" strokeType="INSIDE" visible="false" width="427.0" />
+      <Label alignment="CENTER" layoutX="14.0" prefHeight="66.0" prefWidth="165.0" text="Make Payment">
+         <font>
+            <Font name="System Bold" size="20.0" />
+         </font>
+      </Label>
+      <Label layoutX="37.0" layoutY="286.0" prefHeight="37.0" prefWidth="158.0" text="Name on Card">
+         <font>
+            <Font size="18.0" />
+         </font>
+      </Label>
+      <TextField fx:id="nametxtfield" layoutX="37.0" layoutY="331.0" prefHeight="45.0" prefWidth="232.0" promptText="Ex : Diaa Ahmed">
+         <font>
+            <Font size="18.0" />
+         </font>
+      </TextField>
+      <Label layoutX="37.0" layoutY="387.0" prefHeight="37.0" prefWidth="129.0" text="Card Number">
+         <font>
+            <Font size="18.0" />
+         </font>
+      </Label>
+      <TextField fx:id="cardtextfield" layoutX="37.0" layoutY="432.0" prefHeight="45.0" prefWidth="343.0" promptText="1234 5678 9101 1123">
+         <font>
+            <Font size="18.0" />
+         </font>
+      </TextField>
+      <Label layoutX="37.0" layoutY="490.0" prefHeight="37.0" prefWidth="129.0" text="Expiry date">
+         <font>
+            <Font size="18.0" />
+         </font>
+      </Label>
+      <DatePicker fx:id="datepicker" editable="false" layoutX="38.0" layoutY="534.0" prefHeight="45.0" prefWidth="129.0" />
+      <Label layoutX="251.0" layoutY="490.0" prefHeight="37.0" prefWidth="129.0" text="CVV">
+         <font>
+            <Font size="18.0" />
+         </font>
+      </Label>
+      <Button fx:id="submitbtn" layoutX="37.0" layoutY="603.0" mnemonicParsing="false" prefHeight="45.0" prefWidth="343.0" style="-fx-background-color: #C8462B#000000;" text="Submit" textFill="WHITE">
+         <font>
+            <Font name="System Bold" size="18.0" />
+         </font>
+      </Button>
+      <AnchorPane layoutX="41.0" layoutY="59.0" prefHeight="216.0" prefWidth="334.0">
+         <children>
+            <ImageView fitHeight="229.0" fitWidth="343.0" layoutX="-4.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../resources/black_card.png" />
+               </image>
+            </ImageView>
+            <Label fx:id="cardnumber" alignment="CENTER" layoutX="15.0" layoutY="118.0" prefHeight="37.0" prefWidth="292.0" text="0000   0000   0000   0000" textAlignment="CENTER" textFill="WHITE">
+               <font>
+                  <Font size="24.0" />
+               </font>
+            </Label>
+            <Label layoutX="25.0" layoutY="26.0" text="Bank Name" textFill="WHITE">
+               <font>
+                  <Font name="System Bold" size="18.0" />
+               </font>
+            </Label>
+            <Label fx:id="cardname" layoutX="29.0" layoutY="172.0" text="CARD HOLDER NAME" textFill="WHITE">
+               <font>
+                  <Font name="System Italic" size="15.0" />
+               </font>
+            </Label>
+            <Label layoutX="182.0" layoutY="75.0" text="VALID" textFill="WHITE">
+               <font>
+                  <Font name="System Italic" size="10.0" />
+               </font>
+            </Label>
+            <Label layoutX="187.0" layoutY="84.0" text="THRU" textFill="WHITE">
+               <font>
+                  <Font name="System Italic" size="10.0" />
+               </font>
+            </Label>
+            <Label fx:id="carddate" layoutX="217.0" layoutY="77.0" text="00/00" textFill="WHITE">
+               <font>
+                  <Font name="System Bold" size="15.0" />
+               </font>
+            </Label>
+         </children>
+      </AnchorPane>
+      <AnchorPane fx:id="cvvanchor" layoutX="251.0" layoutY="534.0" prefHeight="45.0" prefWidth="129.0">
+         <children>
+            <TextField fx:id="cvvtextfield" prefHeight="45.0" prefWidth="129.0" promptText="357">
+               <font>
+                  <Font size="18.0" />
+               </font>
+            </TextField>
+            <Label fx:id="hintlabel" alignment="CENTER" layoutX="103.0" layoutY="10.0" prefHeight="27.0" prefWidth="23.0" style="-fx-background-color: #e3e1e1; -fx-background-radius: 20;" text="?">
+               <font>
+                  <Font name="System Bold" size="18.0" />
+               </font>
+               <tooltip>
+                  <Tooltip fx:id="tooltip" text="3 digits on the back of your card" />
+               </tooltip>
+            </Label>
+         </children>
+      </AnchorPane>
+      <Label layoutX="291.0" layoutY="286.0" prefHeight="37.0" prefWidth="87.0" text="Amount">
+         <font>
+            <Font size="18.0" />
+         </font>
+      </Label>
+      <TextField fx:id="amounttf" layoutX="291.0" layoutY="331.0" prefHeight="45.0" prefWidth="87.0" promptText="50">
+         <font>
+            <Font size="18.0" />
+         </font>
+      </TextField>
+   </children>
+</AnchorPane>

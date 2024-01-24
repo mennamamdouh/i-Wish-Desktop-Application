@@ -8,7 +8,8 @@
   </information>
   <resources>
     <j2se version="1.6+" href="http://java.sun.com/products/autodl/j2se"/>
-    <jar href="IWishClient.jar" size="7783" download="eager" />
+    <jar href="IWishClient.jar" size="4494841" download="eager" />
+    <jar href="lib\gson-2.8.0.jar" size="231952" download="eager" />
   </resources>
   <applet-desc  width="800" height="600" main-class="com.javafx.main.NoJavaFXFallback"  name="IWishClient" >
     <param name="requiredFXVersion" value="8.0+"/>

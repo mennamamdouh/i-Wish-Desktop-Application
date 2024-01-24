@@ -1,16 +1,43 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.scene.control.Label?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.shape.Circle?>
 <?import javafx.scene.text.Font?>
+<?import javafx.scene.text.Text?>
 
-
-<AnchorPane id="AnchorPane" prefHeight="714.0" prefWidth="1000.0" xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/8.0.171" fx:controller="Controller.AboutController">
+<AnchorPane id="AnchorPane" prefHeight="714.0" prefWidth="1000.0" style="-fx-background-color: #2D0901;" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Controller.AboutController">
    <children>
-      <Label alignment="CENTER" contentDisplay="CENTER" layoutX="287.0" layoutY="312.0" prefHeight="90.0" prefWidth="426.0" text="Hi from About tab!">
+      <Text fill="WHITE" layoutX="125.0" layoutY="197.0" strokeType="OUTSIDE" strokeWidth="0.0" text="iWish is a social platform that aims at bringing connections together and make the use of social media different and more fun.&#10;&#10;It was first released in 2024 by a group of trainees in the Information Technology Institution and later that year was published on app store.&#10;" textAlignment="CENTER" wrappingWidth="749.9580078125">
          <font>
-            <Font size="30.0" />
+            <Font size="22.0" />
          </font>
-      </Label>
+      </Text>
+      <ImageView fx:id="presentImage" fitHeight="725.0" fitWidth="1000.0" layoutY="59.0" opacity="0.09" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@../resources/3d-gift-box-scene-with-clouds.png" />
+         </image>
+      </ImageView>
+      <ImageView fx:id="diaaImage" fitHeight="142.0" fitWidth="147.0" layoutX="211.0" layoutY="367.0" pickOnBounds="true" preserveRatio="true" AnchorPane.rightAnchor="642.0" />
+      <Circle fx:id="diaaCircle" fill="TRANSPARENT" layoutX="285.0" layoutY="438.0" radius="66.0" stroke="BLACK" strokeType="INSIDE" strokeWidth="0.0" />
+      <ImageView fx:id="mennaImage" fitHeight="142.0" fitWidth="147.0" layoutX="418.0" layoutY="367.0" pickOnBounds="true" AnchorPane.rightAnchor="435.0" />
+      <Circle fx:id="mennaCircle" fill="TRANSPARENT" layoutX="485.0" layoutY="438.0" radius="66.0" stroke="BLACK" strokeType="INSIDE" strokeWidth="0.0" />
+      <ImageView fx:id="hatemImage" fitHeight="142.0" fitWidth="147.0" layoutX="624.0" layoutY="367.0" pickOnBounds="true" preserveRatio="true" AnchorPane.rightAnchor="229.0" />
+      <Circle fx:id="hatemCircle" fill="TRANSPARENT" layoutX="697.0" layoutY="438.0" radius="66.0" stroke="BLACK" strokeType="INSIDE" strokeWidth="0.0" />
+      <ImageView fx:id="omarImage" fitHeight="142.0" fitWidth="147.0" layoutX="298.0" layoutY="529.0" pickOnBounds="true" preserveRatio="true" />
+      <Circle fx:id="omarCircle" fill="TRANSPARENT" layoutX="371.0" layoutY="614.0" radius="66.0" stroke="BLACK" strokeType="INSIDE" strokeWidth="0.0" />
+      <ImageView fx:id="abdullahImage" fitHeight="142.0" fitWidth="147.0" layoutX="521.0" layoutY="534.0" pickOnBounds="true" preserveRatio="true" />
+      <Circle fx:id="abdullahCircle" fill="TRANSPARENT" layoutX="594.0" layoutY="619.0" radius="66.0" stroke="BLACK" strokeType="INSIDE" strokeWidth="0.0" />
+      <Text fill="WHITE" layoutX="244.0" layoutY="525.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Diaa Ahmed" />
+      <Text fill="WHITE" layoutX="432.0" layoutY="525.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Menna Mamdouh" />
+      <Text fill="WHITE" layoutX="639.0" layoutY="525.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Mahmoud Hatem" />
+      <Text fill="WHITE" layoutX="319.0" layoutY="685.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Omar Ramadan" />
+      <Text fill="WHITE" layoutX="547.0" layoutY="686.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Abdullah Attia" />
+      <Text fill="WHITE" layoutX="302.0" layoutY="99.0" stroke="BLACK" strokeType="OUTSIDE" strokeWidth="5.0" text="Welcome to iWish" textAlignment="CENTER">
+         <font>
+            <Font name="Bell MT Bold" size="48.0" />
+         </font>
+      </Text>
    </children>
 </AnchorPane>

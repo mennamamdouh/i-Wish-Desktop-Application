@@ -1,15 +1,88 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.Cursor?>
+<?import javafx.scene.control.Button?>
 <?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.shape.Circle?>
 <?import javafx.scene.text.Font?>
+<?import javafx.scene.text.Text?>
 
-<AnchorPane id="AnchorPane" prefHeight="714.0" prefWidth="1000.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Controller.WishListController">
+<AnchorPane id="AnchorPane" prefHeight="714.0" prefWidth="1000.0" style="-fx-background-color: #FDF8F6;" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Controller.WishListController">
    <children>
-      <Label alignment="CENTER" contentDisplay="CENTER" layoutX="287.0" layoutY="312.0" prefHeight="90.0" prefWidth="426.0" text="Hi from My Wishlist tab!">
-         <font>
-            <Font size="30.0" />
-         </font>
-      </Label>
+      <AnchorPane prefHeight="719.0" prefWidth="289.0">
+         <children>
+            <VBox alignment="TOP_CENTER" layoutX="2.0" layoutY="293.0" prefHeight="163.0" prefWidth="267.0" spacing="10.0">
+               <children>
+                  <Label alignment="CENTER" contentDisplay="CENTER" prefHeight="30.0" prefWidth="220.0" text="Personal Infromation">
+                     <font>
+                        <Font name="System Bold" size="18.0" />
+                     </font>
+                  </Label>
+                  <Text fx:id="txtFullName" strokeType="OUTSIDE" strokeWidth="0.0" text="Abdullah Attia" textAlignment="CENTER" wrappingWidth="202.7109375">
+                     <font>
+                        <Font size="19.0" />
+                     </font>
+                  </Text>
+                  <Text fx:id="txtBirthDate" strokeType="OUTSIDE" strokeWidth="0.0" text="24/11/1999" textAlignment="CENTER" wrappingWidth="96.744140625">
+                     <font>
+                        <Font size="16.0" />
+                     </font>
+                  </Text>
+               </children>
+            </VBox>
+            <Button fx:id="ProfilePictureButton" layoutX="83.0" layoutY="222.0" mnemonicParsing="false" prefHeight="30.0" prefWidth="91.0" style="-fx-background-color: #601100;" text="Change Picture" textFill="WHITE" wrapText="true">
+               <font>
+                  <Font size="11.0" />
+               </font>
+               <cursor>
+                  <Cursor fx:constant="HAND" />
+               </cursor>
+            </Button>
+            <ImageView fx:id="imageView" fitHeight="178.0" fitWidth="178.0" layoutX="39.0" layoutY="24.0" pickOnBounds="true" preserveRatio="true" />
+            <Circle fill="#1f93ff00" layoutX="128.0" layoutY="113.0" radius="89.0" stroke="BLACK" strokeType="INSIDE" strokeWidth="0.15" />
+            <Button fx:id="SignOutButton" layoutX="62.0" layoutY="649.0" mnemonicParsing="false" prefHeight="31.0" prefWidth="134.0" style="-fx-background-color: #601100;" text="Sign Out" textFill="WHITE">
+               <cursor>
+                  <Cursor fx:constant="HAND" />
+               </cursor>
+            </Button>
+         </children>
+      </AnchorPane>
+      <AnchorPane layoutX="255.0" layoutY="139.0" prefHeight="573.0" prefWidth="703.0">
+         <children>
+            <Text layoutX="41.0" layoutY="20.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Wish List">
+               <font>
+                  <Font name="System Bold" size="17.0" />
+               </font></Text>
+            <Button fx:id="btnClearMyWishlist" layoutX="570.0" layoutY="511.0" mnemonicParsing="false" style="-fx-background-color: #601100;" text="Clear My Wishlist" textFill="WHITE">
+               <cursor>
+                  <Cursor fx:constant="HAND" />
+               </cursor>
+            </Button>
+            <TableView fx:id="wishlistTable" layoutX="31.0" layoutY="31.0" prefHeight="425.0" prefWidth="501.0" stylesheets="@../resources/css%20files/items.css">
+              <columns>
+                <TableColumn fx:id="imageColumn" prefWidth="95.0" text="Image" />
+<TableColumn fx:id="nameColumn" prefWidth="175.0" text="Name" />
+                  <TableColumn fx:id="priceColumn" prefWidth="65.0" text="Price" />
+                  <TableColumn fx:id="progressColumn" prefWidth="165.0" text="Progress" />
+              </columns>
+            </TableView>
+            <TableView fx:id="contributionsTable" layoutX="535.0" layoutY="31.0" prefHeight="425.0" prefWidth="200.0">
+              <columns>
+                <TableColumn fx:id="contributorColumn" prefWidth="120.0" text="Contributor" />
+                <TableColumn fx:id="amountColumn" prefWidth="79.0" text="Amount" />
+              </columns>
+            </TableView>
+         </children>
+      </AnchorPane>
+      <Button fx:id="searchItemsButton" layoutX="291.0" layoutY="32.0" mnemonicParsing="false" prefHeight="31.0" prefWidth="501.0" text="Search for Items" />
    </children>
+   <padding>
+      <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
+   </padding>
 </AnchorPane>
